@@ -15,6 +15,7 @@
 /* @var $pagesCount Integer */
 /* @var $limit Integer Количество превьюшек на странице */
 
+use yii\helpers\Html;
 $this->title = Yii::$app->name . ' - ' . $camera->name;
 
 $this->registerCssFile(Yii::$app->homeUrl . "fw/datepicker/css/datepicker3.css");
@@ -26,44 +27,27 @@ $this->registerJsFile(Yii::$app->homeUrl . "js/slashman-glass.js", ['position' =
 
 $i = 1;
 
-$boot_class = '';
-
-$column2 = $column3 = $column4 = $column8 = '';
-switch ($_COOKIE['GalleryColumn']) {
-    case '2' :
-        $column2 = 'active';
-        break;
-    case '3' :
-        $column3 = 'active';
-        break;
-    case '4' :
-        $column4 = 'active';
-        break;
-    case '8' :
-        $column8 = 'active';
-        break;
-    default:
-        $column4 = 'active';
-        break;
+$column2 = $column3 = $column4 = $column6 = '';
+switch($_COOKIE['GalleryColumn']){
+    case '2' : $column2 = 'active'; break;
+    case '3' : $column3 = 'active'; break;
+    case '4' : $column4 = 'active'; break;
+    case '6' : $column6 = 'active'; break;
+    default: $column4 = 'active'; break;
 }
 
 $size4 = $size8 = $size16 = $size32 = '';
-switch ($_COOKIE['GalleryHeight']) {
-    case '4' :
-        $size4 = 'active';
-        break;
-    case '8' :
-        $size8 = 'active';
-        break;
-    case '16' :
-        $size16 = 'active';
-        break;
-    case '32' :
-        $size32 = 'active';
-        break;
-    default:
-        $size8 = 'active';
-        break;
+switch($_COOKIE['GalleryHeight']){
+    case '4' : $size4 = 'active'; break;
+    case '8' : $size8 = 'active'; break;
+    case '16' : $size16 = 'active'; break;
+    case '32' : $size32 = 'active'; break;
+    default: $size8 = 'active'; break;
+}
+
+$boot_class = 'col-md-3';
+if(!empty($_COOKIE['GalleryColumn'])){
+    $boot_class = 'col-md-'. 12/$_COOKIE['GalleryColumn'];
 }
 ?>
 <?php if (count($images) > 0) : ?>
@@ -126,8 +110,7 @@ switch ($_COOKIE['GalleryHeight']) {
                 <div class="modal-header">
                     <div class="row">
                         <div class="col-xs-12">
-                            <button type="button" class="close text-danger" data-dismiss="modal" aria-hidden="true">×
-                            </button>
+                            <button type="button" class="close text-danger" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                     </div>
                 </div>
@@ -138,15 +121,9 @@ switch ($_COOKIE['GalleryHeight']) {
                                 <div class="row">
                                     <div class="col-md-12 image-container">
                                         <?php if ($currentImage): ?>
-                                            <img src="<?= $images[$currentImage]->getImageUrl() ?>"
-                                                 class="img-responsive magniflier"
-                                                 big-image="<?= $images[$currentImage]->getImageUrl() ?>"
-                                                 id="view-image" class="img-responsive"/>
+                                            <img src="<?= $images[$currentImage]->getImageUrl() ?>" class="img-responsive magniflier" big-image="<?= $images[$currentImage]->getImageUrl() ?>" id="view-image" class="img-responsive"/>
                                         <?php else: ?>
-                                            <img src="<?= $images[0]->getImageUrl() ?>"
-                                                 class="img-responsive magniflier"
-                                                 big-image="<?= $images[0]->getImageUrl() ?>" id="view-image"
-                                                 class="img-responsive"/>
+                                            <img src="<?= $images[0]->getImageUrl() ?>" class="img-responsive magniflier" big-image="<?= $images[0]->getImageUrl() ?>" id="view-image" class="img-responsive"/>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -162,8 +139,7 @@ switch ($_COOKIE['GalleryHeight']) {
                                                 <i class="fa fa-expand"></i>
                                             </button>
                                             <?php if ($view !== 'thumbs'): ?>
-                                                <a href="<?= $this->context->createUrl(['/cabinet/camera', 'id' => $camera->id, 'view' => 'thumbs']) ?>"
-                                                   class="btn btn-default" title="Предпросмотр изображений">
+                                                <a href="<?= $this->context->createUrl(['/cabinet/camera', 'id' => $camera->id, 'view' => 'thumbs']) ?>" class="btn btn-default" title="Предпросмотр изображений">
                                                     <i class="fa fa-th"></i>
                                                 </a>
                                             <?php endif; ?>
@@ -189,16 +165,11 @@ switch ($_COOKIE['GalleryHeight']) {
                                     </div>
                                     <div class="col-md-4">
                                         <div class="btn-group pull-right">
-                                            <button
-                                                class="btn btn-default" <?= $previous == null ? 'disabled="disabled"' : '' ?>
-                                                title="Предыдущее изображение">
+                                            <button class="btn btn-default" <?= $previous == null ? 'disabled="disabled"' : '' ?> title="Предыдущее изображение">
                                                 <i class="fa fa-backward"></i>
                                             </button>
-                                            <button class="btn btn-default toggle-slideshow" title="Слайдшоу"><i
-                                                    class="fa fa-play"></i></button>
-                                            <button
-                                                class="btn btn-default nextImage" <?= $next == null ? 'disabled="disabled"' : '' ?>
-                                                title="Следующее изображение">
+                                            <button class="btn btn-default toggle-slideshow" title="Слайдшоу"><i class="fa fa-play"></i></button>
+                                            <button class="btn btn-default nextImage" <?= $next == null ? 'disabled="disabled"' : '' ?> title="Следующее изображение">
                                                 <i class="fa fa-forward"></i>
                                             </button>
                                         </div>
@@ -214,25 +185,23 @@ switch ($_COOKIE['GalleryHeight']) {
 <?php endif; ?>
 
 <div class="col-md-12 camera-thumbnails-full">
-    <div class="image-thumbnails" style="overflow-y: scroll;" data-height="calc(100vh - 143px)" data-scrollbar="true">
+    <div class="image-thumbnails"  style="overflow-y: scroll;" data-height="calc(100vh - 143px)" data-scrollbar="true">
         <div class="col-md-12">
             <div class="page-header col-md-3">
                 <?php if ($camera->icon_name): ?>
-                    <img src="<?= Yii::$app->homeUrl ?>uploads/camera_icons/<?= $camera->icon_name ?>"
-                         class="header-camera-icon">
+                    <img src="<?= Yii::$app->homeUrl ?>uploads/camera_icons/<?= $camera->icon_name ?>" class="header-camera-icon">
                 <?php endif; ?>
                 <?= $camera->name; ?>
             </div>
             <div class="text-center col-md-5">
-                <ul class="pagination pagination-sm">
+                <ul class="pagination pagination-sm" >
                     <li class="disabled previous-page">
                         <a href="#" aria-label="Previous">
                             <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span>
                         </a>
                     </li>
                     <?php for ($i = max(1, $currentPage - 3); $i <= min($pagesCount, $currentPage + 3); $i++): ?>
-                        <li page-number="<?= $i ?>" class="go-to-page<?= $currentPage == $i ? ' active' : '' ?>"><a
-                                href="#"><?= $i ?></a></li>
+                        <li page-number="<?= $i ?>" class="go-to-page<?= $currentPage == $i ? ' active' : '' ?>"><a href="#"><?= $i ?></a></li>
                     <?php endfor; ?>
                     <li>
                         <a href="#" aria-label="Next" class="next-page">
@@ -243,8 +212,7 @@ switch ($_COOKIE['GalleryHeight']) {
             </div>
             <div class="col-md-4 p-l-0 p-r-0">
                 <div class="dropdown change-view-wrap text-right">
-                    <button class="btn btn-inverse m-r-10 btn-sm dropdown-toggle pull-right" type="button"
-                            id="change-view"
+                    <button class="btn btn-inverse m-r-10 btn-sm dropdown-toggle pull-right" type="button" id="change-view"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Вид просмотра
                     </button>
@@ -252,42 +220,27 @@ switch ($_COOKIE['GalleryHeight']) {
                         <li>
                             <div class="row view-menu">
                                 <a href="#" class="js-sort" data-sort="asc">Прямая сортировка </a>
-                                <button class="btn btn-inverse btn-sm size-change" data-size="6" data-column="2">2
-                                </button>
-                                <button class="btn btn-inverse btn-sm size-change" data-size="4" data-column="3">3
-                                </button>
-                                <button class="btn btn-inverse btn-sm size-change active" data-size="3" data-column="4">
-                                    4
-                                </button>
-                                <button class="btn btn-inverse btn-sm size-change" data-size="2" data-column="6">6
-                                </button>
+                                <button  class="btn btn-inverse btn-sm size-change <?=$column2?>" data-size="6" data-column="2">2</button>
+                                <button  class="btn btn-inverse btn-sm size-change <?=$column3?>" data-size="4" data-column="3">3</button>
+                                <button  class="btn btn-inverse btn-sm size-change <?=$column4?>" data-size="3" data-column="4">4</button>
+                                <button  class="btn btn-inverse btn-sm size-change <?=$column6?>" data-size="2" data-column="6">6</button>
                                 <span>X</span>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size4 ?>" data-size="4">4
-                                </button>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size8 ?>" data-size="8">8
-                                </button>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size16 ?>" data-size="16">16
-                                </button>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size32 ?>" data-size="32">32
-                                </button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?=$size4?>" data-size="4">4</button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?=$size8?>" data-size="8">8</button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?=$size16?>" data-size="16">16</button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?=$size32?>" data-size="32">32</button>
                             </div>
                         </li>
                     </ul>
-                    <a href="<?= $this->context->createUrl(['/cabinet/camera', 'id' => $camera->id, 'view' => 'one']) ?>"
-                       class="btn btn-sm btn-inverse m-r-10 pull-right">Режим галереи</a>
+                    <a href="<?= $this->context->createUrl(['/cabinet/camera', 'id' => $camera->id, 'view' => 'one']) ?>" class="btn btn-sm btn-inverse m-r-10 pull-right">Режим галереи</a>
                 </div>
             </div>
         </div>
         <?php if (count($images) > 0): ?>
             <div class="thumbnails-list">
                 <?php for ($i = ($currentPage - 1) * $limit; $i < min($currentPage * $limit, count($images)); $i++): ?>
-                    <?php
-                    $boot_class = 'col-md-3';
-                    if (!empty($_COOKIE['GalleryColumn'])) {
-                        $boot_class = 'col-md-' . 12 / $_COOKIE['GalleryColumn'];
-                    }
-                    ?>
-                    <div class="<?= $boot_class ?> thumbnail-container" image-id="<?= $images[$i]->id ?>">
+
+                    <div class="<?=$boot_class?> thumbnail-container" image-id="<?= $images[$i]->id ?>">
                         <div class="panel panel-default">
                             <div class="panel-body" image-index="<?= $i ?>">
                                 <div class="image-container show-modal">
@@ -298,10 +251,9 @@ switch ($_COOKIE['GalleryHeight']) {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <?= date('d-m-y H:i', strtotime($images[$i]->created)); ?>
-                                        <input type="checkbox" class="pull-right thumb-check"
-                                               image-id="<?= $images[$i]->id ?>"/>
+                                        <input type="checkbox" class="pull-right thumb-check" image-id="<?= $images[$i]->id ?>"/>
                                         <span class="pull-right favorite-star">
-                                            <?= $this->render('favorite', ['id' => $images[$i]->id, 'f_fav' => $images[$i]->f_fav]); ?>
+                                            <?= $this->render('favorite', ['id' => $images[$i]->id, 'f_fav' => $images[$i]->f_fav]);?>
                                         </span>
                                     </div>
                                 </div>
@@ -350,7 +302,7 @@ switch ($_COOKIE['GalleryHeight']) {
         });
         $('#view-image-big').bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function (e) {
             var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-            var event = state ? 'FullscreenOn' : 'FullscreenOff';
+            var event = state? 'FullscreenOn': 'FullscreenOff';
 
             if (!state)
                 $('#view-image-big').css('display', 'none');
@@ -393,14 +345,14 @@ switch ($_COOKIE['GalleryHeight']) {
 
     });
     //Изменение размеров превью
-    $(document).on('click', '.js-sort', function () {
+    $(document).on('click', '.js-sort', function(){
         var self = $(this);
         sort = self.data('sort');
         moveToPage(1);
-        if (sort == 'asc') {
+        if(sort == 'asc'){
             self.data('sort', 'desc');
             self.html('Обратная сортировка');
-        } else {
+        }else{
             self.data('sort', 'asc');
             self.html('Прямая сортировка');
         }
@@ -418,8 +370,8 @@ switch ($_COOKIE['GalleryHeight']) {
         $.cookie('GalleryColumn', column);
 
         $('.thumbnail-container').removeClass('col-md-6').removeClass('col-md-4').removeClass('col-md-3').removeClass('col-md-2').addClass(activeClass).addClass('fadeInUp animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-            $(this).removeClass('fadeInUp animated');
-        });
+              $(this).removeClass('fadeInUp animated');
+          });
         updatePagination();
     });
 
@@ -617,8 +569,8 @@ switch ($_COOKIE['GalleryHeight']) {
 
                 var winWidth = $(window).width();
                 var winHeight = $(window).height();
-                var heightDifference = winHeight > $(img).height() ? winHeight - $(img).height() : 0;
-                var widthDifference = winWidth > $(img).width() ? winWidth - $(img).width() : 0;
+                var heightDifference = winHeight > $(img).height()? winHeight - $(img).height(): 0;
+                var widthDifference = winWidth > $(img).width()? winWidth - $(img).width(): 0;
                 var animateAttrs = {};
                 if (offset.left > 0) {
                     animateAttrs.left = '0';
@@ -664,28 +616,22 @@ switch ($_COOKIE['GalleryHeight']) {
             moveToPage(currentPage + 1);
     }
     function moveToPage(page) {
-        $.get(yii.app.createUrl('cabinet/camera/get-json-images', {
-            id: cameraId,
-            page: page,
-            limit: limit,
-            type: type,
-            sort: sort
-        }, '&', 'get')).done(function (images) {
-            jsonImages = JSON.parse(images);
+        $.get(yii.app.createUrl('cabinet/camera/get-json-images', {id: cameraId, page: page, limit: limit, type: type, sort: sort}, '&', 'get')).done(function (images) {
+              jsonImages = JSON.parse(images);
 
-            var imageThumbnailsContainer = $('.thumbnails-list');
-            var html = '';
+              var imageThumbnailsContainer = $('.thumbnails-list');
+              var html = '';
 
-            //for(var i = (page - 1) * limit; i < Math.min(page * limit, jsonImages.length); i++)
-            for (var i = 0; i < jsonImages.length; i++) {
-                html = html + '<div class="' + boot_class + ' thumbnail-container" image-id="' + jsonImages[i].id + '">' + '<div class="panel panel-default">' + '<div class="panel-body" image-index="' + i + '">' + '<div class="row image-container show-modal">' + '<img src="' + jsonImages[i].thumb + '" class="img-responsive cam-thumb"/>' + '</div>' + '</div>' + '<div class="panel-footer">' + '<div class="row">' + '<div class="col-md-10">' + jsonImages[i].created + '</div>' + '<div class="col-md-2">' + '<input type="checkbox" class="pull-right thumb-check" image-id="' + jsonImages[i].id + '"/>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>';
-            }
-            $(imageThumbnailsContainer).html(html);
+              //for(var i = (page - 1) * limit; i < Math.min(page * limit, jsonImages.length); i++)
+              for (var i = 0; i < jsonImages.length; i++) {
+                  html = html + '<div class="'+boot_class+' thumbnail-container" image-id="' + jsonImages[i].id + '">' + '<div class="panel panel-default">' + '<div class="panel-body" image-index="' + i + '">' + '<div class="row image-container show-modal">' + '<img src="' + jsonImages[i].thumb + '" class="img-responsive cam-thumb"/>' + '</div>' + '</div>' + '<div class="panel-footer">' + '<div class="row">' + '<div class="col-md-10">' + jsonImages[i].created + '</div>' + '<div class="col-md-2">' + '<input type="checkbox" class="pull-right thumb-check" image-id="' + jsonImages[i].id + '"/>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>';
+              }
+              $(imageThumbnailsContainer).html(html);
 
-            currentPage = page;
+              currentPage = page;
 
-            updatePagination();
-        });
+              updatePagination();
+          });
     }
 
     function updatePagination() {

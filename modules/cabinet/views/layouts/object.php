@@ -14,8 +14,7 @@ $i = 1;
                 </li>
                 <?php if (Yii::$app->user->identity->hasUnmappedLocations()): ?>
                     <li class="nav-header text-center marker-hint">
-                        <span class="text-success text-center">перетащите маркер на карту&nbsp;&nbsp;<i
-                                class="fa fa-close"></i></span>
+                        <span class="text-success text-center">перетащите маркер на карту&nbsp;&nbsp;<i class="fa fa-close"></i></span>
                     </li>
                 <?php endif; ?>
                 <li class="has-sub">
@@ -29,19 +28,15 @@ $i = 1;
                             <li class="locations-list-element" location-id="<?= $location->id ?>">
                                 <a class="row">
                                     <?php if ($location->lat === null && $location->lon === null): ?>
-                                        <i class="fa fa-map-marker map-marker pull-right text-success"
-                                           location-id="<?= $location->id ?>"></i>
+                                        <i class="fa fa-map-marker map-marker pull-right text-success" location-id="<?= $location->id ?>"></i>
                                     <?php endif; ?>
                                     <div class="col-md-9 info p-l-0 p-r-0">
                                         <span class="edit-location-label"><?= $location->getName() ?></span>
-                                        <input type="text" class="form-control input-sm edit-input"
-                                               value="<?= $location->name ?>">
+                                        <input type="text" class="form-control input-sm edit-input" value="<?= $location->name ?>">
                                     </div>
                                     <div class="col-md-3 buttons p-l-0 p-r-0">
-                                        <i class="fa fa-trash pull-right delete-location"
-                                           location-id="<?= $location->id ?>"></i>
-                                        <i class="fa fa-pencil pull-right edit-location"
-                                           location-id="<?= $location->id ?>"></i>
+                                        <i class="fa fa-trash pull-right delete-location" location-id="<?= $location->id ?>"></i>
+                                        <i class="fa fa-pencil pull-right edit-location" location-id="<?= $location->id ?>"></i>
                                         <i class="fa fa-close cancel-edit-location pull-right"></i>
                                         <i class="fa fa-check do-edit-location pull-right"></i>
                                     </div>
@@ -51,8 +46,7 @@ $i = 1;
                         <li class="add-row">
                             <a class="row">
                                 <div class="info p-l-0 p-r-0">
-                                    <input type="text" class="form-control input-sm" id="add-location-input">
-                                    <!--style="width: 0; display: none;"-->
+                                    <input type="text" class="form-control input-sm" id="add-location-input"> <!--style="width: 0; display: none;"-->
                                     <span class="add-location-label">Добавить</span>
                                 </div>
                                 <div class="buttons p-l-0 p-r-0">
@@ -76,14 +70,11 @@ $i = 1;
                                 <a class="row">
                                     <div class="info p-l-0 p-r-0">
                                         <span class="edit-location-label"><?= $category->name ?></span>
-                                        <input type="text" class="form-control input-sm edit-input"
-                                               value="<?= $category->name ?>">
+                                        <input type="text" class="form-control input-sm edit-input" value="<?= $category->name ?>">
                                     </div>
                                     <div class="buttons p-l-0 p-r-0">
-                                        <i class="fa fa-trash pull-right delete-category"
-                                           category-id="<?= $category->id ?>"></i>
-                                        <i class="fa fa-pencil pull-right edit-category"
-                                           category-id="<?= $category->id ?>"></i>
+                                        <i class="fa fa-trash pull-right delete-category" category-id="<?= $category->id ?>"></i>
+                                        <i class="fa fa-pencil pull-right edit-category" category-id="<?= $category->id ?>"></i>
                                         <i class="fa fa-close cancel-edit-category pull-right"></i>
                                         <i class="fa fa-check do-edit-category pull-right"></i>
                                     </div>
@@ -93,8 +84,7 @@ $i = 1;
                         <li class="add-row">
                             <a class="row">
                                 <div class="info p-l-0 p-r-0">
-                                    <input type="text" class="form-control input-sm" id="add-category-input">
-                                    <!--style="width: 0; display: none;"-->
+                                    <input type="text" class="form-control input-sm" id="add-category-input"> <!--style="width: 0; display: none;"-->
                                     <span class="add-category-label">Добавить</span>
                                 </div>
                                 <div class="buttons p-l-0 p-r-0">
@@ -148,22 +138,22 @@ $i = 1;
         $(document).on('click', '.do-add-location', function (e) {
             var locationName = $('#add-location-input').val();
             $.post(yii.app.createUrl('cabinet/object/ajax-add-location'), {
-                name: locationName
-            }).done(function (response) {
-                response = JSON.parse(response);
-                var html = '<li class="locations-list-element" location-id="' + response.id + '">' + '<a class="row">' + '<i class="fa fa-map-marker map-marker pull-right text-success" location-id="' + response.id + '"></i>' + '<div class="col-md-9 info p-l-0 p-r-0">' + '<span class="edit-location-label">' + response.name.trunc(12) + '</span>' + '<input type="text" class="form-control input-sm edit-input" value="' + response.name + '">' + '</div>' + '<div class="col-md-3 buttons p-l-0 p-r-0">' + '<i class="fa fa-trash pull-right delete-location" location-id="' + response.id + '"></i>' + '<i class="fa fa-pencil pull-right edit-location" location-id="' + response.id + '"></i>' + '<i class="fa fa-close cancel-edit-location pull-right"></i>' + '<i class="fa fa-check do-edit-location pull-right"></i>' + '</div>' + '</a>' + '</li>';
-                $('.locations-list .add-row').before(html);
-                makeDraggable($('.locations-list-element:last i.map-marker'));
-                $('#add-location-input').animate({'width': '0'}, {
-                    duration: 100, complete: function () {
-                        $('.do-add-location').hide();
-                        $('.cancel-location').hide();
-                        $('#add-location-input').hide();
-                        $('.add-location').show();
-                        $('.add-location-label').show();
-                    }
-                });
-            });
+                  name: locationName
+              }).done(function (response) {
+                  response = JSON.parse(response);
+                  var html = '<li class="locations-list-element" location-id="' + response.id + '">' + '<a class="row">' + '<i class="fa fa-map-marker map-marker pull-right text-success" location-id="' + response.id + '"></i>' + '<div class="col-md-9 info p-l-0 p-r-0">' + '<span class="edit-location-label">' + response.name.trunc(12) + '</span>' + '<input type="text" class="form-control input-sm edit-input" value="' + response.name + '">' + '</div>' + '<div class="col-md-3 buttons p-l-0 p-r-0">' + '<i class="fa fa-trash pull-right delete-location" location-id="' + response.id + '"></i>' + '<i class="fa fa-pencil pull-right edit-location" location-id="' + response.id + '"></i>' + '<i class="fa fa-close cancel-edit-location pull-right"></i>' + '<i class="fa fa-check do-edit-location pull-right"></i>' + '</div>' + '</a>' + '</li>';
+                  $('.locations-list .add-row').before(html);
+                  makeDraggable($('.locations-list-element:last i.map-marker'));
+                  $('#add-location-input').animate({'width': '0'}, {
+                      duration: 100, complete: function () {
+                          $('.do-add-location').hide();
+                          $('.cancel-location').hide();
+                          $('#add-location-input').hide();
+                          $('.add-location').show();
+                          $('.add-location-label').show();
+                      }
+                  });
+              });
         });
 
         //ADD CATEGORY
@@ -188,21 +178,21 @@ $i = 1;
         $(document).on('click', '.do-add-category', function (e) {
             var categoryName = $('#add-category-input').val();
             $.post(yii.app.createUrl('cabinet/object/ajax-add-category'), {
-                name: categoryName
-            }).done(function (response) {
-                response = JSON.parse(response);
-                var html = '<li class="categories-list-element" category-id="' + response.id + '">' + '<a class="row">' + '<div class="info p-l-0 p-r-0">' + '<span class="edit-location-label">' + response.name.trunc(12) + '</span>' + '<input type="text" class="form-control input-sm edit-input" value="' + response.name + '">' + '</div>' + '<div class="buttons p-l-0 p-r-0">' + '<i class="fa fa-trash pull-right delete-category" category-id="' + response.id + '"></i>' + '<i class="fa fa-pencil pull-right edit-category" category-id="' + response.id + '"></i>' + '<i class="fa fa-close cancel-edit-category pull-right"></i>' + '<i class="fa fa-check do-edit-category pull-right"></i>' + '</div>' + '</a>' + '</li>';
-                $('.categories-list .add-row').before(html);
-                $('#add-category-input').animate({'width': '0'}, {
-                    duration: 100, complete: function () {
-                        $('.do-add-category').hide();
-                        $('.cancel-category').hide();
-                        $('#add-category-input').hide();
-                        $('.add-category').show();
-                        $('.add-category-label').show();
-                    }
-                });
-            });
+                  name: categoryName
+              }).done(function (response) {
+                  response = JSON.parse(response);
+                  var html = '<li class="categories-list-element" category-id="' + response.id + '">' + '<a class="row">' + '<div class="info p-l-0 p-r-0">' + '<span class="edit-location-label">' + response.name.trunc(12) + '</span>' + '<input type="text" class="form-control input-sm edit-input" value="' + response.name + '">' + '</div>' + '<div class="buttons p-l-0 p-r-0">' + '<i class="fa fa-trash pull-right delete-category" category-id="' + response.id + '"></i>' + '<i class="fa fa-pencil pull-right edit-category" category-id="' + response.id + '"></i>' + '<i class="fa fa-close cancel-edit-category pull-right"></i>' + '<i class="fa fa-check do-edit-category pull-right"></i>' + '</div>' + '</a>' + '</li>';
+                  $('.categories-list .add-row').before(html);
+                  $('#add-category-input').animate({'width': '0'}, {
+                      duration: 100, complete: function () {
+                          $('.do-add-category').hide();
+                          $('.cancel-category').hide();
+                          $('#add-category-input').hide();
+                          $('.add-category').show();
+                          $('.add-category-label').show();
+                      }
+                  });
+              });
         });
 
         //EDIT CATEGORY
@@ -241,20 +231,20 @@ $i = 1;
             var categoryId = $(this).parent().parent().parent().attr('category-id');
 
             $.post(yii.app.createUrl('cabinet/object/ajax-edit-category'), {
-                id: categoryId, name: categoryName
-            }).done(function (response) {
-                response = JSON.parse(response);
+                  id: categoryId, name: categoryName
+              }).done(function (response) {
+                  response = JSON.parse(response);
 
-                $(editCategoryName).text(response.name);
-                $(editCategoryInput).animate({'width': '0'}, {
-                    duration: 100, complete: function () {
-                        $(editCategoryOKCancel).hide();
-                        $(editCategoryInput).hide();
-                        $(editCategoryButtons).show();
-                        $(editCategoryName).show();
-                    }
-                });
-            });
+                  $(editCategoryName).text(response.name);
+                  $(editCategoryInput).animate({'width': '0'}, {
+                      duration: 100, complete: function () {
+                          $(editCategoryOKCancel).hide();
+                          $(editCategoryInput).hide();
+                          $(editCategoryButtons).show();
+                          $(editCategoryName).show();
+                      }
+                  });
+              });
         });
 
         //EDIT LOCATION
@@ -293,30 +283,30 @@ $i = 1;
             var locationId = $(this).parent().parent().parent().attr('location-id');
 
             $.post(yii.app.createUrl('cabinet/object/ajax-edit-location'), {
-                id: locationId, name: locationName
-            }).done(function (response) {
-                response = JSON.parse(response);
+                  id: locationId, name: locationName
+              }).done(function (response) {
+                  response = JSON.parse(response);
 
-                if (typeof markers !== 'undefined') {
-                    for (var i = 0; i < markers.length; i++) {
-                        if (markers[i].marker.id == locationId) {
-                            markers[i].infoWindow.setContent(generateBalloon(response));
-                            markers[i].marker.setTitle(response.name);
-                            break;
-                        }
-                    }
-                }
+                  if (typeof markers !== 'undefined') {
+                      for (var i = 0; i < markers.length; i++) {
+                          if (markers[i].marker.id == locationId) {
+                              markers[i].infoWindow.setContent(generateBalloon(response));
+                              markers[i].marker.setTitle(response.name);
+                              break;
+                          }
+                      }
+                  }
 
-                $(editLocationName).text(response.name);
-                $(editLocationInput).animate({'width': '0'}, {
-                    duration: 100, complete: function () {
-                        $(editLocationOKCancel).hide();
-                        $(editLocationInput).hide();
-                        $(editLocationButtons).show();
-                        $(editLocationName).show();
-                    }
-                });
-            });
+                  $(editLocationName).text(response.name);
+                  $(editLocationInput).animate({'width': '0'}, {
+                      duration: 100, complete: function () {
+                          $(editLocationOKCancel).hide();
+                          $(editLocationInput).hide();
+                          $(editLocationButtons).show();
+                          $(editLocationName).show();
+                      }
+                  });
+              });
         });
 
         //DELETE LOCATION
@@ -324,30 +314,23 @@ $i = 1;
             var locationId = $(this).attr('location-id');
             var locationContainer = $(this).parent().parent();
             swal({
-                title: "Вы уверены?",
-                text: "Место будет удалено",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Удалить",
-                cancelButtonText: "Отмена",
-                closeOnConfirm: false
-            }, function () {
-                $.post(yii.app.createUrl('cabinet/object/ajax-remove-location'), {
-                    id: locationId
-                }).done(function (response) {
-                    if (typeof markers !== 'undefined') {
-                        for (var i = 0; i < markers.length; i++) {
-                            if (markers[i].marker.id == locationId) {
-                                removeGeoLocation(i);
-                                break;
+                  title: "Вы уверены?", text: "Место будет удалено", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Удалить", cancelButtonText: "Отмена", closeOnConfirm: false
+              }, function () {
+                  $.post(yii.app.createUrl('cabinet/object/ajax-remove-location'), {
+                        id: locationId
+                    }).done(function (response) {
+                        if (typeof markers !== 'undefined') {
+                            for (var i = 0; i < markers.length; i++) {
+                                if (markers[i].marker.id == locationId) {
+                                    removeGeoLocation(i);
+                                    break;
+                                }
                             }
                         }
-                    }
-                    $(locationContainer).remove();
-                    swal("Удалено!", "Место удалено", "success");
-                });
-            });
+                        $(locationContainer).remove();
+                        swal("Удалено!", "Место удалено", "success");
+                    });
+              });
         });
 
         //DELETE CATEGORY
@@ -355,22 +338,15 @@ $i = 1;
             var categoryId = $(this).attr('category-id');
             var categoryContainer = $(this).parent().parent();
             swal({
-                title: "Вы уверены?",
-                text: "Категория будет удалена",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Удалить",
-                cancelButtonText: "Отмена",
-                closeOnConfirm: false
-            }, function () {
-                $.post(yii.app.createUrl('cabinet/object/ajax-remove-category'), {
-                    id: categoryId
-                }).done(function (response) {
-                    $(categoryContainer).remove();
-                    swal("Готово!", "Категория удалена", "success");
-                });
-            });
+                  title: "Вы уверены?", text: "Категория будет удалена", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Удалить", cancelButtonText: "Отмена", closeOnConfirm: false
+              }, function () {
+                  $.post(yii.app.createUrl('cabinet/object/ajax-remove-category'), {
+                        id: categoryId
+                    }).done(function (response) {
+                        $(categoryContainer).remove();
+                        swal("Готово!", "Категория удалена", "success");
+                    });
+              });
         });
     </script>
 <?php $this->endContent(); ?>

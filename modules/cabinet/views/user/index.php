@@ -10,6 +10,7 @@
 /* @var $tariffs Tariff[] */
 
 use app\models\Tariff;
+
 use yii\widgets\ActiveForm;
 
 $this->registerCssFile(Yii::$app->homeUrl . "template/plugins/switchery/switchery.min.css");
@@ -66,17 +67,17 @@ $i = 1;
                 <div class="panel-body">
 
                     <?php $form = ActiveForm::begin([
-                        'id' => 'password-form',
-                        'enableClientValidation' => true,
-                        'validateOnSubmit' => true,
-                        'options' => [
-                            'class' => 'form-horizontal new-camera-form',
-                            'enctype' => 'multipart/form-data'
-                        ],
-                        'fieldConfig' => [
-                            'template' => "{input}\n{error}",
-                            //'labelOptions' => ['class' => 'col-lg-2 control-label'],
-                        ],
+                      'id' => 'password-form',
+                      'enableClientValidation' => true,
+                      'validateOnSubmit' => true,
+                      'options' => [
+                        'class' => 'form-horizontal new-camera-form',
+                        'enctype' => 'multipart/form-data'
+                      ],
+                      'fieldConfig' => [
+                        'template' => "{input}\n{error}",
+                        //'labelOptions' => ['class' => 'col-lg-2 control-label'],
+                      ],
                     ]); ?>
 
                     <div class="form-group">
@@ -143,40 +144,37 @@ $i = 1;
                     </div>
 
                     <?php $form = ActiveForm::begin([
-                        'id' => 'invoice-form',
-                        'action' => ['/cabinet/user/invoice'],
-                        'enableClientValidation' => true,
-                        'validateOnSubmit' => true,
-                        'options' => [
-                            'target' => '_blank',
-                            //'class' => 'form-horizontal new-camera-form',
-                            //'enctype' => 'multipart/form-data'
-                        ],
-                        'fieldConfig' => [
-                            'template' => "{input}\n{error}",
-                            //'labelOptions' => ['class' => 'col-lg-2 control-label'],
-                        ],
+                      'id' => 'invoice-form',
+                      'action' => ['/cabinet/user/invoice'],
+                      'enableClientValidation' => true,
+                      'validateOnSubmit' => true,
+                      'options' => [
+                        'target' => '_blank',
+                        //'class' => 'form-horizontal new-camera-form',
+                        //'enctype' => 'multipart/form-data'
+                      ],
+                      'fieldConfig' => [
+                        'template' => "{input}\n{error}",
+                        //'labelOptions' => ['class' => 'col-lg-2 control-label'],
+                      ],
                     ]); ?>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><input type="radio" name="paymentType" id="robokassa" value="robokassa" checked>
-                                    Электронный платеж</label>
+                                <label><input type="radio" name="paymentType" id="robokassa" value="robokassa" checked> Электронный платеж</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group p-t-3">
-                                <label><input type="radio" name="paymentType" id="invoice" value="invoice"> Выписать
-                                    счет</label>
+                                <label><input type="radio" name="paymentType" id="invoice" value="invoice"> Выписать счет</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="funds-amount" name="amount"
-                                       placeholder="Введите сумму">
+                                <input type="text" class="form-control" id="funds-amount" name="amount" placeholder="Введите сумму">
                             </div>
                         </div>
                     </div>
@@ -207,8 +205,7 @@ $i = 1;
                     </div>
                     <div class="row <?= $user->getTariffExpireDate() ? '' : 'hidden' ?>">
                         <div class="col-xs-12 text-center">
-                            действует до <span class="label label-success"
-                                               id="tariff-expire-date"><?= $user->getTariffExpireDate() ?></span>
+                            действует до <span class="label label-success" id="tariff-expire-date"><?= $user->getTariffExpireDate() ?></span>
                         </div>
                     </div>
                     <div class="row m-t-20">
@@ -339,8 +336,7 @@ $i = 1;
                                         <td>
                                             <div><?= $durationPrice['price'] ?></div>
                                             <?php if ($durationPrice['selectable']): ?>
-                                                <input type="radio" class="form-control tariff-switch-radio"
-                                                       name="tariffDuration" value="<?= $durationPrice['id'] ?>"/>
+                                                <input type="radio" class="form-control tariff-switch-radio" name="tariffDuration" value="<?= $durationPrice['id'] ?>"/>
                                             <?php endif; ?>
                                         </td>
                                     <?php endforeach; ?>
@@ -352,9 +348,7 @@ $i = 1;
                 </div>
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-sm btn-success" id="tariff-switch" disabled="disabled">Сменить
-                    тариф на выбранный
-                </button>
+                <button type="button" class="btn btn-sm btn-success" id="tariff-switch" disabled="disabled">Сменить тариф на выбранный</button>
                 <button type="button" class="btn btn-white" data-dismiss="modal" aria-hidden="true">Отмена</button>
             </div>
         </div>
@@ -416,50 +410,43 @@ $i = 1;
         var trigger = $('.disable-all-cameras');
         if (trigger.hasClass('fa-toggle-on')) {
             $.post(yii.app.createUrl('cabinet/user/ajax-toggle-all-cameras'), {
-                password: password, action: 'enable'
-            }).done(function (response) {
-                if (response == 'OK') {
-                    trigger.removeClass('fa-toggle-on').addClass('fa-toggle-off');
-                    $('.disable-all-cameras').popover('hide');
-                    $('#disable-cameras-password').val('');
-                }
-            });
+                  password: password, action: 'enable'
+              }).done(function (response) {
+                  if (response == 'OK') {
+                      trigger.removeClass('fa-toggle-on').addClass('fa-toggle-off');
+                      $('.disable-all-cameras').popover('hide');
+                      $('#disable-cameras-password').val('');
+                  }
+              });
         } else {
             $.post(yii.app.createUrl('cabinet/user/ajax-toggle-all-cameras'), {
-                password: password, action: 'disable'
-            }).done(function (response) {
-                if (response == 'OK') {
-                    trigger.removeClass('fa-toggle-off').addClass('fa-toggle-on');
-                    $('.disable-all-cameras').popover('hide');
-                    $('#disable-cameras-password').val('');
-                } else
-                    sweetAlert("Неверный пароль", "", "error");
-            });
+                  password: password, action: 'disable'
+              }).done(function (response) {
+                  if (response == 'OK') {
+                      trigger.removeClass('fa-toggle-off').addClass('fa-toggle-on');
+                      $('.disable-all-cameras').popover('hide');
+                      $('#disable-cameras-password').val('');
+                  } else
+                      sweetAlert("Неверный пароль", "", "error");
+              });
         }
         password = '';
     });
     $(document).on('click', '#do-delete-all', function () {
         swal({
-            title: "Вы уверены?",
-            text: "Фотографии будут удалены",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Удалить",
-            cancelButtonText: "Отмена",
-            closeOnConfirm: false
-        }, function () {
-            $.post(yii.app.createUrl('cabinet/remove/delete-all'), {
-                password: password
-            }).done(function (response) {
-                if (response == 'OK') {
-                    swal("Удалено!", "Вы удалили все фото", "success");
-                    $('.delete-all').popover('hide');
-                    $('#delete-all-password').val('');
-                } else
-                    sweetAlert("Неверный пароль", "", "error");
-            });
-        });
+              title: "Вы уверены?", text: "Фотографии будут удалены", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Удалить", cancelButtonText: "Отмена", closeOnConfirm: false
+          }, function () {
+              $.post(yii.app.createUrl('cabinet/remove/delete-all'), {
+                    password: password
+                }).done(function (response) {
+                    if (response == 'OK') {
+                        swal("Удалено!", "Вы удалили все фото", "success");
+                        $('.delete-all').popover('hide');
+                        $('#delete-all-password').val('');
+                    } else
+                        sweetAlert("Неверный пароль", "", "error");
+                });
+          });
     });
     $(document).on('change', '#disable-cameras-password, #delete-all-password', function (e) {
         password = $(this).val();
@@ -476,22 +463,22 @@ $i = 1;
         var selectedRadio = $('.tariff-switch-radio:checked');
         if (selectedRadio.length > 0) {
             $.post(yii.app.createUrl('cabinet/user/ajax-change-tariff'), {
-                tariffDurationId: $(selectedRadio).val()
-            }).done(function (response) {
-                response = JSON.parse(response);
+                  tariffDurationId: $(selectedRadio).val()
+              }).done(function (response) {
+                  response = JSON.parse(response);
 
-                if (response.result == 'OK') {
-                    swal("Тариф изменен", "Ваш текущий тариф - " + response.name, 'success');
-                    $('#tariff-name').text(response.name);
-                    $('#tariff-expire-date').text(response.expires);
-                    $('#modal-change-tariff').modal('hide');
-                    $('.tariff-switch-radio').each(function (index, radio) { //Deselect all
-                        $(radio).prop('checked', false);
-                    });
-                } else if (response.result == 'LOW_FUNDS') {
-                    swal("Тариф не был изменен", "У вас не хватает средств", 'error');
-                }
-            });
+                  if (response.result == 'OK') {
+                      swal("Тариф изменен", "Ваш текущий тариф - " + response.name, 'success');
+                      $('#tariff-name').text(response.name);
+                      $('#tariff-expire-date').text(response.expires);
+                      $('#modal-change-tariff').modal('hide');
+                      $('.tariff-switch-radio').each(function (index, radio) { //Deselect all
+                          $(radio).prop('checked', false);
+                      });
+                  } else if (response.result == 'LOW_FUNDS') {
+                      swal("Тариф не был изменен", "У вас не хватает средств", 'error');
+                  }
+              });
         }
     });
 
@@ -503,13 +490,13 @@ $i = 1;
         if (amount !== '') {
             if ($('#robokassa').prop('checked')) {
                 $.post(yii.app.createUrl('cabinet/user/ajax-payment-modal'), {
-                    amount: amount
-                }).done(function (response) {
+                      amount: amount
+                  }).done(function (response) {
 
-                    var template = Handlebars.compile($('#payment-modal-template').html());
-                    $('#payment-modal-body').html(template(JSON.parse(response)));
-                    $('#modal-payment').modal('show');
-                });
+                      var template = Handlebars.compile($('#payment-modal-template').html());
+                      $('#payment-modal-body').html(template(JSON.parse(response)));
+                      $('#modal-payment').modal('show');
+                  });
             } else if ($('#invoice').prop('checked')) {
                 $('#invoice-form').submit();
             }

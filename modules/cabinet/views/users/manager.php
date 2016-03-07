@@ -10,8 +10,8 @@
 /* @var $transactions Transaction[] */
 /* @var $tariffsTransposed Array[] */
 
-use app\models\Permission;
 use app\models\Tariff;
+use app\models\Permission;
 use yii\helpers\ArrayHelper;
 
 
@@ -43,47 +43,37 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
                 </thead>
                 <tbody id="additional-users">
                 <?php foreach ($additionalUsers as $additionalUser): ?>
-                    <tr class="additional-user-row additional-user-info"
-                        additional-user-id="<?= $additionalUser['id'] ?>">
+                    <tr class="additional-user-row additional-user-info" additional-user-id="<?= $additionalUser['id'] ?>">
                         <td>
-                            <a href="#" data-type="text" data-name="login" data-pk="<?= $additionalUser['id'] ?>"
-                               data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
+                            <a href="#" data-type="text" data-name="login" data-pk="<?= $additionalUser['id'] ?>" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
                                 <?= $additionalUser['login'] ?>
                             </a>
                         </td>
                         <td>
-                            <a href="#" data-type="text" data-name="name" data-pk="<?= $additionalUser['id'] ?>"
-                               data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
+                            <a href="#" data-type="text" data-name="name" data-pk="<?= $additionalUser['id'] ?>" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
                                 <?= $additionalUser['name'] ? $additionalUser['name'] : 'Empty' ?>
                             </a>
                         </td>
                         <td>
-                            <a href="#" data-type="text" data-name="email" data-pk="<?= $additionalUser['id'] ?>"
-                               data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
+                            <a href="#" data-type="text" data-name="email" data-pk="<?= $additionalUser['id'] ?>" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
                                 <?= $additionalUser['email'] ? $additionalUser['email'] : 'Empty' ?>
                             </a>
                         </td>
                         <td>
-                            <a href="#" data-type="select" data-value="<?= $additionalUser['active'] ?>"
-                               data-name="active" data-pk="<?= $additionalUser['id'] ?>"
-                               data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
+                            <a href="#" data-type="select" data-value="<?= $additionalUser['active'] ?>" data-name="active" data-pk="<?= $additionalUser['id'] ?>" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
                                 <?= $additionalUser['active'] ? 'Активен' : 'Не активен' ?>
                             </a>
                         </td>
                         <td>
-                            <i class="fa fa-close trigger text-danger remove-additional-user"
-                               id="remove-additional-user" additional-user-id="<?= $additionalUser['id'] ?>"></i>
+                            <i class="fa fa-close trigger text-danger remove-additional-user" id="remove-additional-user" additional-user-id="<?= $additionalUser['id'] ?>"></i>
                         </td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
                 </tr>
             </table>
-            <input type="text" class="form-control" id="additional-user-input"
-                   placeholder="Введите e-mail нового пользователя"><br>
-            <button type="button" class="btn btn-success" id="add-additional-user"><i class="fa fa-plus"></i> Добавить
-                пользователя
-            </button>
+            <input type="text" class="form-control" id="additional-user-input" placeholder="Введите e-mail нового пользователя"><br>
+            <button type="button" class="btn btn-success" id="add-additional-user"><i class="fa fa-plus"></i> Добавить пользователя</button>
             <?php /*<button type="button" class="btn btn-success" id="remove-additional-user"><i class="fa fa-minus"></i> Удалить пользователя</button>*/ ?>
         </div>
     </div>
@@ -144,26 +134,22 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
     {{#each additional_users}}
     <tr class="additional-user-row" additional-user-id="{{id}}">
         <td>
-            <a href="#" data-type="text" data-name="login" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
+            <a href="#" data-type="text" data-name="login" data-pk="{{id}}" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
                 {{login}}
             </a>
         </td>
         <td>
-            <a href="#" data-type="text" data-name="name" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
+            <a href="#" data-type="text" data-name="name" data-pk="{{id}}" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
                 {{name}}
             </a>
         </td>
         <td>
-            <a href="#" data-type="text" data-name="email" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
+            <a href="#" data-type="text" data-name="email" data-pk="{{id}}" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
                 {{email}}
             </a>
         </td>
         <td>
-            <a href="#" data-type="select" data-name="active" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
+            <a href="#" data-type="select" data-name="active" data-pk="{{id}}" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
                 {{active}}
             </a>
         </td>
@@ -197,9 +183,8 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
             </a>
         </td>
         <td>
-            <a href="#" data-name="traffic_limit_after_block" class="limit-edit editable editable-click"
-               data-pk="{{id}}"
-               data-pk="{{id}}" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
+            <a href="#" data-name="traffic_limit_after_block" class="limit-edit editable editable-click" data-pk="{{id}}"
+                           data-pk="{{id}}" data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
                 {{limit}}
             </a>
         </td>
@@ -208,19 +193,14 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
 </script>
 
 
+
 <?php
 $permissions_classes = Permission::find()->select(['id', 'machine_name'])->asArray()->all();
-foreach ($permissions_classes as &$v) {
-    switch ($v['machine_name']) {
-        case 'access_view':
-            $v['class'] = 'success';
-            break;
-        case 'access_copy':
-            $v['class'] = 'info';
-            break;
-        case 'access_delet':
-            $v['class'] = 'danger';
-            break;
+foreach($permissions_classes as &$v){
+    switch($v['machine_name']){
+        case 'access_view': $v['class'] = 'success'; break;
+        case 'access_copy': $v['class'] = 'info'; break;
+        case 'access_delet': $v['class'] = 'danger'; break;
     }
 }
 $permissions_classes = json_encode(ArrayHelper::map($permissions_classes, 'id', 'class'));
@@ -233,7 +213,7 @@ $js = <<<JS
     var permissions_classes = $permissions_classes;
 JS;
 
-Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
+Yii::$app->view->registerJs($js,\yii\web\View::POS_END);
 ?>
 
 
@@ -279,14 +259,14 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
 
 
         $('.permisions').editable({
-            params: function (params) {
+            params: function(params) {
                 var data = {};
                 data['permission_id'] = params.value;
                 data['camera_id'] = $(this).data('camera-id');
                 data['additional_user_id'] = $('#additional-user-info-container').attr('additional-user-id');
                 return data;
             },
-            success: function (response, newValue) {
+            success: function(response, newValue) {
                 $(this).closest('td').removeAttr('class').addClass(permissions_classes[newValue]);
             },
             type: 'select',
@@ -336,27 +316,27 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
             pk: additionalUserId
         }).done(function (additionalUserInfo) {
 
-            additionalUserInfo = JSON.parse(additionalUserInfo);
+              additionalUserInfo = JSON.parse(additionalUserInfo);
 
-            var clientInfo = additionalUserInfo.clientInfo;
+              var clientInfo = additionalUserInfo.clientInfo;
 
-            if (typeof clientInfo.cameras !== 'undefined') {
-                $('#cameras-body').html(camerasTemplate(clientInfo));
-                /*$('.camera-row td a[data-type=text]').editable();
-                 $('.camera-row td a[data-type=select]').editable({
-                 source: [{value: 0, text: 'Неактивна'}, {value: 1, text: 'Активна'}]
-                 });*/
-            }
+              if (typeof clientInfo.cameras !== 'undefined') {
+                  $('#cameras-body').html(camerasTemplate(clientInfo));
+                  /*$('.camera-row td a[data-type=text]').editable();
+                  $('.camera-row td a[data-type=select]').editable({
+                      source: [{value: 0, text: 'Неактивна'}, {value: 1, text: 'Активна'}]
+                  });*/
+              }
 
-            if (typeof clientInfo.settings !== 'undefined') {
-                $('#settings-body').html(userAdditionalSettingsTemplate(clientInfo.settings));
-            }
+              if (typeof clientInfo.settings !== 'undefined') {
+                  $('#settings-body').html(userAdditionalSettingsTemplate(clientInfo.settings));
+              }
 
-            $('.additional-user-info-container').show().attr('additional-user-id', additionalUserId);
+              $('.additional-user-info-container').show().attr('additional-user-id',additionalUserId);
 
             editableInit();
 
-        });
+          });
 
 
     }

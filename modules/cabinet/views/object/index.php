@@ -25,10 +25,10 @@ $i = 1;
     });
     function placeNewMarker(location, id) {
         $.post(yii.app.createUrl('cabinet/object/ajax-set-new-lat-lon'), {
-            lat: location.lat(), lon: location.lng(), id: id
-        }).done(function (response) {
-            addMarker(JSON.parse(response));
-        });
+              lat: location.lat(), lon: location.lng(), id: id
+          }).done(function (response) {
+              addMarker(JSON.parse(response));
+          });
     }
 
     function initialize() {
@@ -54,20 +54,16 @@ $i = 1;
         });
 
         var marker = new google.maps.Marker({
-            id: location.id,
-            draggable: true,
-            position: new google.maps.LatLng(location.lat, location.lon),
-            map: map,
-            title: location.name
+            id: location.id, draggable: true, position: new google.maps.LatLng(location.lat, location.lon), map: map, title: location.name
         });
 
         google.maps.event.addListener(marker, 'dragend', function (event) {
             var newLat = event.latLng.lat();
             var newLon = event.latLng.lng();
             $.post(yii.app.createUrl('cabinet/object/ajax-set-new-lat-lon'), {
-                lat: newLat, lon: newLon, id: marker.id
-            }).done(function (response) {
-            });
+                  lat: newLat, lon: newLon, id: marker.id
+              }).done(function (response) {
+              });
         });
         google.maps.event.addListener(marker, 'click', function () {
             infowindow.open(map, marker);
@@ -88,10 +84,7 @@ $i = 1;
                 var startX = event.pageX;
                 var startY = event.pageY;
                 returnMapMarkerTo = $(ui.helper).parent();
-                $(ui.helper).detach().appendTo('body').css({
-                    'padding-top': startY + 'px',
-                    'padding-left': startX + 'px'
-                });
+                $(ui.helper).detach().appendTo('body').css({'padding-top': startY + 'px', 'padding-left': startX + 'px'});
                 $('.map-marker[location-id=' + $(ui.helper).attr('location-id') + ']:first').hide();
             }, /*revert : function(event, ui) {
              $(this.context).css({'padding-left': 0, 'padding-top': 0});
@@ -135,9 +128,9 @@ $i = 1;
         }
 
         $.post(yii.app.createUrl('cabinet/object/ajax-purge-location'), {
-            id: locationId
-        }).done(function (response) {
-        });
+              id: locationId
+          }).done(function (response) {
+          });
     });
 
     function removeGeoLocation(index) {
