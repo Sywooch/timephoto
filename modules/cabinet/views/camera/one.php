@@ -30,25 +30,38 @@ $this->registerJsFile(Yii::$app->homeUrl . "js/slashman-glass.js", ['position' =
 
 $i = 1;
 
+$boot_class = '';
+
 $column2 = $column3 = '';
-switch($_COOKIE['GalleryOneColumn']){
-    case '2' : $column2 = 'active'; break;
-    case '3' : $column3 = 'active'; break;
-    default: $column2 = 'active'; break;
+switch ($_COOKIE['GalleryOneColumn']) {
+    case '2' :
+        $column2 = 'active';
+        break;
+    case '3' :
+        $column3 = 'active';
+        break;
+    default:
+        $column2 = 'active';
+        break;
 }
 
 $size4 = $size8 = $size16 = $size32 = '';
-switch($_COOKIE['GalleryOneHeight']){
-    case '4' : $size4 = 'active'; break;
-    case '8' : $size8 = 'active'; break;
-    case '16' : $size16 = 'active'; break;
-    case '32' : $size32 = 'active'; break;
-    default: $size8 = 'active'; break;
-}
-
-$boot_class = 'col-md-6';
-if(!empty($_COOKIE['GalleryOneColumn'])){
-    $boot_class = 'col-md-'. 12/$_COOKIE['GalleryOneColumn'];
+switch ($_COOKIE['GalleryOneHeight']) {
+    case '4' :
+        $size4 = 'active';
+        break;
+    case '8' :
+        $size8 = 'active';
+        break;
+    case '16' :
+        $size16 = 'active';
+        break;
+    case '32' :
+        $size32 = 'active';
+        break;
+    default:
+        $size8 = 'active';
+        break;
 }
 ?>
 
@@ -116,7 +129,8 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
                     <div class="row ">
                         <div class="col-md-4  text-left">
                             <?php if ($camera->icon_name): ?>
-                                <img src="<?= Yii::$app->homeUrl ?>uploads/camera_icons/<?= $camera->icon_name ?>" class="header-camera-icon">
+                                <img src="<?= Yii::$app->homeUrl ?>uploads/camera_icons/<?= $camera->icon_name ?>"
+                                     class="header-camera-icon">
                             <?php endif; ?>
                             <?= $camera->name; ?>
                         </div>
@@ -128,7 +142,9 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
                                     </a>
                                 </li>
                                 <?php for ($i = max(1, $currentPage - 3); $i <= min($pagesCount, $currentPage + 3); $i++): ?>
-                                    <li page-number="<?= $i ?>" class="go-to-page<?= $currentPage == $i ? ' active' : '' ?>"><a href="#"><?= $i ?></a></li>
+                                    <li page-number="<?= $i ?>"
+                                        class="go-to-page<?= $currentPage == $i ? ' active' : '' ?>"><a
+                                            href="#"><?= $i ?></a></li>
                                 <?php endfor; ?>
                                 <li>
                                     <a href="#" aria-label="Next" class="next-page">
@@ -140,7 +156,8 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
 
                         <div class="col-md-4 text-right ">
                             <div class="dropdown change-view-wrap">
-                                <button class="btn btn-inverse m-r-10 btn-sm dropdown-toggle" type="button" id="change-view"
+                                <button class="btn btn-inverse m-r-10 btn-sm dropdown-toggle" type="button"
+                                        id="change-view"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Вид просмотра
                                 </button>
@@ -149,13 +166,25 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
                                         <div class="row view-menu">
                                             <a href="#" class="js-sort" data-sort="asc">Прямая сортировка </a>
 
-                                            <button class="btn btn-inverse btn-sm size-change <?=$column2?>" data-size="6" data-column="2">2</button>
-                                            <button class="btn btn-inverse btn-sm size-change <?=$column3?>" data-size="4" data-column="3">3</button>
+                                            <button class="btn btn-inverse btn-sm size-change <?= $column2 ?>"
+                                                    data-size="6" data-column="2">2
+                                            </button>
+                                            <button class="btn btn-inverse btn-sm size-change <?= $column3 ?>"
+                                                    data-size="4" data-column="3">3
+                                            </button>
                                             <span>X</span>
-                                            <button class="btn btn-inverse btn-sm limit-change <?=$size4?>" data-size="4">4</button>
-                                            <button class="btn btn-inverse btn-sm limit-change <?=$size8?>" data-size="8">8</button>
-                                            <button class="btn btn-inverse btn-sm limit-change <?=$size16?>" data-size="16">16</button>
-                                            <button class="btn btn-inverse btn-sm limit-change <?=$size32?>" data-size="32">32</button>
+                                            <button class="btn btn-inverse btn-sm limit-change <?= $size4 ?>"
+                                                    data-size="4">4
+                                            </button>
+                                            <button class="btn btn-inverse btn-sm limit-change <?= $size8 ?>"
+                                                    data-size="8">8
+                                            </button>
+                                            <button class="btn btn-inverse btn-sm limit-change <?= $size16 ?>"
+                                                    data-size="16">16
+                                            </button>
+                                            <button class="btn btn-inverse btn-sm limit-change <?= $size32 ?>"
+                                                    data-size="32">32
+                                            </button>
                                         </div>
                                     </li>
                                 </ul>
@@ -174,9 +203,14 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
                     <div class="row">
                         <div class="col-md-12 image-container">
                             <?php if ($currentImage): ?>
-                                <img src="<?= $images[$currentImage]->getImageUrl() ?>" class="img-responsive magniflier" big-image="<?= $images[$currentImage]->getImageUrl() ?>" id="view-image" class="img-responsive"/>
+                                <img src="<?= $images[$currentImage]->getImageUrl() ?>"
+                                     class="img-responsive magniflier"
+                                     big-image="<?= $images[$currentImage]->getImageUrl() ?>" id="view-image"
+                                     class="img-responsive"/>
                             <?php else: ?>
-                                <img src="<?= $images[0]->getImageUrl() ?>" class="img-responsive magniflier" big-image="<?= $images[0]->getImageUrl() ?>" id="view-image" class="img-responsive"/>
+                                <img src="<?= $images[0]->getImageUrl() ?>" class="img-responsive magniflier"
+                                     big-image="<?= $images[0]->getImageUrl() ?>" id="view-image"
+                                     class="img-responsive"/>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -192,7 +226,8 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
                                     <i class="fa fa-expand"></i>
                                 </button>
                                 <?php if ($view !== 'thumbs'): ?>
-                                    <a href="<?= $this->context->createUrl(['/cabinet/camera', 'id' => $camera->id, 'view' => 'thumbs']) ?>" class="btn btn-default" title="Предпросмотр изображений">
+                                    <a href="<?= $this->context->createUrl(['/cabinet/camera', 'id' => $camera->id, 'view' => 'thumbs']) ?>"
+                                       class="btn btn-default" title="Предпросмотр изображений">
                                         <i class="fa fa-th"></i>
                                     </a>
                                 <?php endif; ?>
@@ -218,11 +253,15 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
                         </div>
                         <div class="col-md-4">
                             <div class="btn-group pull-right">
-                                <button class="btn btn-default" <?= $previous == null ? 'disabled="disabled"' : '' ?> title="Предыдущее изображение">
+                                <button class="btn btn-default" <?= $previous == null ? 'disabled="disabled"' : '' ?>
+                                        title="Предыдущее изображение">
                                     <i class="fa fa-backward"></i>
                                 </button>
-                                <button class="btn btn-default toggle-slideshow" title="Слайдшоу"><i class="fa fa-play"></i></button>
-                                <button class="btn btn-default nextImage" <?= $next == null ? 'disabled="disabled"' : '' ?> title="Следующее изображение">
+                                <button class="btn btn-default toggle-slideshow" title="Слайдшоу"><i
+                                        class="fa fa-play"></i></button>
+                                <button
+                                    class="btn btn-default nextImage" <?= $next == null ? 'disabled="disabled"' : '' ?>
+                                    title="Следующее изображение">
                                     <i class="fa fa-forward"></i>
                                 </button>
                             </div>
@@ -239,40 +278,58 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
     <?php endif; ?>
 </div>
 <?php if (count($images) > 0): ?>
-    <div class="col-md-5 camera-thumbnails white-bg" >
-        <div class="image-thumbnails" style="overflow-y: scroll;" data-height="calc(100vh - 143px)" data-scrollbar="true" >
+    <div class="col-md-5 camera-thumbnails white-bg">
+        <div class="image-thumbnails" style="overflow-y: scroll;" data-height="calc(100vh - 143px)"
+             data-scrollbar="true">
             <?php for ($i = ($currentPage - 1) * $limit; $i < min($currentPage * $limit, count($images)); $i++): ?>
+                <?php
+                $boot_class = 'col-md-6';
+                if (!empty($_COOKIE['GalleryOneColumn'])) {
+                    $boot_class = 'col-md-' . 12 / $_COOKIE['GalleryOneColumn'];
+                }
+                ?>
 
-
-                <div class="<?=$boot_class?> thumbnail-container left-thumb <?= $images[$i]->id == $imageId ? 'current' : '' ?>" image-id="<?= $images[$i]->id ?>">
+                <div
+                    class="<?= $boot_class ?> thumbnail-container left-thumb <?= $images[$i]->id == $imageId ? 'current' : '' ?>"
+                    image-id="<?= $images[$i]->id ?>">
                     <div class="panel panel-default">
                         <div class="panel-body" image-index="<?= $i ?>">
                             <div class="row image-container">
-                                <img src="<?= $images[$i]->getThumbnailUrl() ?>" class="img-responsive cam-thumb" full-img="<?= $images[$i]->getImageUrl() ?>"/>
+                                <img src="<?= $images[$i]->getThumbnailUrl() ?>" class="img-responsive cam-thumb"
+                                     full-img="<?= $images[$i]->getImageUrl() ?>"/>
                             </div>
                         </div>
                         <?php
-                            $footer_class ='';
-                            if( isset($images[$i]->type) ){
-                                switch($images[$i]->type){
-                                    case 'MOVE': $footer_class = 'success'; break;
-                                    case 'ALERT': $footer_class = 'danger'; break;
-                                    case 'SCHEDULE': $footer_class = 'info'; break;
-                                    default: $footer_class = ''; break;
-                                }
+                        $footer_class = '';
+                        if (isset($images[$i]->type)) {
+                            switch ($images[$i]->type) {
+                                case 'MOVE':
+                                    $footer_class = 'success';
+                                    break;
+                                case 'ALERT':
+                                    $footer_class = 'danger';
+                                    break;
+                                case 'SCHEDULE':
+                                    $footer_class = 'info';
+                                    break;
+                                default:
+                                    $footer_class = '';
+                                    break;
                             }
+                        }
                         ?>
 
 
-                        <div class="panel-footer <?=$footer_class?>">
+                        <div class="panel-footer <?= $footer_class ?>">
                             <div class="row">
                                 <div class="col-md-8">
                                     <?= date('d-m-y H:i', strtotime($images[$i]->created)); ?>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="checkbox" class="pull-right thumb-check" image-id="<?= $images[$i]->id ?>"/>
+                                    <input type="checkbox" class="pull-right thumb-check"
+                                           image-id="<?= $images[$i]->id ?>"/>
                                     <span class="pull-right favorite-star">
-                                            <?= $this->render('favorite', ['id' => $images[$i]->id, 'f_fav' => $images[$i]->f_fav]);?>
+                                            <?= $this->render('favorite', ['id' => $images[$i]->id, 'f_fav' => $images[$i]->f_fav]); ?>
                                     </span>
                                 </div>
                             </div>
@@ -307,9 +364,14 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
     var slideshowInterval = 1;
     var boot_class = '<?=$boot_class?>';
 
-    $('.limit-change[data-size="'+limit/2+'"]').addClass('active');
+    $('.limit-change[data-size="' + limit / 2 + '"]').addClass('active');
     function moveToPage(page) {
-        $.get(yii.app.createUrl('cabinet/camera/get-json-images', {id: cameraId, page: page, limit: limit, sort: sort}, '&', 'get')).done(function (images) {
+        $.get(yii.app.createUrl('cabinet/camera/get-json-images', {
+            id: cameraId,
+            page: page,
+            limit: limit,
+            sort: sort
+        }, '&', 'get')).done(function (images) {
             jsonImages = JSON.parse(images);
 
             var imageThumbnailsContainer = $('.camera-thumbnails .image-thumbnails:first');
@@ -332,24 +394,24 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
                         footer_class = ''
                 }
                 html = html + '' +
-                  '<div class="'+ boot_class +' thumbnail-container " image-id="' + jsonImages[i].id + '">' +
+                    '<div class="' + boot_class + ' thumbnail-container " image-id="' + jsonImages[i].id + '">' +
                     '<div class="panel panel-default">' +
-                      '<div class="panel-body" image-index="' + i + '">' +
-                          '<div class="row image-container">' +
-                              '<img src="' + jsonImages[i].thumb + '" class="img-responsive cam-thumb" full-img="' + jsonImages[i].big + '">' +
-                          '</div>' +
-                      '</div>' +
-                      '<div class="panel-footer '+footer_class+'">' +
-                          '<div class="row">' +
-                              '<div class="col-md-10">' + jsonImages[i].created +
-                              '</div>' +
-                              '<div class="col-md-2">' +
-                                  '<input type="checkbox" class="pull-right thumb-check" image-id="' + jsonImages[i].id + '">' +
-                              '</div>' +
-                          '</div>' +
-                      '</div>' +
+                    '<div class="panel-body" image-index="' + i + '">' +
+                    '<div class="row image-container">' +
+                    '<img src="' + jsonImages[i].thumb + '" class="img-responsive cam-thumb" full-img="' + jsonImages[i].big + '">' +
                     '</div>' +
-                  '</div>';
+                    '</div>' +
+                    '<div class="panel-footer ' + footer_class + '">' +
+                    '<div class="row">' +
+                    '<div class="col-md-10">' + jsonImages[i].created +
+                    '</div>' +
+                    '<div class="col-md-2">' +
+                    '<input type="checkbox" class="pull-right thumb-check" image-id="' + jsonImages[i].id + '">' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
             }
             $(imageThumbnailsContainer).html(html);
 
@@ -370,7 +432,7 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
         });
         $('#view-image-big').bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function (e) {
             var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-            var event = state? 'FullscreenOn': 'FullscreenOff';
+            var event = state ? 'FullscreenOn' : 'FullscreenOff';
 
             if (!state)
                 $('#view-image-big').css('display', 'none');
@@ -432,14 +494,14 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
     });
 
     //AJAX
-    $(document).on('click', '.js-sort', function(){
+    $(document).on('click', '.js-sort', function () {
         var self = $(this);
         sort = self.data('sort');
         moveToPage(1);
-        if(sort == 'asc'){
+        if (sort == 'asc') {
             self.data('sort', 'desc');
             self.html('Обратная сортировка');
-        }else{
+        } else {
             self.data('sort', 'asc');
             self.html('Прямая сортировка');
         }
@@ -697,8 +759,8 @@ if(!empty($_COOKIE['GalleryOneColumn'])){
 
                 var winWidth = $(window).width();
                 var winHeight = $(window).height();
-                var heightDifference = winHeight > $(img).height()? winHeight - $(img).height(): 0;
-                var widthDifference = winWidth > $(img).width()? winWidth - $(img).width(): 0;
+                var heightDifference = winHeight > $(img).height() ? winHeight - $(img).height() : 0;
+                var widthDifference = winWidth > $(img).width() ? winWidth - $(img).width() : 0;
                 var animateAttrs = {};
                 if (offset.left > 0) {
                     animateAttrs.left = '0';

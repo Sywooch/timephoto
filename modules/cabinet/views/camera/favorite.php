@@ -1,6 +1,7 @@
 <?php
-use yii\widgets\Pjax;
 use yii\helpers\Html;
+use yii\widgets\Pjax;
+
 ?>
 <?php Pjax::begin(); ?>
 <?= Html::beginForm(['favorite'], 'post', ['data-pjax' => '', 'class' => 'form-inline']); ?>

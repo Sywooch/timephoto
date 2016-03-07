@@ -16,11 +16,16 @@ $i = 1;
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav footer-navbar footer-navbar-one-camera">
                     <li class="divider-vertical"></li>
-                    <li class="p-l-5 p-r-5 p-t-1 "><button href="#" id="calendar-popover"class="btn btn-default"><i class="fa fa-calendar"></i> Фильтр по дате</button></li>
+                    <li class="p-l-5 p-r-5 p-t-1 ">
+                        <button href="#" id="calendar-popover" class="btn btn-default"><i class="fa fa-calendar"></i>
+                            Фильтр по дате
+                        </button>
+                    </li>
                     <li class="divider-vertical"></li>
                     <li class="p-l-5 p-r-5 p-t-1">
                         <div class="dropup type-filter-dropup ">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                    data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-check-square-o"></i>
                                 Фильтр по событию
                                 <span class="caret"></span>
@@ -28,23 +33,31 @@ $i = 1;
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                                 <?php if (in_array('ALL', $filterTypes)): ?>
                                     <li role="presentation">
-                                        <a tabindex="0"><label class="checkbox"><input type="checkbox" value="all" id="all-option" <?= in_array('all', explode(',', $type)) ? 'checked="checked"' : '' ?>> Все</label></a>
+                                        <a tabindex="0"><label class="checkbox"><input type="checkbox" value="all"
+                                                                                       id="all-option" <?= in_array('all', explode(',', $type)) ? 'checked="checked"' : '' ?>>
+                                                Все</label></a>
                                     </li>
                                 <?php endif; ?>
                                 <?php if (in_array('ALERT', $filterTypes)): ?>
                                     <li role="presentation">
-                                        <a tabindex="0"><label class="checkbox"><input type="checkbox" value="alert" <?= in_array('alert', explode(',', $type)) || in_array('all', explode(',', $type)) ? 'checked="checked"' : '' ?>> По тревоге</label></a>
+                                        <a tabindex="0"><label class="checkbox"><input type="checkbox"
+                                                                                       value="alert" <?= in_array('alert', explode(',', $type)) || in_array('all', explode(',', $type)) ? 'checked="checked"' : '' ?>>
+                                                По тревоге</label></a>
                                     </li>
                                 <?php endif; ?>
                                 <?php if (in_array('MOVE', $filterTypes)): ?>
                                     <li role="presentation">
-                                        <a tabindex="0"><label class="checkbox"><input type="checkbox" value="move" <?= in_array('move', explode(',', $type)) || in_array('all', explode(',', $type)) ? 'checked="checked"' : '' ?>> По
+                                        <a tabindex="0"><label class="checkbox"><input type="checkbox"
+                                                                                       value="move" <?= in_array('move', explode(',', $type)) || in_array('all', explode(',', $type)) ? 'checked="checked"' : '' ?>>
+                                                По
                                                 движению</label></a>
                                     </li>
                                 <?php endif; ?>
                                 <?php if (in_array('SCHEDULE', $filterTypes)): ?>
                                     <li role="presentation">
-                                        <a tabindex="0"><label class="checkbox"><input type="checkbox" value="schedule" <?= in_array('schedule', explode(',', $type)) || in_array('all', explode(',', $type)) ? 'checked="checked"' : '' ?>> По расписанию</label></a>
+                                        <a tabindex="0"><label class="checkbox"><input type="checkbox"
+                                                                                       value="schedule" <?= in_array('schedule', explode(',', $type)) || in_array('all', explode(',', $type)) ? 'checked="checked"' : '' ?>>
+                                                По расписанию</label></a>
                                     </li>
                                 <?php endif; ?>
                                 <li role="presentation" class="do-filter text-center">
@@ -54,17 +67,21 @@ $i = 1;
                         </div>
                     </li>
                     <li class="divider-vertical"></li>
-                    <?php if(Yii::$app->user->identity->checkPermission('access_copy')):?>
-                    <li class="p-l-5 p-r-5 p-t-1">
-                        <button href="" id="download-selected" class="btn btn-default"><i class="fa fa-download"></i> Скачать выделенное</button>
-                    </li>
-                    <?php endif;?>
+                    <?php if (Yii::$app->user->identity->checkPermission('access_copy')): ?>
+                        <li class="p-l-5 p-r-5 p-t-1">
+                            <button href="" id="download-selected" class="btn btn-default"><i
+                                    class="fa fa-download"></i> Скачать выделенное
+                            </button>
+                        </li>
+                    <?php endif; ?>
                     <li class="divider-vertical"></li>
-                    <?php if(Yii::$app->user->identity->checkPermission('access_delet')):?>
-                    <li class="p-l-5 p-r-5 p-t-1">
-                        <button href="#" id="delete-selected" class="btn btn-default"><i class="fa fa-times-circle-o"></i> Удалить выделенное</button>
-                    </li>
-                    <?php endif;?>
+                    <?php if (Yii::$app->user->identity->checkPermission('access_delet')): ?>
+                        <li class="p-l-5 p-r-5 p-t-1">
+                            <button href="#" id="delete-selected" class="btn btn-default"><i
+                                    class="fa fa-times-circle-o"></i> Удалить выделенное
+                            </button>
+                        </li>
+                    <?php endif; ?>
                     <li class="divider-vertical"></li>
                 </ul>
             </div>
@@ -118,11 +135,16 @@ $i = 1;
     });
     $(document).on('click', '#clearDate', function (e) {
         e.preventDefault();
-        window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'thumbs', type: type}, '&', 'get'));
+        window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'thumbs', type: type}));
     });
     $(document).on('click', '#dateDoFilter', function (e) {
         e.preventDefault();
-        window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'thumbs', type: type, date: calendarDates}, '&', 'get'));
+        window.location.replace(yii.app.createUrl('cabinet/camera', {
+            id: cameraId,
+            view: 'thumbs',
+            type: type,
+            date: calendarDates
+        }));
     });
 
     $(document).on('click', '.thumb-check', function () {
@@ -134,10 +156,10 @@ $i = 1;
 
 
         $.post(yii.app.createUrl('cabinet/remove/batch-remove'), {
-              Images: getSelectedThumbnailsString()
-          }).done(function (response) {
-              removeSelectedThumbnails();
-          });
+            Images: getSelectedThumbnailsString()
+        }).done(function (response) {
+            removeSelectedThumbnails();
+        });
 
     });
 
@@ -146,7 +168,7 @@ $i = 1;
         var first = true;
         if (!$('#all-option').prop('checked')) {
             $('.type-filter-dropup input:checked').each(function (index, option) {
-                type = first? $(option).val(): type + ',' + $(option).val();
+                type = first ? $(option).val() : type + ',' + $(option).val();
                 first = false;
             });
             window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'thumbs', type: type}));
@@ -183,14 +205,14 @@ $i = 1;
 
             first = false;
         });
-        return 'images='+images;
+        return 'images=' + images;
     }
     function updateDownloadLink() {
         var downloadBaseUrl = yii.app.createUrl('cabinet/download/download-zip', {images: []});
 
         $('#download-selected').attr('href', downloadBaseUrl + getSelectedThumbnailsString());
     }
-    $('#download-selected').on('click',function(){
+    $('#download-selected').on('click', function () {
         var link = 'http://' + window.location.host + $(this).attr('href');
         window.open(link, '_blank');
     });
