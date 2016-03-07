@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yz\shoppingcart\CartPositionTrait;
+use yz\shoppingcart\CartPositionInterface;
 
 /**
  * This is the model class for table "{{%device}}".
@@ -20,8 +22,19 @@ use Yii;
  * @property DeviceFeature[] $deviceFeatures
  * @property DevicePhoto[] $devicePhotos
  */
-class Device extends \yii\db\ActiveRecord
+class Device extends \yii\db\ActiveRecord implements CartPositionInterface
 {
+    use CartPositionTrait;
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
     /**
      * @inheritdoc
      */
@@ -36,11 +49,11 @@ class Device extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description'], 'string'],
-            [['price', 'device_category_id'], 'required'],
-            [['price'], 'number'],
-            [['main_page', 'active', 'device_category_id'], 'integer'],
-            [['name'], 'string', 'max' => 45]
+          [['description'], 'string'],
+          [['price', 'device_category_id'], 'required'],
+          [['price'], 'number'],
+          [['main_page', 'active', 'device_category_id'], 'integer'],
+          [['name'], 'string', 'max' => 45]
         ];
     }
 
@@ -50,13 +63,13 @@ class Device extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'description' => 'Description',
-            'price' => 'Price',
-            'main_page' => 'Main Page',
-            'active' => 'Active',
-            'device_category_id' => 'Device Category',
+          'id' => 'ID',
+          'name' => 'Name',
+          'description' => 'Description',
+          'price' => 'Price',
+          'main_page' => 'Main Page',
+          'active' => 'Active',
+          'device_category_id' => 'Device Category',
         ];
     }
 
