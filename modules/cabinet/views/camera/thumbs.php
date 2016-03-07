@@ -26,9 +26,12 @@ $this->registerJsFile(Yii::$app->homeUrl . "js/slashman-glass.js", ['position' =
 
 $i = 1;
 
-$boot_class = '';
+$boot_class = 'col-md-3';
+if (!empty($_COOKIE['GalleryColumn'])) {
+    $boot_class = 'col-md-' . 12 / $_COOKIE['GalleryColumn'];
+}
 
-$column2 = $column3 = $column4 = $column8 = '';
+$column2 = $column3 = $column4 = $column6 = '';
 switch ($_COOKIE['GalleryColumn']) {
     case '2' :
         $column2 = 'active';
@@ -252,24 +255,15 @@ switch ($_COOKIE['GalleryHeight']) {
                         <li>
                             <div class="row view-menu">
                                 <a href="#" class="js-sort" data-sort="asc">Прямая сортировка </a>
-                                <button class="btn btn-inverse btn-sm size-change" data-size="6" data-column="2">2
-                                </button>
-                                <button class="btn btn-inverse btn-sm size-change" data-size="4" data-column="3">3
-                                </button>
-                                <button class="btn btn-inverse btn-sm size-change active" data-size="3" data-column="4">
-                                    4
-                                </button>
-                                <button class="btn btn-inverse btn-sm size-change" data-size="2" data-column="6">6
-                                </button>
+                                <button class="btn btn-inverse btn-sm <?= $column2 ?> size-change" data-size="6" data-column="2">2</button>
+                                <button class="btn btn-inverse btn-sm <?= $column3 ?> size-change" data-size="4" data-column="3">3</button>
+                                <button class="btn btn-inverse btn-sm <?= $column4 ?> size-change" data-size="3" data-column="4">4</button>
+                                <button class="btn btn-inverse btn-sm <?= $column6 ?> size-change" data-size="2" data-column="6">6</button>
                                 <span>X</span>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size4 ?>" data-size="4">4
-                                </button>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size8 ?>" data-size="8">8
-                                </button>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size16 ?>" data-size="16">16
-                                </button>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size32 ?>" data-size="32">32
-                                </button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?= $size4 ?>" data-size="4">4</button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?= $size8 ?>" data-size="8">8</button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?= $size16 ?>" data-size="16">16</button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?= $size32 ?>" data-size="32">32</button>
                             </div>
                         </li>
                     </ul>
@@ -281,12 +275,6 @@ switch ($_COOKIE['GalleryHeight']) {
         <?php if (count($images) > 0): ?>
             <div class="thumbnails-list">
                 <?php for ($i = ($currentPage - 1) * $limit; $i < min($currentPage * $limit, count($images)); $i++): ?>
-                    <?php
-                    $boot_class = 'col-md-3';
-                    if (!empty($_COOKIE['GalleryColumn'])) {
-                        $boot_class = 'col-md-' . 12 / $_COOKIE['GalleryColumn'];
-                    }
-                    ?>
                     <div class="<?= $boot_class ?> thumbnail-container" image-id="<?= $images[$i]->id ?>">
                         <div class="panel panel-default">
                             <div class="panel-body" image-index="<?= $i ?>">

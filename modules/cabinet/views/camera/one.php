@@ -30,7 +30,10 @@ $this->registerJsFile(Yii::$app->homeUrl . "js/slashman-glass.js", ['position' =
 
 $i = 1;
 
-$boot_class = '';
+$boot_class = 'col-md-6';
+if (!empty($_COOKIE['GalleryOneColumn'])) {
+    $boot_class = 'col-md-' . 12 / $_COOKIE['GalleryOneColumn'];
+}
 
 $column2 = $column3 = '';
 switch ($_COOKIE['GalleryOneColumn']) {
@@ -282,12 +285,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
         <div class="image-thumbnails" style="overflow-y: scroll;" data-height="calc(100vh - 143px)"
              data-scrollbar="true">
             <?php for ($i = ($currentPage - 1) * $limit; $i < min($currentPage * $limit, count($images)); $i++): ?>
-                <?php
-                $boot_class = 'col-md-6';
-                if (!empty($_COOKIE['GalleryOneColumn'])) {
-                    $boot_class = 'col-md-' . 12 / $_COOKIE['GalleryOneColumn'];
-                }
-                ?>
+
 
                 <div
                     class="<?= $boot_class ?> thumbnail-container left-thumb <?= $images[$i]->id == $imageId ? 'current' : '' ?>"

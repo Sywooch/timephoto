@@ -126,7 +126,7 @@ $i = 1;
     });
     $(document).on('click', '#clearDate', function (e) {
         e.preventDefault();
-        window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'one', type: type}));
+        window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'one', type: type}, '&', 'get'));
     });
     $(document).on('click', '#dateDoFilter', function (e) {
         e.preventDefault();
@@ -135,7 +135,7 @@ $i = 1;
             view: 'one',
             type: type,
             date: calendarDates
-        }));
+        }, '&', 'get'));
     });
 
     $(document).on('click', '.thumb-check', function () {
@@ -165,10 +165,10 @@ $i = 1;
                 type = first ? $(option).val() : type + ',' + $(option).val();
                 first = false;
             });
-            window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'one', type: type}));
+            window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'one', type: type}, '&', 'get'));
         }
         else
-            window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'one'}));
+            window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'one'}, '&', 'get'));
     });
 
     $(document).on('change', '.type-filter-dropup input[type=checkbox]', function () {
@@ -202,7 +202,7 @@ $i = 1;
         return images;
     }
     function updateDownloadLink() {
-        var downloadBaseUrl = yii.app.createUrl('/cabinet/download/download-zip', {images: []});
+        var downloadBaseUrl = yii.app.createUrl('/cabinet/download/download-zip', {images: []}, '&', 'get');
 
         $('#download-selected').attr('href', downloadBaseUrl + getSelectedThumbnailsString());
     }
