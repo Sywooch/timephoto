@@ -1,0 +1,4 @@
+#local config
+local.php
+params_local.php
+db.php

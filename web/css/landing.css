@@ -1,0 +1,384 @@
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic-ext,latin-ext,cyrillic);
+
+p {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+body {
+  margin: 0 auto;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body .container {
+  height: 0px;
+  margin: 0 auto;
+  width: 1360px;
+}
+body .container .header {
+  background-color: #00abeb;
+  padding: 15px 0;
+  color: white;
+  display: inline-block;
+  width: 100%;
+}
+body .container .header .logo {
+  font-size: 20pt;
+  margin-left: 22px;
+  display: inline-block;
+  /* text-transform: uppercase; */
+  vertical-align: middle;
+}
+body .container .header .links {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+body .container .header .login {
+  vertical-align: middle;
+  margin-right: 20px;
+}
+body .container .header .login .signin {
+  font-size: 22pt;
+  display: inline-block;
+  position: relative;
+  bottom: 5px;
+  right: 5px;
+  vertical-align: bottom;
+}
+body .container .header .login .links {
+  vertical-align: top;
+  display: inline-block;
+}
+body .container .header-links {
+  background-color: #008ec5;
+  padding: 5px 0;
+  text-align: center;
+  color: #FFFFFF;
+  width: 100%;
+}
+body .container .header-links a {
+  margin-right: 10px;
+}
+body .container .header-links a:last-child {
+  margin-right: 0;
+}
+body .container .space{
+  height:5px;
+  background-color:#EAF2F5;
+}
+
+body .container .first-image {
+  height: 630px;
+  width: 1340px;
+  background: url('/images/landing/image_u12.jpg');
+  padding-left: 20px;
+  padding-top: 20px;
+
+}
+body .container .first-image .slogan {
+  position: relative;
+  color: white;
+  font-size: 16pt;
+  width: 530px;
+  background-color: rgba(28, 190, 236, 0.5);
+  padding: 20px;
+  text-align: center;
+  border-radius: 20px;
+  height: 50px;
+  left: 740px;
+}
+body .container .first-image .round-links {
+  margin-top: 380px;
+  color: white;
+}
+body .container .first-image .round-links div {
+  display: inline-block;
+  vertical-align: bottom;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  text-align: center;
+}
+body .container .first-image .round-links div:nth-child(1) {
+  background-color: #1dbfed;
+}
+body .container .first-image .round-links div:nth-child(1):hover {
+  background-color: #21cfff;
+}
+body .container .first-image .round-links div:nth-child(2) {
+  background-color: #1de3a6;
+  margin-left: 30px;
+}
+body .container .first-image .round-links div:nth-child(2):hover {
+  background-color: #21fcb7;
+}
+body .container .first-image .round-links div a {
+  top: 42px;
+  position: relative;
+}
+body .container .text-1 {
+  background-color: #6eb6b5;
+  padding: 15px 150px;
+  color: white;
+  text-align: center;
+}
+body .container .text-1 .pros {
+  background-color: #50a09f;
+  display: inline-block;
+  text-align: center;
+  border-radius: 20px;
+}
+body .container .text-1 .pros div {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  padding: 15px 15px;
+  font-size: 22px;
+  vertical-align: top;
+}
+body .container .text-1 .pros div.div6 {
+  width: 40%;
+}
+body .container .text-1 .pros div:nth-child(1) {
+  font-size: 28px;
+}
+body .container .text-1 .camera-types {
+  display: inline-block;
+  margin-bottom:25px;
+}
+body .container .text-1 .camera-types .camera-type {
+  display: inline-block;
+  padding-top: 20px;
+  width: 33%;
+  background: url('../images/landing/rectangle_raunded_u113.png') no-repeat;
+  background-position: center center;
+}
+body .container .text-1 .camera-types .camera-type img {
+  margin-left: 45px;
+  width: 270px;
+  height: 270px;
+}
+body .container .text-1 .camera-types .camera-type p {
+  text-align: center;
+  font-size: 22px;
+}
+body .container .image-2 {
+  height: 631px;
+  width: 1360px;
+  background: url('/images/landing/image_u10.jpg');
+  background-size: cover;
+}
+body .container .image-2 .round-links {
+  position: relative;
+  top: 480px;
+  left: 20px;
+  color: white;
+}
+
+body .container .image-2 .round-links div {
+  display: inline-block;
+  vertical-align: bottom;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  text-align: center;
+}
+body .container .image-2 .round-links div:nth-child(1) {
+  background-color: #1dbfed;
+}
+body .container .image-2 .round-links  div:nth-child(1):hover {
+  background-color: #21cfff;
+}
+body .container .image-2 .round-links div:nth-child(2) {
+  background-color: #1de3a6;
+  margin-left: 30px;
+}
+body .container .image-2 .round-links  div:nth-child(2):hover {
+  background-color: #21fcb7;
+}
+body .container .image-2 .round-links div a {
+  top: 42px;
+  position: relative;
+}
+body .container .image-2 .slogan {
+  color: white;
+  font-size: 16pt;
+  width: 470px;
+  background-color: rgba(9, 112, 111, 0.5);
+  padding: 20px;
+  text-align: center;
+  border-radius: 20px;
+  height: 50px;
+  position: relative;
+  top: 400px;
+  left: 820px;
+}
+body .container .text-2 {
+  width: 1250px;
+  padding: 50px 50px 20px 60px;
+  background-color: #6eb6b5;
+  color: white;
+  font-size: 22px;
+  display: inline-block;
+  text-align: center;
+}
+body .container .text-2 .text-element {
+  display: inline-block;
+  width: 25%;
+  margin-left: 5%;
+  text-align: center;
+  vertical-align: top;
+  padding-bottom: 50px;
+}
+body .container .text-2 .text-element:nth-child(1),
+body .container .text-2 .text-element:nth-child(4) {
+  width: 21%;
+  margin-left: 0;
+}
+body .container .image-3 {
+  background: url('/images/landing/image_u8.jpg');
+  width: 100%;
+  height: 499px;
+}
+body .container .image-3 .round-links {
+  position: relative;
+  top: 350px;
+  left: 20px;
+  color: white;
+}
+body .container .image-3 .round-links div {
+  display: inline-block;
+  vertical-align: bottom;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  text-align: center;
+}
+body .container .image-3 .round-links div:nth-child(1) {
+  background-color: #1dbfed;
+}
+
+body .container .image-3 .round-links  div:nth-child(1):hover {
+  background-color: #21cfff;
+}
+body .container .image-3 .round-links div:nth-child(2) {
+  background-color: #1de3a6;
+  margin-left: 30px;
+}
+body .container .image-3 .round-links  div:nth-child(2):hover {
+  background-color: #21fcb7;
+}
+body .container .image-3 .round-links div a {
+  top: 42px;
+  position: relative;
+}
+body .container .image-3 .slogan {
+  padding: 5px 5px 5px 5px;
+  margin-left: 23px;
+  margin-top: 47px;
+  color: white;
+  font-size: 26pt;
+  width: 700px;
+  background-color: rgba(0, 204, 255, 0.9);
+  text-align: center;
+  border-radius: 20px;
+}
+body .container .image-3 .monitor {
+  width: 450px;
+  position: relative;
+  bottom: 220px;
+  left: 800px;
+}
+body .container .image-3 .monitor-label {
+  color: white;
+  position: relative;
+  left: 830px;
+  bottom: 425px;
+  padding: 3px;
+  width: 110px;
+  height: 70px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #00ccff;
+  font-size: 14pt;
+}
+body .container .text-3 {
+  background-color: #008dc3;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-size: 14pt;
+  color: white;
+
+}
+body .container .text-3 ul {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  width: 30%;
+  -webkit-padding-start: 0px;
+  list-style-type: none;
+}
+body .container .text-3 ul li {
+  padding-bottom: 20px;
+  padding-left: 120px;
+}
+body .container .text-3 .comp {
+  text-align: right;
+  padding-right: 40px;
+  font-size: 10pt;
+}
+body .container .map {
+  height: 700px;
+}
+body .container .map .slogan {
+  padding: 5px;
+  padding-left: 20px;
+  position: relative;
+  bottom: 680px;
+  left: 80px;
+  color: white;
+  font-size: 17pt;
+  width: 1200px;
+  background-color: rgba(11, 147, 197, 0.5);
+  border-radius: 20px;
+  z-index: 9999999999;
+}
+body .container .map .gmap {
+  height: 700px;
+}
+body .container .cameras {
+  position: relative;
+  display: inline-block;
+  bottom: 625px;
+  left: 90px;
+  height: 0;
+}
+body .container .cameras .cameras-container .camera {
+  display: inline-block;
+  width: 32%;
+  text-align: center;
+  padding-left:10px;
+}
+body .container .cameras .cameras-container .camera img {
+  border: 2px solid #fdffe9;
+  border-radius: 5px;
+  width: 100%;
+  margin: 0 auto;
+
+}
+
+body .container .pros-2 {
+  background-color: #50a09f;
+  display: inline-block;
+  text-align: center;
+  border-radius: 20px;
+  padding: 25px 15px;
+  vertical-align: middle;
+}

@@ -1,0 +1,807 @@
+@footerHeight: 37px;
+@headerHeight: 40px;
+.container {
+  &.main-container {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    margin-top: 71px;
+  }
+}
+.navbar {
+  height: @headerHeight;
+  min-height: @headerHeight;
+  .navbar-header {
+    .navbar-brand {
+      height: @headerHeight;
+//      padding: 4px 20px;
+      padding: 0;
+      width: auto;
+      display: inline-block;
+      line-height: 20px;
+      .site-logo {
+//        padding: 4px 5px;
+        width: 150px;
+        display: inline-block;
+        text-align: center;
+        .navbar-logo {
+          top: -4px;
+          position: relative;
+        }
+        .navbar-brand-text {
+
+        }
+      }
+      .custom-logo {
+        display: inline-block;
+        img {
+          width: 150px;
+          height: 40px;
+        }
+      }
+    }
+    .navbar-toggle {
+      margin-top: 3px;
+      margin-bottom: 3px;
+    }
+  }
+  .container-fluid {
+    //Сколлапсированная шапка
+    .navbar-collapse {
+      &.in,
+      &.collapsing {
+        background-color: white;
+        ul {
+          text-align: center;
+          float: none;
+          li {
+            width: 100%;
+            a {
+              .label {
+                top: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .navbar-nav {
+      li {
+        a {
+          padding: 10px 15px;
+          .label {
+            margin-left: 3px;
+            padding: .2em .6em .3em;
+            position: initial;
+            display: inline;
+          }
+        }
+      }
+    }
+    .navbar-right {
+      .badge-nick {
+        background-color: #1A2229;
+        color: #a8acb1;
+      }
+      .navbar-user {
+        .user-info {
+          padding-right: 5px;
+          padding-left: 0;
+        }
+      }
+      .header-left-info {
+        padding-top: 18px;
+        padding-right: 10px;
+        a {
+          display: inline;
+        }
+      }
+    }
+  }
+}
+.page-header {
+  margin: 0 0 20px 0;
+  min-height: 40px;
+  &.camera-page-header {
+    min-height: inherit;
+    margin: 0;
+  }
+}
+.cameras-panel {
+  .panel-body {
+    .cameras-list {
+      .camera-item {
+        padding-left: 15px;
+      }
+    }
+  }
+}
+@oneImageContainerHeight: 470px;
+.large-image {
+  .one-image {
+    .panel-body {
+      padding: 0;
+      .image-container {
+        img {
+          max-height: calc(~"100vh - 235px");
+          width: 100%;
+          margin: 0 auto;
+        }
+      }
+    }
+    .panel-footer {
+      .image-name {
+        padding-top: 8px;
+      }
+    }
+  }
+  .alert-container {
+    height: @oneImageContainerHeight;
+  }
+  .buttons-row {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #d3d3d3;
+    .type-filters {
+      margin-top: 30px;
+      a {
+        width: 100%;
+      }
+    }
+    .actions {
+      margin-top: 30px;
+      .action-button {
+        margin-top: 5px;
+        a, button {
+          width: 100%;
+        }
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+.camera-thumbnails {
+  padding-right: 0;
+  .pagination {
+    margin-top: 0;
+  }
+  .image-thumbnails {
+    //DEBUG----------------------------
+    &.debug {
+      .thumbnail-container {
+        .panel {
+          .panel-body {
+            min-height: 200px;
+            img {
+              max-height: 200px;
+            }
+          }
+        }
+      }
+    }
+    //END_____DEBUG----------------------------
+    height: calc(~"100vh - 143px");
+    //overflow-y: scroll;
+    .thumbnail-container {
+      .cam-thumb {
+        cursor: pointer;
+      }
+      .panel {
+        .panel-body {
+          padding: 0;
+          overflow-style: auto;
+          overflow: hidden;
+          img {
+            width: 100%;
+            margin: 0 auto;
+          }
+        }
+        .panel-footer {
+          padding: 0 5px;
+          input {
+            cursor: pointer;
+          }
+        }
+      }
+      &.current {
+        .panel {
+          border-color: #66afe9;
+          outline: 0;
+          -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+          .panel-footer {
+            input {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+//FULLSCREEN
+
+.full-screen-container {
+  width: 100%;
+  .big-image-container {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    img {
+      top: 0;
+      left: 0;
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+  .actions-bar {
+    background-color: transparent;
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    .full-screen-info {
+      padding-top: 8px;
+      background-color: #d3d3d3;
+      height: 34px;
+    }
+    .full-screen-range {
+      .duration {
+        background-color: #d3d3d3;
+        height: 34px;
+        line-height: 34px;
+      }
+    }
+  }
+}
+
+//Камеры клиента
+.cameras-thumbs {
+  width: 100%;
+  img {
+    margin: 0 auto;
+  }
+  h3 {
+    margin-top: 0;
+  }
+  .camera-thumb {
+    img {
+      width: 100%;
+    }
+    .panel {
+      .panel-body {
+        padding: 0;
+      }
+    }
+    &.col-md-3 {
+      .panel-footer {
+        .big {
+          display: none;
+        }
+        .small {
+          display: block;
+        }
+      }
+      img {
+        max-height: 232px;
+      }
+    }
+    &.col-md-4 {
+      .panel-footer {
+        .big {
+          display: none;
+        }
+        .small {
+          display: block;
+        }
+      }
+      img {
+        max-height: 333px;
+      }
+    }
+    &.col-md-6 {
+      .panel-footer {
+        .big {
+          display: block;
+        }
+        .small {
+          display: none;
+        }
+      }
+      img {
+        max-height: 520px;
+      }
+    }
+  }
+  .no-camera-add {
+    height: 150px;
+    i {
+      font-size: 18pt;
+    }
+  }
+}
+//Иконка камеры в заголовке
+.page-header {
+  min-height: 50px;
+  .header-camera-icon {
+    max-width: 80px;
+    max-height: 40px;
+  }
+  margin-bottom: 5px;
+}
+//Предпросмотр всех изображений
+
+.camera-thumbnails-full {
+  margin-bottom: 30px;
+  .pagination {
+    margin-top: 0;
+  }
+  .image-thumbnails {
+    .thumbnail-container {
+      //DEBUG----------------------------
+      &.debug {
+        &.col-md-6 {
+          .panel {
+            .panel-body {
+              min-height: 520px;
+              img {
+                max-height: 520px;
+                margin: 0 auto;
+              }
+            }
+          }
+        }
+        &.col-md-4 {
+          .panel {
+            .panel-body {
+              min-height: 340px;
+              img {
+                max-height: 340px;
+                margin: 0 auto;
+              }
+            }
+          }
+        }
+        &.col-md-3 {
+          .panel {
+            .panel-body {
+              min-height: 240px;
+              img {
+                max-height: 240px;
+                margin: 0 auto;
+              }
+            }
+          }
+        }
+        &.col-md-2 {
+          .panel {
+            .panel-body {
+              min-height: 155px;
+              img {
+                max-height: 155px;
+                margin: 0 auto;
+              }
+            }
+          }
+        }
+      }
+
+      //END_____DEBUG----------------------------
+      .cam-thumb {
+        cursor: pointer;
+      }
+      .panel {
+        .panel-body {
+          padding: 0;
+          overflow-style: auto;
+          overflow: hidden;
+          img {
+            margin: 0 auto;
+            width: 100%;
+          }
+        }
+        .panel-footer {
+          padding: 0 5px;
+          input {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+form.new-camera-form {
+  .input-group.addon {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .input-group-addon {
+    min-width: 80px;
+  }
+  .measurment-label {
+    padding-top: 6px;
+    padding-left: 0;
+  }
+  .divide-bottom {
+    padding-bottom: 20px;
+    margin: 20px 0 20px;
+    border-bottom: 1px solid #eee;
+  }
+  i {
+    &.fa-question-circle {
+      font-size: 14pt;
+    }
+  }
+  #camera-icon-preview {
+    img {
+      max-width: 200px;
+      max-height: 100px;
+      margin: 0 auto;
+    }
+  }
+  .icon-upload {
+    i {
+      &.fa-close {
+        position: relative;
+        top: 4px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+//Удаление изображений таблица
+
+.manage-images-table {
+  thead {
+    tr {
+      th {
+        text-align: center;
+      }
+    }
+  }
+  tbody {
+    tr {
+      .form-horizontal {
+        .form-group:last-child {
+          margin-bottom: 0;
+        }
+      }
+      .text-middle {
+        vertical-align: middle;
+      }
+      width: 100%;
+      .name-column {
+        width: 20%;
+      }
+      .size-column {
+        width: 10%;
+      }
+    }
+  }
+}
+.panel-title {
+  font-size: 14px !important;
+}
+body {
+  font-size: 14px;
+  height: 100vh;
+  #page-container {
+    &.page-header-fixed {
+      padding-top: @headerHeight !important;
+      .sidebar {
+        padding-top: @headerHeight !important;
+        .nav {
+          .nav-header {
+            .with-btns {
+              top: 3px;
+              position: relative;
+            }
+            .cameras-search-icon {
+              position: absolute;
+              left: 10px;
+              top: 9px;
+              font-size: 12pt;
+            }
+            .cameras-search {
+              input {
+                padding-left: 30px;
+              }
+            }
+          }
+          &.cameras-nav {
+            li {
+              a {
+                text-align: center;
+              }
+            }
+          }
+          &.objects-nav {
+            .marker-hint {
+              padding-top: 0;
+              padding-bottom: 0;
+              i {
+                cursor: pointer;
+              }
+            }
+            .sub-menu {
+              li {
+                max-height: 27px;
+                a {
+                  .info {
+                    width: 75% !important;
+                    float: left;
+                  }
+                  .buttons {
+                    width: 25% !important;
+                    float: left;
+                  }
+                  i {
+                    padding-top: 4px;
+                  }
+                }
+              }
+            }
+            li {
+              a {
+                .edit-input,
+                #add-category-input,
+                #add-location-input {
+                  padding-left: 0;
+                  width: 0;
+                  display: none;
+                }
+                &:hover {
+                  color: #889097;
+                }
+                margin-left: 0;
+                margin-right: 0;
+                .add-category-label {
+                  position: relative;
+                  top: 2px;
+                }
+                i {
+                  cursor: pointer;
+                  transition: color 100ms ease-in-out;
+                  -o-transition: color 100ms ease-in-out;
+                  -ms-transition: color 100ms ease-in-out;
+                  -moz-transition: color 100ms ease-in-out;
+                  -webkit-transition: color 100ms ease-in-out;
+                  &:hover {
+                    color: #fff;
+                  }
+                  &.add-category {
+                    position: relative;
+                    top: 2px;
+                  }
+                  &.cancel-category,
+                  &.cancel-edit-category,
+                  &.do-add-category,
+                  &.do-edit-category,
+                  &.cancel-location,
+                  &.cancel-edit-location,
+                  &.do-edit-location,
+                  &.do-add-location {
+                    display: none;
+                  }
+                }
+                input {
+                  height: 18px;
+                }
+              }
+            }
+          }
+          &.nav-list {
+            li {
+              a {
+                img {
+                  display: none;
+                }
+                text-align: left;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.page-sidebar-minified {
+      .sidebar {
+        position: fixed !important;
+      }
+    }
+    height: 100vh !important;
+    .content.gmap-content {
+      padding-right: 5px;
+      padding-top: 10px;
+      height: 100%;
+      &.gmap-content {
+        padding: 0;
+        .gmap {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+.camera-footer {
+  position: fixed;
+  bottom: 0;
+  margin-top: 20px;
+  width: 100%;
+  height: @footerHeight;
+  background-color: #f5f5f5;
+  .navbar {
+
+    margin-bottom: 0;
+    .divider-vertical {
+      height: @footerHeight;
+    }
+    li {
+      a {
+        padding-top: 7px;
+        padding-bottom: 5px;
+      }
+    }
+    .navbar-form {
+      margin-top: 2px;
+      //padding-top: 4px;
+      .form-group {
+        label {
+          font-weight: normal;
+          color: #777;
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+//DatePicker
+.datepicker.dropdown-menu {
+  position: fixed !important;
+  //bottom: 43px !important;
+  //top: 47% !important;
+  top: calc(~"100vh - 295px") !important;
+}
+
+
+//User page
+.panel {
+  .panel-body {
+    .text-content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+.disable-all-cameras {
+  font-size: 18pt;
+  cursor: pointer;
+}
+
+
+.content {
+  padding-left: 0;
+}
+
+//Hints
+.hints {
+  i {
+    font-size: 12pt;
+    position: relative;
+    top: 1px;
+    cursor: pointer;
+  }
+  margin: 0 auto;
+}
+//JS-Range
+.range{
+  margin-top: 12px;
+}
+
+
+.glass {
+  width: 175px;
+  height: 175px;
+  position: absolute;
+  border-radius: 50%;
+  cursor: crosshair;
+
+  z-index: 99999;
+  /* Multiple box shadows to achieve the glass effect */
+  box-shadow:
+  0 0 0 7px rgba(255, 255, 255, 0.85),
+  0 0 7px 7px rgba(0, 0, 0, 0.25),
+  inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+
+  /* hide the glass by default */
+  display: none;
+}
+
+
+.map-marker {
+  z-index: 9000000000;
+  font-size: 14pt;
+  position: absolute;
+  left: 0;
+  bottom: 3px;
+}
+
+.marker-balloon {
+  //width: 500px;
+}
+
+.faded {
+  display: none;
+  height: 0;
+}
+#code-container {
+  margin-bottom: 20px;
+}
+.gray-attribute {
+  td {
+    color: #d3d3d3;
+  }
+}
+
+.fa.trigger {
+  font-size: 14pt;
+  padding-top: 3px;
+  cursor: pointer;
+}
+.custom-logo {
+  img {
+    width: 50px;
+    height: 25px;
+    margin: 0 auto;
+  }
+}
+
+.prices-table {
+  thead {
+    td {
+      text-align: center;
+    }
+  }
+  tbody {
+    td {
+      div {
+        min-width: 35px;
+        display: inline-block;
+      }
+      input {
+        width: auto;
+        height: auto;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+#image-modal {
+  .modal-dialog {
+    width: 50%;
+    min-width: 800px;
+    margin: 30px auto;
+    max-height: 100vh;
+    .modal-body,
+    .modal-header {
+      width: 100%;
+    }
+  }
+}
+
+.panel {
+  &.panel-gray {
+    .panel-heading {
+      background: #b6c2c9;
+      .panel-title {
+        font-size: 14px;
+      }
+    }
+  }
+}

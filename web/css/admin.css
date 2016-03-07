@@ -1,0 +1,24 @@
+.admin-content {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+.admin-content .clients-panel-container .panel .panel-body table tbody tr {
+  cursor: pointer;
+}
+.admin-content .client-info-container {
+  display: none;
+}
+.admin-content .transactions-table th,
+.admin-content .transactions-table td {
+  text-align: center;
+}
+.device-category-row td,
+.device-row td,
+.page-row td {
+  cursor: pointer;
+}
+.device-category-row td:last-of-type,
+.device-row td:last-of-type,
+.page-row td:last-of-type {
+  cursor: default;
+}

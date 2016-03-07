@@ -1,0 +1,17 @@
+DELIMITER $$
+
+USE `cameras`$$
+
+DROP TRIGGER /*!50032 IF EXISTS */ `insert_internal_id`$$
+
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `insert_internal_id` BEFORE INSERT ON `camera` 
+    FOR EACH ROW BEGIN
+	SET NEW.internal_id = (SELECT MAX(internal_id)+1 FROM camera WHERE user_id = NEW.user_id);
+	SET NEW.ftp_login = CONCAT((NEW.user_id + 10011000),'_',NEW.internal_id);
+	SET NEW.ftp_home_dir = CONCAT('/home/users/',(10011000+NEW.user_id),'/',(10011000+NEW.user_id),'_',NEW.internal_id);
+    END;
+$$
+
+DELIMITER ;

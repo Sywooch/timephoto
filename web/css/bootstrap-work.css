@@ -1,0 +1,23 @@
+.navbar .divider-vertical {
+  height: 50px;
+  margin: 0 9px;
+  border-right: 1px solid #ffffff;
+  border-left: 1px solid #cfcfcf;
+}
+.navbar-inverse .divider-vertical {
+  border-right-color: #222222;
+  border-left-color: #111111;
+}
+@media (max-width: 767px) {
+  .navbar-collapse .nav > .divider-vertical {
+    display: none;
+  }
+}
+
+.additional-user-info-container {
+  display: none;
+}
+
+table.table tbody#additional-users tr.additional-user-row {
+  cursor: pointer;
+}
