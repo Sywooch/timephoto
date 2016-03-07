@@ -54,6 +54,7 @@ $i = 1;
                             <div class="row price-row">
                                 <div class="col-md-12 text-center">
                                     <span class="price"><?= $device->price ?> P.</span>
+                                    <a href="<?=Url::to(['/catalog/product-view', 'id'=>$device->id])?>" class="btn btn-cart">Подробнее</a>
                                 </div>
                             </div>
                         </div>
