@@ -563,8 +563,6 @@ body #page-container .content.gmap-content.gmap-content .gmap {
   display: inline-block;
 }
 .prices-table tbody td input {
-  width: auto;
-  height: auto;
   display: inline-block;
 }
 #image-modal {width: 100%; text-align: center; background: rgba(0,0,0,.4);}
