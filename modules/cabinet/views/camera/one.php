@@ -256,14 +256,14 @@ switch ($_COOKIE['GalleryOneHeight']) {
                         </div>
                         <div class="col-md-4">
                             <div class="btn-group pull-right">
-                                <button class="btn btn-default" <?= $previous == null ? 'disabled="disabled"' : '' ?>
+                                <button class="btn btn-default previousImage"
                                         title="Предыдущее изображение">
                                     <i class="fa fa-backward"></i>
                                 </button>
                                 <button class="btn btn-default toggle-slideshow" title="Слайдшоу"><i
                                         class="fa fa-play"></i></button>
                                 <button
-                                    class="btn btn-default nextImage" <?= $next == null ? 'disabled="disabled"' : '' ?>
+                                    class="btn btn-default nextImage"
                                     title="Следующее изображение">
                                     <i class="fa fa-forward"></i>
                                 </button>
@@ -363,59 +363,65 @@ switch ($_COOKIE['GalleryOneHeight']) {
     var boot_class = '<?=$boot_class?>';
 
     $('.limit-change[data-size="' + limit / 2 + '"]').addClass('active');
+
+
     function moveToPage(page) {
-        $.get(yii.app.createUrl('cabinet/camera/get-json-images', {
-            id: cameraId,
-            page: page,
-            limit: limit,
-            sort: sort
-        }, '&', 'get')).done(function (images) {
-            jsonImages = JSON.parse(images);
+        $.ajax({
+            async: false,
+            url: yii.app.createUrl('cabinet/camera/get-json-images', {
+                        id: cameraId,
+                        page: page,
+                        limit: limit,
+                        sort: sort
+                    },
+                    '&', 'get'),
+            success: function (images) {
+                jsonImages = JSON.parse(images);
 
-            var imageThumbnailsContainer = $('.camera-thumbnails .image-thumbnails:first');
-            var html = '';
-            var footer_class
+                var imageThumbnailsContainer = $('.camera-thumbnails .image-thumbnails:first');
+                var html = '';
+                var footer_class
 
-
-            for (var i = 0; i < jsonImages.length; i++) {
-                switch (jsonImages[i].type) {
-                    case 'ALERT':
-                        footer_class = 'danger'
-                        break;
-                    case 'MOVE':
-                        footer_class = 'success'
-                        break;
-                    case 'SCHEDULE':
-                        footer_class = 'info'
-                        break;
-                    default:
-                        footer_class = ''
+                for (var i = 0; i < jsonImages.length; i++) {
+                    switch (jsonImages[i].type) {
+                        case 'ALERT':
+                            footer_class = 'danger';
+                            break;
+                        case 'MOVE':
+                            footer_class = 'success';
+                            break;
+                        case 'SCHEDULE':
+                            footer_class = 'info';
+                            break;
+                        default:
+                            footer_class = ''
+                    }
+                    html = html + '' +
+                        '<div class="' + boot_class + ' thumbnail-container " image-id="' + jsonImages[i].id + '">' +
+                        '<div class="panel panel-default">' +
+                        '<div class="panel-body" image-index="' + i + '">' +
+                        '<div class="row image-container">' +
+                        '<img src="' + jsonImages[i].thumb + '" class="img-responsive cam-thumb" full-img="' + jsonImages[i].big + '">' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="panel-footer ' + footer_class + '">' +
+                        '<div class="row">' +
+                        '<div class="col-md-10">' + jsonImages[i].created +
+                        '</div>' +
+                        '<div class="col-md-2">' +
+                        '<input type="checkbox" class="pull-right thumb-check" image-id="' + jsonImages[i].id + '">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
                 }
-                html = html + '' +
-                    '<div class="' + boot_class + ' thumbnail-container " image-id="' + jsonImages[i].id + '">' +
-                    '<div class="panel panel-default">' +
-                    '<div class="panel-body" image-index="' + i + '">' +
-                    '<div class="row image-container">' +
-                    '<img src="' + jsonImages[i].thumb + '" class="img-responsive cam-thumb" full-img="' + jsonImages[i].big + '">' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="panel-footer ' + footer_class + '">' +
-                    '<div class="row">' +
-                    '<div class="col-md-10">' + jsonImages[i].created +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                    '<input type="checkbox" class="pull-right thumb-check" image-id="' + jsonImages[i].id + '">' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
+                $(imageThumbnailsContainer).html(html);
+
+                currentPage = page;
+
+                updatePagination();
             }
-            $(imageThumbnailsContainer).html(html);
-
-            currentPage = page;
-
-            updatePagination();
         });
     }
 
@@ -456,6 +462,11 @@ switch ($_COOKIE['GalleryOneHeight']) {
                 resetSlideShow();
             }
         });
+
+        $('#image-modal').on('hide.bs.modal', function (e) {
+            stopSlideShow();
+        });
+
         doMagnify();
         zoomDraggable();
         updatePagination();
@@ -619,27 +630,31 @@ switch ($_COOKIE['GalleryOneHeight']) {
 
     //Показ следующей фотки
     function showNextImage() {
-        if (currentImage + 1 != jsonImages.length) {
-            if ($('.thumbnail-container:last').attr('image-id') == jsonImages[currentImage].id)
-                nextPage();
 
-            var nextImageData = jsonImages[currentImage + 1];
+        if(currentImage == (jsonImages.length-1) ){
+            nextPage();
+            currentImage = 0;
+        }else{
             currentImage++;
-            changeImage(nextImageData, currentImage);
-        } else
-            stopSlideShow();
+        }
+
+        var nextImageData = jsonImages[currentImage];
+        changeImage(nextImageData, currentImage);
+
     }
 
     function showPreviousImage() {
-        if (currentImage > 0) {
-            if ($('.thumbnail-container:first').attr('image-id') == jsonImages[currentImage].id)
-                previousPage();
-
-            var previousImageData = jsonImages[currentImage - 1];
+        if(currentImage == 0){
+            previousPage();
+            currentImage = jsonImages.length - 1;
+        }else{
             currentImage--;
-            changeImage(previousImageData, currentImage);
         }
+
+        var previousImageData = jsonImages[currentImage];
+        changeImage(previousImageData, currentImage);
     }
+
 
     function showImageByIndex(index) {
         changeImage(jsonImages[index], index)
@@ -652,7 +667,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
         currentImage = index;
 
         updateMagnifier();
-        updateArrows();
+        //updateArrows();
         updateBigDate();
         updateSelectedThumbnail();
         newImg = true;
@@ -688,12 +703,18 @@ switch ($_COOKIE['GalleryOneHeight']) {
             turnOffMagnifier();
     }
     function previousPage() {
-        if (currentPage !== 1)
+        if (currentPage === 1){
+            moveToPage(pagesCount);
+        }else{
             moveToPage(currentPage - 1);
+        }
     }
     function nextPage() {
-        if (currentPage !== pagesCount)
+        if (currentPage >= pagesCount){
+            moveToPage(1);
+        }else{
             moveToPage(currentPage + 1);
+        }
     }
 
 

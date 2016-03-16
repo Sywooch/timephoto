@@ -193,14 +193,14 @@ switch ($_COOKIE['GalleryHeight']) {
                                     <div class="col-md-4">
                                         <div class="btn-group pull-right">
                                             <button
-                                                class="btn btn-default" <?= $previous == null ? 'disabled="disabled"' : '' ?>
+                                                class="btn btn-default previousImage"
                                                 title="Предыдущее изображение">
                                                 <i class="fa fa-backward"></i>
                                             </button>
                                             <button class="btn btn-default toggle-slideshow" title="Слайдшоу"><i
                                                     class="fa fa-play"></i></button>
                                             <button
-                                                class="btn btn-default nextImage" <?= $next == null ? 'disabled="disabled"' : '' ?>
+                                                class="btn btn-default nextImage"
                                                 title="Следующее изображение">
                                                 <i class="fa fa-forward"></i>
                                             </button>
@@ -364,6 +364,11 @@ switch ($_COOKIE['GalleryHeight']) {
                 resetSlideShow();
             }
         });
+
+        $('#image-modal').on('hide.bs.modal', function (e) {
+            stopSlideShow();
+        });
+
         doMagnify();
         zoomDraggable();
         updatePagination();
@@ -526,26 +531,29 @@ switch ($_COOKIE['GalleryHeight']) {
 
     //Показ следующей фотки
     function showNextImage() {
-        if (currentImage + 1 != jsonImages.length) {
-            if ($('.thumbnail-container:last').attr('image-id') == jsonImages[currentImage].id)
-                nextPage();
 
-            var nextImageData = jsonImages[currentImage + 1];
+        if(currentImage == (jsonImages.length-1) ){
+            nextPage();
+            currentImage = 0;
+        }else{
             currentImage++;
-            changeImage(nextImageData, currentImage);
-        } else
-            stopSlideShow();
+        }
+
+        var nextImageData = jsonImages[currentImage];
+        changeImage(nextImageData, currentImage);
+
     }
 
     function showPreviousImage() {
-        if (currentImage > 0) {
-            if ($('.thumbnail-container:first').attr('image-id') == jsonImages[currentImage].id)
-                previousPage();
-
-            var previousImageData = jsonImages[currentImage - 1];
+        if(currentImage == 0){
+            previousPage();
+            currentImage = jsonImages.length - 1;
+        }else{
             currentImage--;
-            changeImage(previousImageData, currentImage);
         }
+
+        var previousImageData = jsonImages[currentImage];
+        changeImage(previousImageData, currentImage);
     }
 
     function showImageByIndex(index) {
@@ -559,7 +567,6 @@ switch ($_COOKIE['GalleryHeight']) {
         currentImage = index;
 
         updateMagnifier();
-        updateArrows();
         updateBigDate();
         newImg = true;
     }
@@ -644,35 +651,45 @@ switch ($_COOKIE['GalleryHeight']) {
         $('.view-date').text(newDate);
     }
     function previousPage() {
-        if (currentPage !== 1)
+        if (currentPage === 1){
+            moveToPage(pagesCount);
+        }else{
             moveToPage(currentPage - 1);
+        }
     }
     function nextPage() {
-        if (currentPage !== pagesCount)
+        if (currentPage >= pagesCount){
+            moveToPage(1);
+        }else{
             moveToPage(currentPage + 1);
+        }
     }
     function moveToPage(page) {
-        $.get(yii.app.createUrl('cabinet/camera/get-json-images', {
-            id: cameraId,
-            page: page,
-            limit: limit,
-            type: type,
-            sort: sort
-        }, '&', 'get')).done(function (images) {
-            jsonImages = JSON.parse(images);
+        $.ajax({
+            async: false,
+            url: yii.app.createUrl('cabinet/camera/get-json-images', {
+                    id: cameraId,
+                    page: page,
+                    limit: limit,
+                    type: type,
+                    sort: sort
+                }, '&', 'get'),
+            success: function (images) {
+                jsonImages = JSON.parse(images);
 
-            var imageThumbnailsContainer = $('.thumbnails-list');
-            var html = '';
+                var imageThumbnailsContainer = $('.thumbnails-list');
+                var html = '';
 
-            //for(var i = (page - 1) * limit; i < Math.min(page * limit, jsonImages.length); i++)
-            for (var i = 0; i < jsonImages.length; i++) {
-                html = html + '<div class="' + boot_class + ' thumbnail-container" image-id="' + jsonImages[i].id + '">' + '<div class="panel panel-default">' + '<div class="panel-body" image-index="' + i + '">' + '<div class="row image-container show-modal">' + '<img src="' + jsonImages[i].thumb + '" class="img-responsive cam-thumb"/>' + '</div>' + '</div>' + '<div class="panel-footer">' + '<div class="row">' + '<div class="col-md-10">' + jsonImages[i].created + '</div>' + '<div class="col-md-2">' + '<input type="checkbox" class="pull-right thumb-check" image-id="' + jsonImages[i].id + '"/>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>';
+                //for(var i = (page - 1) * limit; i < Math.min(page * limit, jsonImages.length); i++)
+                for (var i = 0; i < jsonImages.length; i++) {
+                    html = html + '<div class="' + boot_class + ' thumbnail-container" image-id="' + jsonImages[i].id + '">' + '<div class="panel panel-default">' + '<div class="panel-body" image-index="' + i + '">' + '<div class="row image-container show-modal">' + '<img src="' + jsonImages[i].thumb + '" class="img-responsive cam-thumb"/>' + '</div>' + '</div>' + '<div class="panel-footer">' + '<div class="row">' + '<div class="col-md-10">' + jsonImages[i].created + '</div>' + '<div class="col-md-2">' + '<input type="checkbox" class="pull-right thumb-check" image-id="' + jsonImages[i].id + '"/>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>';
+                }
+                $(imageThumbnailsContainer).html(html);
+
+                currentPage = page;
+
+                updatePagination();
             }
-            $(imageThumbnailsContainer).html(html);
-
-            currentPage = page;
-
-            updatePagination();
         });
     }
 
