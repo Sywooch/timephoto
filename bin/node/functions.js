@@ -4,11 +4,15 @@ function processArray(items, process) {
     var todo = items.concat();
 
     setTimeout(function () {
+
         process(todo.shift());
+
         if (todo.length > 0) {
-            setTimeout(arguments.callee, 25);
+            //setTimeout(arguments.callee, 2);
+            setTimeout(processArray(todo, process), 20);
         }
-    }, 25);
+
+    }, 20);
 }
 
 function getHost(url) {
@@ -58,13 +62,18 @@ function directoryWalk(dir, done, rootDir) {
         fs.stat(dir + '/' + file, function (err, stat) {
 
             if (file.indexOf('.ftpquota') < 0 && file.indexOf('.thumbs') < 0) {
+
                 if (stat && stat.isDirectory()) {
 
                     directoryWalk(file, function (err, res) {
+
                         results = results.concat(res);
                         next();
+
                     }, rootDir);
+
                 } else {
+
                     var fileName = getFileName(rootDir, file);
 
                     if (fileName.indexOf('ended.') === 0) {
@@ -73,6 +82,7 @@ function directoryWalk(dir, done, rootDir) {
 
                     next();
                 }
+
             } else {
                 next();
             }

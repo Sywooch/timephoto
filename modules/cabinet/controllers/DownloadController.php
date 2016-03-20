@@ -9,11 +9,10 @@ namespace app\modules\cabinet\controllers;
 
 
 use app\models\Image;
-use app\modules\cabinet\components\CabinetController;
 use Yii;
 use ZipArchive;
 
-class DownloadController extends CabinetController
+class DownloadController extends \app\modules\cabinet\components\CabinetController
 {
     private $dir = '/files/zip/';
 

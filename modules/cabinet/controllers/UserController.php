@@ -19,11 +19,10 @@ use app\models\Tariff;
 use app\models\TariffDuration;
 use app\models\Transaction;
 use app\models\User;
-use app\modules\cabinet\components\CabinetController;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-class UserController extends CabinetController
+class UserController extends \app\modules\cabinet\components\CabinetController
 {
     public $layout = 'user';
     public $pageTitle = 'Пользователь';
@@ -206,6 +205,7 @@ class UserController extends CabinetController
                     'result' => 'OK',
                     'additional_users' => [
                         [
+                            'id' => $additionalUser->id,
                             'login' => $additionalUser->login,
                             'name' => $additionalUser->name,
                             'email' => $additionalUser->email,
@@ -282,6 +282,7 @@ class UserController extends CabinetController
 
         if (Yii::$app->request->isPost && $pk) {
 
+            /** @var AdditionalUser $additionalUser */
             $additionalUser = AdditionalUser::findOne($pk);
 
             $permissions_collections = ArrayHelper::map(Permission::find()->asArray()->all(), 'id', 'title');
@@ -322,6 +323,7 @@ class UserController extends CabinetController
 
             $response = ['result' => 'OK'];
             $response['clientInfo']['settings'] = [
+                'login' => $additionalUser->login,
                 'created' => $additionalUser->create_time,
                 'password' => '******',
                 'limit' => $additionalUser->traffic_limit_after_block,
@@ -345,21 +347,10 @@ class UserController extends CabinetController
         $camera_id = Yii::$app->request->post('camera_id');
         $permission_id = Yii::$app->request->post('permission_id');
 
-        $userPermission = AdditionalUserPermission::findOne(['additional_user_id' => $additional_user_id, 'camera_id' => $camera_id]);
-
-        if (!$userPermission) {
-
-            $userPermission = new AdditionalUserPermission();
-            $userPermission->additional_user_id = $additional_user_id;
-            $userPermission->user_id = Yii::$app->user->id;
-            $userPermission->camera_id = $camera_id;
-
-        }
-
-        $userPermission->permission_id = $permission_id;
-
-        if ($userPermission->save()) {
-            $response = ['result' => 'OK', 'userPermission' => $userPermission->permission_id];
+        /** @var AdditionalUser $additionalUser */
+        if ($additionalUser = AdditionalUser::findOne($additional_user_id)) {
+            $permission_id = $additionalUser->addPermission($camera_id, $permission_id);
+            $response = ['result' => 'OK', 'userPermission' => $permission_id];
         }
 
         echo json_encode($response);

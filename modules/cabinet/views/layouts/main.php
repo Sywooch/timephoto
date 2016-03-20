@@ -1,15 +1,11 @@
 <?php
 /* @var $this CameraController */
 
-use app\models\Camera;
 use app\models\Location;
-use app\models\Registrator;
 use yii\helpers\Url;
 
-$countCameras = Camera::find()->where(['user_id' => Yii::$app->user->identity->userId, 'deleted' => 0])->count();
-$countRegistrator = Registrator::find()->where(['deleted' => 0, 'user_id' => Yii::$app->user->identity->userId])->count();
-
-$i = 1;
+$countCameras = count(\Yii::$app->controller->cameras);
+$countRegistrator = count(\Yii::$app->controller->registrators);
 
 ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>

@@ -9,10 +9,9 @@ namespace app\modules\cabinet\controllers;
 
 use app\models\Image;
 use app\models\User;
-use app\modules\cabinet\components\CabinetController;
 use Yii;
 
-class RemoveController extends CabinetController
+class RemoveController extends \app\modules\cabinet\components\CabinetController
 {
 
     public function actionBatchRemove()

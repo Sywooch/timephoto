@@ -255,15 +255,27 @@ switch ($_COOKIE['GalleryHeight']) {
                         <li>
                             <div class="row view-menu">
                                 <a href="#" class="js-sort" data-sort="asc">Прямая сортировка </a>
-                                <button class="btn btn-inverse btn-sm <?= $column2 ?> size-change" data-size="6" data-column="2">2</button>
-                                <button class="btn btn-inverse btn-sm <?= $column3 ?> size-change" data-size="4" data-column="3">3</button>
-                                <button class="btn btn-inverse btn-sm <?= $column4 ?> size-change" data-size="3" data-column="4">4</button>
-                                <button class="btn btn-inverse btn-sm <?= $column6 ?> size-change" data-size="2" data-column="6">6</button>
+                                <button class="btn btn-inverse btn-sm <?= $column2 ?> size-change" data-size="6"
+                                        data-column="2">2
+                                </button>
+                                <button class="btn btn-inverse btn-sm <?= $column3 ?> size-change" data-size="4"
+                                        data-column="3">3
+                                </button>
+                                <button class="btn btn-inverse btn-sm <?= $column4 ?> size-change" data-size="3"
+                                        data-column="4">4
+                                </button>
+                                <button class="btn btn-inverse btn-sm <?= $column6 ?> size-change" data-size="2"
+                                        data-column="6">6
+                                </button>
                                 <span>X</span>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size4 ?>" data-size="4">4</button>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size8 ?>" data-size="8">8</button>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size16 ?>" data-size="16">16</button>
-                                <button class="btn btn-inverse btn-sm limit-change  <?= $size32 ?>" data-size="32">32</button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?= $size4 ?>" data-size="4">4
+                                </button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?= $size8 ?>" data-size="8">8
+                                </button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?= $size16 ?>" data-size="16">16
+                                </button>
+                                <button class="btn btn-inverse btn-sm limit-change  <?= $size32 ?>" data-size="32">32
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -532,10 +544,10 @@ switch ($_COOKIE['GalleryHeight']) {
     //Показ следующей фотки
     function showNextImage() {
 
-        if(currentImage == (jsonImages.length-1) ){
+        if (currentImage == (jsonImages.length - 1)) {
             nextPage();
             currentImage = 0;
-        }else{
+        } else {
             currentImage++;
         }
 
@@ -545,10 +557,10 @@ switch ($_COOKIE['GalleryHeight']) {
     }
 
     function showPreviousImage() {
-        if(currentImage == 0){
+        if (currentImage == 0) {
             previousPage();
             currentImage = jsonImages.length - 1;
-        }else{
+        } else {
             currentImage--;
         }
 
@@ -651,16 +663,16 @@ switch ($_COOKIE['GalleryHeight']) {
         $('.view-date').text(newDate);
     }
     function previousPage() {
-        if (currentPage === 1){
+        if (currentPage === 1) {
             moveToPage(pagesCount);
-        }else{
+        } else {
             moveToPage(currentPage - 1);
         }
     }
     function nextPage() {
-        if (currentPage >= pagesCount){
+        if (currentPage >= pagesCount) {
             moveToPage(1);
-        }else{
+        } else {
             moveToPage(currentPage + 1);
         }
     }
@@ -668,12 +680,12 @@ switch ($_COOKIE['GalleryHeight']) {
         $.ajax({
             async: false,
             url: yii.app.createUrl('cabinet/camera/get-json-images', {
-                    id: cameraId,
-                    page: page,
-                    limit: limit,
-                    type: type,
-                    sort: sort
-                }, '&', 'get'),
+                id: cameraId,
+                page: page,
+                limit: limit,
+                type: type,
+                sort: sort
+            }, '&', 'get'),
             success: function (images) {
                 jsonImages = JSON.parse(images);
 

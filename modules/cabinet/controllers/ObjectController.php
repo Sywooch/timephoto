@@ -10,10 +10,9 @@ namespace app\modules\cabinet\controllers;
 use app\models\Camera;
 use app\models\CameraCategory;
 use app\models\Location;
-use app\modules\cabinet\components\CabinetController;
 use Yii;
 
-class ObjectController extends CabinetController
+class ObjectController extends \app\modules\cabinet\components\CabinetController
 {
     public $layout = 'object';
     public $locations;

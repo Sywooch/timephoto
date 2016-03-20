@@ -21,6 +21,7 @@ use Yii;
  */
 class AdditionalUser extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+
     /**
      * @inheritdoc
      */
@@ -138,23 +139,74 @@ class AdditionalUser extends \yii\db\ActiveRecord implements \yii\web\IdentityIn
     {
         return 'U' . $this->id;
     }*/
+
     public function validatePassword($password)
     {
         return (bool)($this->password === $password);
     }
 
-    public function checkPermission($machine_name)
+    public function checkPermission($machine_name, $cameraId = false)
     {
-        return AdditionalUserPermission::find()
-            ->where([
+
+        $where = [
                 '{{%permission}}.machine_name' => $machine_name,
                 '{{%additional_user_permission}}.additional_user_id' => $this->id,
-            ])->joinWith('permission', '{{%additional_user_permission}}.permission_id = {{%permission}}.id')->exists();
+        ];
+
+        if($cameraId){
+            $where['{{%additional_user_permission}}.camera_id'] = $cameraId;
+        }
+
+        return AdditionalUserPermission::find()
+            ->where($where)->joinWith('permission', '{{%additional_user_permission}}.permission_id = {{%permission}}.id')->exists();
+
     }
 
     public function canAddCamera()
     {
         return false;
+    }
+
+    public function addPermission($camera_id, $permission_id)
+    {
+
+        AdditionalUserPermission::deleteAll([
+            'additional_user_id' => $this->id,
+            'camera_id' => $camera_id,
+        ]);
+
+        if(!$permission_id) return false;
+
+        $userPermission = new AdditionalUserPermission();
+        $userPermission->additional_user_id = $this->id;
+        $userPermission->user_id = Yii::$app->user->id;
+        $userPermission->camera_id = $camera_id;
+        $userPermission->permission_id = $permission_id;
+
+        if(!$userPermission->save()){
+            return false;
+        }
+
+        if($permission_id == AdditionalUserPermission::ACCESS_COPY){
+            $userPermission->id = 0;
+            $userPermission->isNewRecord = true;
+            $userPermission->permission_id = AdditionalUserPermission::ACCESS_VIEW;
+            $userPermission->save(false);
+        }
+
+        if($permission_id == AdditionalUserPermission::ACCESS_DELETE){
+            $userPermission->id = 0;
+            $userPermission->isNewRecord = true;
+            $userPermission->permission_id = AdditionalUserPermission::ACCESS_VIEW;
+            $userPermission->save(false);
+
+            $userPermission->id = 0;
+            $userPermission->isNewRecord = true;
+            $userPermission->permission_id = AdditionalUserPermission::ACCESS_COPY;
+            $userPermission->save(false);
+        }
+
+        return $permission_id;
     }
 
     // UserIdentity
@@ -202,7 +254,10 @@ class AdditionalUser extends \yii\db\ActiveRecord implements \yii\web\IdentityIn
 
     }
 
-
+    public function canEdit()
+    {
+        return false;
+    }
 
     public function getRole()
     {

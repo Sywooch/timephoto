@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\helpers\Url;
 use app\components\Helper;
 use Yii;
 
@@ -28,6 +29,7 @@ use Yii;
  * @property integer $internal_id
  * @property integer $registrator_id
  * @property integer $camera_registrator_id
+ * @property string $format
  *
  * @property CameraCategory $cameraCategory
  * @property Location $location
@@ -91,6 +93,7 @@ class Camera extends \yii\db\ActiveRecord
             [['ftp_home_dir'], 'string', 'max' => 255],
             [['ftp_login'], 'unique'],
             [['ftp_home_dir'], 'unique'],
+            [['format'], 'string', 'max' => 50],
             [['created'], 'safe']
         ];
     }
@@ -112,15 +115,16 @@ class Camera extends \yii\db\ActiveRecord
             'memory_limit' => 'Лимит памяти',
             'storage_time' => 'Срок хранения',
             'enabled' => 'Enabled',
-            'deleted' => 'Deleted',
+            'deleted' => 'Флаг удаления камеры',
             'user_id' => 'User',
             'location_id' => 'Объект',
             'camera_category_id' => 'Тематика',
             'icon_name' => 'icon_name',
-            'delete' => 'Icon Name',
+            'delete' => 'Режим удаления фотографий по истечении времени хранения',
             'internal_id' => 'Internal ID',
             'registrator_id' => 'Registrator ID',
             'camera_registrator_id' => 'Camera Registrator ID',
+            'format' => 'Формат файлов',
         ];
     }
 
@@ -325,6 +329,40 @@ class Camera extends \yii\db\ActiveRecord
         }
 
         return $filterTypes;
+    }
+
+    public static function getCameras()
+    {
+        $cameras = Camera::find()->where([
+            'user_id' => Yii::$app->user->identity->userId,
+            'deleted' => 0
+        ])->orderBy(['location_id' => SORT_DESC, 'id' => SORT_DESC])->all();
+
+        $cameraMenu = [];
+        $camerasArray = [];
+        foreach ($cameras as $camera) {
+            if (Yii::$app->user->identity->role == 'ADDITIONAL_USER') {
+                if (!Yii::$app->user->identity->checkPermission('access_view', $camera->id)) {
+                    continue;
+                }
+            }
+            $cameraElement = $camera->attributes;
+            $cameraElement['thumb'] = $camera->getLastImage()->getThumbnailUrl();
+            $cameraElement['category_name'] = $camera->getCategoryName();
+            $cameraElement['location_name'] = $camera->getLocationName();
+            $cameraElement['last_image_date'] = date('d-m-y H:i', strtotime($camera->getLastImage()->created));
+            $cameraElement['totalSize'] = $camera->getTotalSize();
+            $cameraElement['occupiedPercent'] = $camera->getOccupiedPercent();
+            $cameraElement['quantity'] = $camera->getCapturesQuantity();
+            $cameraElement['canEdit'] = Yii::$app->user->identity->canEdit();
+            $cameraElement['href'] = Url::to(['/cabinet/camera', 'id' => $camera->id]);
+            $cameraElement['manage_href'] = Url::to('/cabinet/camera/manage');
+            $cameraElement['edit_href'] = Url::to(['/cabinet/camera/edit', 'id' => $camera->id]);
+            $camerasArray[] = $cameraElement;
+            $cameraMenu[] = $camera;
+        }
+
+        return [$cameraMenu, $camerasArray];
     }
 
 }
