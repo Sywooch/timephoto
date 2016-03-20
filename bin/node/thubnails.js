@@ -2,7 +2,6 @@
  * Created by slashman on 08.03.15.
  */
 var gm = require('gm').subClass({imageMagick: true});
-;
 var colors = require('colors');
 var sizeOf = require('image-size');
 var fs = require('fs');

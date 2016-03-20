@@ -369,12 +369,12 @@ switch ($_COOKIE['GalleryOneHeight']) {
         $.ajax({
             async: false,
             url: yii.app.createUrl('cabinet/camera/get-json-images', {
-                        id: cameraId,
-                        page: page,
-                        limit: limit,
-                        sort: sort
-                    },
-                    '&', 'get'),
+                    id: cameraId,
+                    page: page,
+                    limit: limit,
+                    sort: sort
+                },
+                '&', 'get'),
             success: function (images) {
                 jsonImages = JSON.parse(images);
 
@@ -631,10 +631,10 @@ switch ($_COOKIE['GalleryOneHeight']) {
     //Показ следующей фотки
     function showNextImage() {
 
-        if(currentImage == (jsonImages.length-1) ){
+        if (currentImage == (jsonImages.length - 1)) {
             nextPage();
             currentImage = 0;
-        }else{
+        } else {
             currentImage++;
         }
 
@@ -644,10 +644,10 @@ switch ($_COOKIE['GalleryOneHeight']) {
     }
 
     function showPreviousImage() {
-        if(currentImage == 0){
+        if (currentImage == 0) {
             previousPage();
             currentImage = jsonImages.length - 1;
-        }else{
+        } else {
             currentImage--;
         }
 
@@ -703,16 +703,16 @@ switch ($_COOKIE['GalleryOneHeight']) {
             turnOffMagnifier();
     }
     function previousPage() {
-        if (currentPage === 1){
+        if (currentPage === 1) {
             moveToPage(pagesCount);
-        }else{
+        } else {
             moveToPage(currentPage - 1);
         }
     }
     function nextPage() {
-        if (currentPage >= pagesCount){
+        if (currentPage >= pagesCount) {
             moveToPage(1);
-        }else{
+        } else {
             moveToPage(currentPage + 1);
         }
     }

@@ -101,6 +101,7 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
                     <table class="table  transactions-table table-stylized">
                         <thead>
                         <tr>
+                            <th>Счет</th>
                             <th>Регистрация</th>
                             <th>Пароль</th>
                             <th>Ограничения</th>
@@ -142,7 +143,7 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
 
 <script id="additional-user-row-template" type="text/x-handlebars-template">
     {{#each additional_users}}
-    <tr class="additional-user-row" additional-user-id="{{id}}">
+    <tr class="additional-user-row additional-user-info" additional-user-id="{{id}}">
         <td>
             <a href="#" data-type="text" data-name="login" data-pk="{{id}}"
                data-url="<?= $this->context->createUrl('/cabinet/user/ajax-edit-additional-user') ?>">
@@ -190,6 +191,7 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
 
 <script id="additional-user-settings-template" type="text/x-handlebars-template">
     <tr>
+        <td>{{login}}</td>
         <td>{{created}}</td>
         <td>
             <a href="#" data-name="password" class="password-edit editable editable-click" data-pk="{{id}}"
@@ -224,9 +226,8 @@ foreach ($permissions_classes as &$v) {
     }
 }
 $permissions_classes = json_encode(ArrayHelper::map($permissions_classes, 'id', 'class'));
-
-
 $permissions_collection = Permission::find()->select(['id as value', 'title as text'])->asArray()->all();
+array_unshift($permissions_collection, ['value' => 0, 'text' => 'Нет доступа']);
 $permissions_json = json_encode($permissions_collection);
 $js = <<<JS
     var permissions_json = $permissions_json;
@@ -245,6 +246,10 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
 
     $(document).ready(function () {
 
+        editableInit();
+
+        App.init();
+
         $(document).on('click', '#add-additional-user', function () {
             addAditionalUser();
         });
@@ -257,9 +262,6 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
             infoAdditionalUser(this);
         });
 
-        editableInit();
-
-        App.init();
     });
 
     function editableInit() {
@@ -295,7 +297,6 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
             source: permissions_json
         });
 
-
     }
 
     function addAditionalUser() {
@@ -309,8 +310,10 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
                 response = JSON.parse(response);
 
                 $("#additional-users").append(addtionalUsersTemplate(response));
-                editableInit();
                 $('#additional-user-input').val('');
+
+                editableInit();
+
             });
         }
     }
@@ -332,6 +335,7 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
 
     function infoAdditionalUser(self) {
         var additionalUserId = $(self).closest('tr').attr('additional-user-id');
+
         $.post(yii.app.createUrl('cabinet/user/ajax-get-additional-user-info'), {
             pk: additionalUserId
         }).done(function (additionalUserInfo) {
@@ -341,7 +345,9 @@ Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
             var clientInfo = additionalUserInfo.clientInfo;
 
             if (typeof clientInfo.cameras !== 'undefined') {
+
                 $('#cameras-body').html(camerasTemplate(clientInfo));
+
                 /*$('.camera-row td a[data-type=text]').editable();
                  $('.camera-row td a[data-type=select]').editable({
                  source: [{value: 0, text: 'Неактивна'}, {value: 1, text: 'Активна'}]

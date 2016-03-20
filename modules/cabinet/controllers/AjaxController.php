@@ -11,10 +11,9 @@ use app\components\SMS;
 use app\models\Camera;
 use app\models\Image;
 use app\models\User;
-use app\modules\cabinet\components\CabinetController;
 use Yii;
 
-class AjaxController extends CabinetController
+class AjaxController extends \app\modules\cabinet\components\CabinetController
 {
 
     public function actionToggleCamera()

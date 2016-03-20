@@ -19,6 +19,7 @@ app.post('/api/watermark/set', function (req, res) {
     var homeDir = req.body.homeDir;
 
     console.log(('Recieved request to upload watermark to: ' + homeDir).yellow);
+
     if (!fs.existsSync(homeDir)) {
         fs.mkdirSync(homeDir, 0777);
         console.log(('Created dir: ' + homeDir).yellow);

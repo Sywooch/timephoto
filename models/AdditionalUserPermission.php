@@ -15,6 +15,12 @@ use Yii;
  */
 class AdditionalUserPermission extends \yii\db\ActiveRecord
 {
+    const ACCESS_VIEW = 3;
+
+     const ACCESS_COPY = 4;
+
+     const ACCESS_DELETE = 5;
+
     /**
      * @inheritdoc
      */

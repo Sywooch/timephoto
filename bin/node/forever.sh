@@ -11,7 +11,7 @@ GROUP="www-data"
 
 APPLICATIONS=(
   "photos.js"
-  #"delete_photos.js"
+  "delete_photos.js"
   #"api.js"
   #"registrator.js"
 )

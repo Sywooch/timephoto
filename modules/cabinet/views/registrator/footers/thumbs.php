@@ -67,7 +67,7 @@ $i = 1;
                         </div>
                     </li>
                     <li class="divider-vertical"></li>
-                    <?php if (Yii::$app->user->identity->checkPermission('access_copy')): ?>
+                    <?php if (Yii::$app->user->identity->checkPermission('access_copy', $id)): ?>
                         <li class="p-l-5 p-r-5 p-t-1">
                             <button href="" id="download-selected" class="btn btn-default"><i
                                     class="fa fa-download"></i> Скачать выделенное
@@ -75,7 +75,7 @@ $i = 1;
                         </li>
                     <?php endif; ?>
                     <li class="divider-vertical"></li>
-                    <?php if (Yii::$app->user->identity->checkPermission('access_delet')): ?>
+                    <?php if (Yii::$app->user->identity->checkPermission('access_delet', $id)): ?>
                         <li class="p-l-5 p-r-5 p-t-1">
                             <button href="#" id="delete-selected" class="btn btn-default"><i
                                     class="fa fa-times-circle-o"></i> Удалить выделенное

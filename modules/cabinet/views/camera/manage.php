@@ -35,6 +35,9 @@ $this->registerJsFile(Yii::$app->homeUrl . "js/slashman-glass.js", ['position' =
     <div class="col-md-12">
         <div class="col-md-12 " style="overflow-y: scroll" data-scrollbar="true" data-height="calc(100vh - 225px)">
             <?php foreach ($cameras as $position => $camera): ?>
+            <?php if (!$camera->countImages()) {
+                continue;
+            } ?>
             <?php if ($position == 0): ?>
             <div class="col-md-12"><h4><?= $camera['location']['name'] ?></h4></div>
             <div class="col-md-12 table-responsive">

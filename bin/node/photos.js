@@ -47,6 +47,7 @@ var Camera = sequelize.define('Camera', {
     ftp_login: Sequelize.STRING(45),
     ftp_password: Sequelize.STRING(45),
     ftp_home_dir: Sequelize.STRING(255),
+    format: Sequelize.STRING(50),
     deleted: Sequelize.INTEGER,
     enabled: Sequelize.INTEGER,
     user_id: {type: Sequelize.INTEGER, references: User, referencesKey: "id"}
@@ -75,6 +76,7 @@ function PhotoScan() {
 }
 
 PhotoScan.prototype.run = function () {
+
     Camera.findAll({
         where: {
             deleted: 0, enabled: 1
@@ -83,11 +85,15 @@ PhotoScan.prototype.run = function () {
             include: Tariff
         }]
     }).then(function (cameras) {
+
         Functions.processArray(cameras, function (currentCamera) {
 
             var userdir = rootDir + (currentCamera.dataValues['user_id'] + 10011000) + '/';
+            var userInfo = currentCamera.dataValues['User'];
             var camera_dir = userdir + currentCamera.dataValues['ftp_login'];
             var ftp_homedir = currentCamera.dataValues['ftp_home_dir'];
+            var format = currentCamera.dataValues['format'];
+            var cameraId = currentCamera.dataValues['id'];
 
             if (fs.existsSync(ftp_homedir)) {
 
@@ -97,8 +103,6 @@ PhotoScan.prototype.run = function () {
                 }
 
                 Functions.directoryWalk(ftp_homedir, function (walkError, files) {
-
-                    var cameraId = currentCamera.dataValues['id'];
 
                     if (files.length > 0) {
 
@@ -113,65 +117,80 @@ PhotoScan.prototype.run = function () {
                             for (var i = 0; i < existingImages.length; i++) {
                                 var index = files.indexOf(existingImages[i].dataValues['file_name']);
 
-                                if (index >= 0)
+                                if (index >= 0) {
                                     files.splice(index, 1);
+                                }
                             }
 
                             if (files.length > 0) {
                                 Functions.processArray(files, function (currentFile) {
+
+                                    if (!fs.existsSync(ftp_homedir + "/" + currentFile)) {
+                                        console.log('File ' + ftp_homedir + "/" + currentFile + ' not found');
+                                        return;
+                                    }
 
                                     var fileMimeType = mime.lookup(ftp_homedir + "/" + currentFile);
 
                                     if (fileMimeType.indexOf('image') !== -1) {
 
                                         var fileName = currentFile.replace('ended.', '');
-                                        var fileThumb = camera_dir + '/.thumbs/' + fileName;
-                                        var fileStats = fs.statSync(ftp_homedir + '/' + currentFile);
-                                        var fileSizeInKilobytes = fileStats['size'] / 1024.0;
 
-                                        if (!fs.existsSync(camera_dir + '/.thumbs')) {
-                                            mkdirp(camera_dir + '/.thumbs', _0775);
-                                            chownr(camera_dir + '/.thumbs', user, group);
-                                        }
+                                        if (!fs.existsSync(camera_dir + "/" + fileName)) {
 
-                                        console.log('Copying... ' + camera_dir + "/" + fileName);
+                                            fs.copy(ftp_homedir + "/" + currentFile, camera_dir + "/" + fileName, function (err) {
 
-                                        /*exif.getImageTags(ftp_homedir + "/" + currentFile, function (err, tags) {
+                                                if (!fs.existsSync(ftp_homedir + "/" + currentFile)) {
+                                                    return;
+                                                }
 
-                                         if (tags == null) {
-                                         return;
-                                         }
+                                                fs.unlinkSync(ftp_homedir + "/" + currentFile);
 
-                                        console.log("DateTime: " + tags["Exif.Image.DateTime"]);
-                                        console.log("DateTimeOriginal: " + tags["Exif.Photo.DateTimeOriginal"]);
+                                                console.log('Copying... ' + camera_dir + "/" + fileName);
 
-                                         });*/
+                                                if (!fs.existsSync(camera_dir + '/.thumbs')) {
+                                                    mkdirp(camera_dir + '/.thumbs', _0775);
+                                                    chownr(camera_dir + '/.thumbs', user, group);
+                                                }
 
-                                        fs.copySync(ftp_homedir + "/" + currentFile, camera_dir + "/" + fileName);
+                                                var fileThumb = camera_dir + '/.thumbs/' + fileName;
 
-                                        if (fs.existsSync(fileThumb)) {
-                                            fs.unlinkSync(fileThumb);
-                                        }
+                                                if (fs.existsSync(fileThumb)) {
+                                                    fs.unlinkSync(fileThumb);
+                                                }
 
-                                        Thubnails.startWorkflow({
-                                            imagePath: camera_dir + "/" + fileName,
-                                            watermarkPath: +'.watermark',
-                                            userInfo: currentCamera.dataValues['User'],
-                                            thumbPath: fileThumb
-                                        }, function () {
+                                                Image.create({
+                                                    file_name: fileName,
+                                                    created: Guess.extractDate(fileName, format),
+                                                    file_size: Guess.getSize(camera_dir + '/' + fileName),
+                                                    camera_id: cameraId,
+                                                    type: Guess.guessImageType(camera_dir + "/" + fileName),
+                                                    //exif: JSON.stringify(tags),
+                                                });
 
-                                            Image.create({
-                                                file_name: fileName,
-                                                created: '',
-                                                file_size: fileSizeInKilobytes,
-                                                camera_id: cameraId,
-                                                type: Guess.guessImageType(camera_dir + "/" + fileName),
-                                                //exif: JSON.stringify(tags),
+                                                Thubnails.startWorkflow({
+                                                    imagePath: camera_dir + "/" + fileName,
+                                                    watermarkPath: '.watermark',
+                                                    userInfo: userInfo,
+                                                    thumbPath: fileThumb
+                                                }, function () {
+
+                                                    console.log('Thubnails image create ' + fileThumb);
+
+                                                });
+
                                             });
 
-                                            fs.unlinkSync(ftp_homedir + "/" + currentFile);
+                                        } else {
 
-                                        });
+                                            console.log('File ' + camera_dir + "/" + fileName + ' exists');
+
+                                            if (fs.existsSync(ftp_homedir + "/" + currentFile)) {
+                                                fs.unlinkSync(ftp_homedir + "/" + currentFile);
+                                            }
+
+                                        }
+
                                     }
 
                                 });

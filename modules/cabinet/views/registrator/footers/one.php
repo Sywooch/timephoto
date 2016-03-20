@@ -67,7 +67,7 @@ $i = 1;
                         </div>
                     </li>
                     <li class="divider-vertical"></li>
-                    <?php if (Yii::$app->user->identity->checkPermission('access_copy')): ?>
+                    <?php if (Yii::$app->user->identity->checkPermission('access_copy', $id)): ?>
                         <li class="p-l-5 p-r-5 p-t-1">
                             <button href="" id="download-selected" class="btn btn-default"><i
                                     class="fa fa-download"></i> Скачать выделенное
@@ -75,7 +75,7 @@ $i = 1;
                         </li>
                     <?php endif; ?>
                     <li class="divider-vertical"></li>
-                    <?php if (Yii::$app->user->identity->checkPermission('access_delet')): ?>
+                    <?php if (Yii::$app->user->identity->checkPermission('access_delet', $id)): ?>
                         <li class="p-l-5 p-r-5 p-t-1">
                             <button href="#" id="delete-selected" class="btn btn-default"><i
                                     class="fa fa-times-circle-o"></i> Удалить выделенное
@@ -126,7 +126,11 @@ $i = 1;
     });
     $(document).on('click', '#clearDate', function (e) {
         e.preventDefault();
-        window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'one', type: type}, '&', 'get'));
+        window.location.replace(yii.app.createUrl('cabinet/camera', {
+            id: cameraId,
+            view: 'one',
+            type: type
+        }, '&', 'get'));
     });
     $(document).on('click', '#dateDoFilter', function (e) {
         e.preventDefault();
@@ -165,7 +169,11 @@ $i = 1;
                 type = first ? $(option).val() : type + ',' + $(option).val();
                 first = false;
             });
-            window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'one', type: type}, '&', 'get'));
+            window.location.replace(yii.app.createUrl('cabinet/camera', {
+                id: cameraId,
+                view: 'one',
+                type: type
+            }, '&', 'get'));
         }
         else
             window.location.replace(yii.app.createUrl('cabinet/camera', {id: cameraId, view: 'one'}, '&', 'get'));

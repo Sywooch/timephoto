@@ -11,12 +11,11 @@ use app\models\Camera;
 use app\models\Image;
 use app\models\Location;
 use app\models\Registrator;
-use app\modules\cabinet\components\CabinetController;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 /* @property Registrator[] $Registrators */
-class RegistratorController extends CabinetController
+class RegistratorController extends \app\modules\cabinet\components\CabinetController
 {
     public $layout = 'registrator';
     public $activeCamera = null;
@@ -50,7 +49,9 @@ class RegistratorController extends CabinetController
             $cameraElement['totalSize'] = $camera->getTotalSize();
             $cameraElement['occupiedPercent'] = $camera->getOccupiedPercent();
             $cameraElement['quantity'] = $camera->getCapturesQuantity();
+
             $cameraElement['canEdit'] = Yii::$app->user->identity->canEdit();
+
             $cameraElement['href'] = $this->createUrl(['/cabinet/camera', 'id' => $camera->id]);
             $cameraElement['manage_href'] = $this->createUrl('/cabinet/camera/manage');
             $cameraElement['edit_href'] = $this->createUrl(['/cabinet/camera/edit', 'id' => $camera->id]);

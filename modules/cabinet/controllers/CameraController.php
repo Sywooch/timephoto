@@ -13,23 +13,13 @@ use app\models\Camera;
 use app\models\CameraCategory;
 use app\models\Image;
 use app\models\Location;
-use app\models\Registrator;
 use app\models\Tariff;
-use app\modules\cabinet\components\CabinetController;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 
-class CameraController extends CabinetController
+class CameraController extends \app\modules\cabinet\components\CabinetController
 {
-    public $layout = 'camera';
-    public $activeCamera = null;
-    public $activeLocation = null;
-    public $activeCategory = null;
-    public $cameras;
-    public $jsonCameras;
-    public $jsonRegistrators;
-    public $registrators;
 
     public function beforeAction($action)
     {
@@ -51,44 +41,13 @@ class CameraController extends CabinetController
             setcookie("GalleryHeight", 4);
         }
 
-
-        $cameras = Camera::find()->where([
-            'user_id' => Yii::$app->user->identity->userId,
-            'deleted' => 0
-        ])->orderBy(['camera_category_id' => SORT_ASC, 'location_id' => SORT_ASC])->all();
-
-        $this->cameras = $cameras;
-
-        $camerasArray = [];
-        foreach ($cameras as $camera) {
-            $cameraElement = $camera->attributes;
-            $cameraElement['thumb'] = $camera->getLastImage()->getThumbnailUrl();
-            $cameraElement['category_name'] = $camera->getCategoryName();
-            $cameraElement['location_name'] = $camera->getLocationName();
-            $cameraElement['last_image_date'] = date('d-m-y H:i', strtotime($camera->getLastImage()->created));
-            $cameraElement['totalSize'] = $camera->getTotalSize();
-            $cameraElement['occupiedPercent'] = $camera->getOccupiedPercent();
-            $cameraElement['quantity'] = $camera->getCapturesQuantity();
-            $cameraElement['canEdit'] = Yii::$app->user->identity->canEdit();
-            $cameraElement['href'] = $this->createUrl(['/cabinet/camera', 'id' => $camera->id]);
-            $cameraElement['manage_href'] = $this->createUrl('/cabinet/camera/manage');
-            $cameraElement['edit_href'] = $this->createUrl(['/cabinet/camera/edit', 'id' => $camera->id]);
-            $camerasArray[] = $cameraElement;
-        }
-
-        $this->jsonCameras = json_encode($camerasArray);
-
-        $registrator_data = Registrator::getRegistrators();
-        $this->registrators = $registrator_data[0];
-        $this->jsonRegistrators = json_encode($registrator_data[1]);
-
         return true;
     }
 
     public function actionIndex($id = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
     {
 
-        if (!Yii::$app->user->identity->checkPermission('access_view')) {
+        if (!Yii::$app->user->identity->checkPermission('access_view', $id)) {
             throw new ForbiddenHttpException('Доступ запрещен');
         }
 
@@ -104,10 +63,11 @@ class CameraController extends CabinetController
 
 
         if ($id === null) {
-            $cameras = Camera::find()->where(['user_id' => Yii::$app->user->identity->userId, 'deleted' => 0])
-                ->orderBy(['location_id' => SORT_DESC, 'id' => SORT_DESC])->all();
 
-            return $this->render('index', ['cameras' => $cameras]);
+            /*$cameras = Camera::find()->where(['user_id' => Yii::$app->user->identity->userId, 'deleted' => 0])
+                ->orderBy(['location_id' => SORT_DESC, 'id' => SORT_DESC])->all();*/
+
+            return $this->render('index', ['cameras' => $this->cameras]);
         } else {
             return $this->actionPhotos($id, $view, $imageId, $type, $date, $currentPage, $limit);
         }
@@ -385,6 +345,10 @@ class CameraController extends CabinetController
 
     public function actionManage($category = null, $location = null)
     {
+        if (Yii::$app->user->identity->role == 'ADDITIONAL_USER') {
+            throw new ForbiddenHttpException('Доступ запрещен');
+        }
+
         $camerasAttributes = [
             'user_id' => Yii::$app->user->identity->userId,
             'deleted' => 0

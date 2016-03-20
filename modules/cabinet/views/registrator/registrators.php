@@ -138,17 +138,17 @@ $i = 1;
                                                             </a>
                                                         </li>
                                                         <?php /*?>
-                            <li>
-                              <a href="#" class="toggle-camera <?= $registrator->enabled ? 'active' : '' ?>"
-                                 camera-id="<?= $registrator->id ?>">
-                                                        <span
-                                                            class="<?= $registrator->enabled ? 'text-success' : 'text-danger' ?>">
-                                                            <i class="fa fa-share-alt"></i> <span
-                                                              class="text"><?= $registrator->enabled ? 'Выключить публичный доступ' : 'Включить публичный доступ' ?></span>
-                                                        </span>
-                              </a>
-                            </li>
-                            */ ?>
+                                                        <li>
+                                                          <a href="#" class="toggle-camera <?= $registrator->enabled ? 'active' : '' ?>"
+                                                             camera-id="<?= $registrator->id ?>">
+                                                                                    <span
+                                                                                        class="<?= $registrator->enabled ? 'text-success' : 'text-danger' ?>">
+                                                                                        <i class="fa fa-share-alt"></i> <span
+                                                                                          class="text"><?= $registrator->enabled ? 'Выключить публичный доступ' : 'Включить публичный доступ' ?></span>
+                                                                                    </span>
+                                                          </a>
+                                                        </li>
+                                                        */ ?>
                                                         <li>
                                                             <a href="#"
                                                                class="toggle-camera <?= $registrator->enabled ? 'active' : '' ?>"
