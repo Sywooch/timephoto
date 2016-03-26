@@ -372,6 +372,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
                     id: cameraId,
                     page: page,
                     limit: limit,
+                    date: date,
                     sort: sort
                 },
                 '&', 'get'),

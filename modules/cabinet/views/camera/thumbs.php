@@ -684,6 +684,7 @@ switch ($_COOKIE['GalleryHeight']) {
                 page: page,
                 limit: limit,
                 type: type,
+                date: date,
                 sort: sort
             }, '&', 'get'),
             success: function (images) {
