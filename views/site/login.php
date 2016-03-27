@@ -41,7 +41,7 @@ $this->registerJsFile(Yii::$app->homeUrl . "template/js/login-v2.demo.min.js", [
         </div>
 
         <div class="m-t-20">
-            Еще не зарегистрировались? Кликните <a href="<?= Url::to('/site/registration'); ?>">сюда</a> для регистрации.
+            Еще не зарегистрировались? Кликните <a href="<?= Url::to('/site/registration'); ?>">сюда</a> для регистрации. Для восстановления пароля кликните <a href="<?= Url::to('/site/request-password'); ?>">сюда</a>.
         </div>
 
         <div class="form-group login-buttons">

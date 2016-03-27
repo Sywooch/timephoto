@@ -3,12 +3,13 @@
 /* @var $model LoginForm */
 
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::$app->name . ' - Регистрация';
+$this->title = Yii::$app->name . ' - Восстановление пароля';
+
 $this->registerJsFile(Yii::$app->homeUrl . "template/js/login-v2.demo.min.js", ['position' => yii\web\View::POS_HEAD]);
 
-?>
 ?>
 <div class="login-cover">
     <div class="login-cover-image"><img src="<?php echo Yii::$app->homeUrl; ?>images/cover.jpg" data-id="login-cover-image" alt=""/></div>
@@ -28,25 +29,24 @@ $this->registerJsFile(Yii::$app->homeUrl . "template/js/login-v2.demo.min.js", [
     </div>
     <!-- end brand -->
     <div class="login-content">
+
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
         <div class="form-group m-b-20">
-            <?= $form->field($model, 'login')->textInput(['class' => 'form-control input-lg', 'placeholder' => 'Email']) ?>
-        </div>
-
-        <div class="form-group m-b-20">
-            <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control input-lg', 'placeholder' => 'Password']) ?>
-        </div>
-
-        <div class="login-buttons">
-            <button type="submit" class="btn btn-success btn-block btn-lg">Зарегистрироваться</button>
+            <?= $form->field($model, 'login') ?>
         </div>
 
         <div class="m-t-20">
-            Уже зарегистрированы? Нажмите <a href="<?= Url::to(['/site/login']); ?>">сюда</a> для входа.
+            Вернуться на страницу <a href="<?= Url::to('/site/registration'); ?>">регистрации</a> или
+            если уже зарегистрированы? Нажмите <a href="<?= Url::to('/site/login'); ?>">сюда</a> для входа.
+        </div>
+
+        <div class="form-group login-buttons">
+            <?= Html::submitButton('Восстановить', ['class' => 'btn btn-success btn-block btn-lg', 'name' => 'restore-password-button']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
+
     </div>
 </div>
 <!-- end login -->
@@ -56,7 +56,7 @@ $this->registerJsFile(Yii::$app->homeUrl . "template/js/login-v2.demo.min.js", [
     $(document).ready(function () {
 
         App.init();
-        LoginV2.init();
+        //LoginV2.init();
 
     });
 </script>

@@ -3,12 +3,13 @@
 /* @var $model LoginForm */
 
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::$app->name . ' - Регистрация';
+$this->title = Yii::$app->name . ' - Вход';
+
 $this->registerJsFile(Yii::$app->homeUrl . "template/js/login-v2.demo.min.js", ['position' => yii\web\View::POS_HEAD]);
 
-?>
 ?>
 <div class="login-cover">
     <div class="login-cover-image"><img src="<?php echo Yii::$app->homeUrl; ?>images/cover.jpg" data-id="login-cover-image" alt=""/></div>
@@ -28,25 +29,23 @@ $this->registerJsFile(Yii::$app->homeUrl . "template/js/login-v2.demo.min.js", [
     </div>
     <!-- end brand -->
     <div class="login-content">
+
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
         <div class="form-group m-b-20">
-            <?= $form->field($model, 'login')->textInput(['class' => 'form-control input-lg', 'placeholder' => 'Email']) ?>
+            <?= $form->field($model, 'newpassword')->passwordInput() ?>
         </div>
 
         <div class="form-group m-b-20">
-            <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control input-lg', 'placeholder' => 'Password']) ?>
+            <?= $form->field($model, 'repeatnewpassword')->passwordInput() ?>
         </div>
 
-        <div class="login-buttons">
-            <button type="submit" class="btn btn-success btn-block btn-lg">Зарегистрироваться</button>
-        </div>
-
-        <div class="m-t-20">
-            Уже зарегистрированы? Нажмите <a href="<?= Url::to(['/site/login']); ?>">сюда</a> для входа.
+        <div class="form-group login-buttons">
+            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success btn-block btn-lg', 'name' => 'save-button']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
+
     </div>
 </div>
 <!-- end login -->

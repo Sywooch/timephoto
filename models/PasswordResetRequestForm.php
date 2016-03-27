@@ -2,13 +2,14 @@
 namespace app\models;
 
 use yii\base\Model;
+use yii\helpers\Url;
 
 /**
  * Password reset request form
  */
 class PasswordResetRequestForm extends Model
 {
-    public $email;
+    public $login;
 
     /**
      * @inheritdoc
@@ -16,14 +17,14 @@ class PasswordResetRequestForm extends Model
     public function rules()
     {
         return [
-            ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
+            ['login', 'filter', 'filter' => 'trim'],
+            ['login', 'required'],
+            ['login', 'email'],
             [
-                'email',
+                'login',
                 'exist',
                 'targetClass' => '\app\models\User',
-                'filter' => ['status' => User::STATUS_ACTIVE],
+                'filter' => ['active' => User::STATUS_ACTIVE],
                 'message' => 'There is no user with such email.'
             ],
         ];
@@ -38,20 +39,24 @@ class PasswordResetRequestForm extends Model
     {
         /* @var $user User */
         $user = User::findOne([
-            'status' => User::STATUS_ACTIVE,
-            'email' => $this->email,
+            'active' => User::STATUS_ACTIVE,
+            'login' => $this->login,
         ]);
 
         if ($user) {
 
-            if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
-                $user->generatePasswordResetToken();
-            }
+            $user->generatePasswordResetToken();
 
             if ($user->save()) {
-                return \Yii::$app->mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
+                return \Yii::$app->mailer->compose([
+                    'html' => 'passwordResetToken-html',
+                    'text' => 'passwordResetToken-text'
+                    ], [
+                        'user' => $user,
+                        'resetPasswordLink' => Url::to(['site/reset-password', 'token' => $user->access_token], true),
+                    ])
                     ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
-                    ->setTo($this->email)
+                    ->setTo($this->login)
                     ->setSubject('Password reset for ' . \Yii::$app->name)
                     ->send();
             }

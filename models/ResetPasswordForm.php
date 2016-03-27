@@ -10,7 +10,9 @@ use yii\base\Model;
  */
 class ResetPasswordForm extends Model
 {
-    public $password;
+    public $newpassword;
+
+    public $repeatnewpassword;
 
     /**
      * @var \app\models\User
@@ -31,7 +33,7 @@ class ResetPasswordForm extends Model
             throw new InvalidParamException('Password reset token cannot be blank.');
         }
 
-        $this->_user = User::findByPasswordResetToken($token);
+        $this->_user = User::findIdentityByAccessToken($token);
 
         if (!$this->_user) {
             throw new InvalidParamException('Wrong password reset token.');
@@ -46,9 +48,25 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            [['newpassword', 'repeatnewpassword'], 'required'],
+            [['newpassword', 'repeatnewpassword'], 'string', 'min' => 6],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'newpassword' => 'Пароль',
+            'repeatnewpassword' => 'Повтор пароля',
+        ];
+    }
+
+    public function validate($attributeNames = null, $clearErrors = true)
+    {
+        return true;
     }
 
     /**
@@ -59,7 +77,7 @@ class ResetPasswordForm extends Model
     public function resetPassword()
     {
         $user = $this->_user;
-        $user->setPassword($this->password);
+        $user->setPassword($this->newpassword);
         $user->removePasswordResetToken();
 
         return $user->save(false);

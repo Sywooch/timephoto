@@ -22,6 +22,7 @@ use yii\db\Expression;
  * @property integer $tariff_id
  * @property string $custom_logo
  * @property integer $hide_site_logo
+ * @property string $access_token
  *
  * @property AdditionalUser[] $additionalUsers
  * @property Camera[] $cameras
@@ -33,6 +34,10 @@ use yii\db\Expression;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    const STATUS_INACTIVE = 0;
+
+    const STATUS_ACTIVE = 1;
+
     public $newPassword;
     public $repeatPassword;
     public $oldPassword;
@@ -73,7 +78,22 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return false;
+        return static::findOne(['access_token' => $token]);
+    }
+
+    public function isPasswordResetTokenValid($token)
+    {
+        return $this->access_token == $token;
+    }
+
+    public function generatePasswordResetToken()
+    {
+        $this->access_token = Yii::$app->getSecurity()->generateRandomString();
+    }
+
+    public function removePasswordResetToken()
+    {
+        $this->access_token = '';
     }
 
     /**
@@ -87,7 +107,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['created', 'tariff_expires'], 'safe'],
             [['balance'], 'number'],
             [['active', 'cameras_enabled', 'tariff_id', 'hide_site_logo'], 'integer'],
-            [['login', 'phone', 'sms_code', 'role', 'custom_logo'], 'string', 'max' => 45]
+            [['login', 'phone', 'sms_code', 'role', 'custom_logo'], 'string', 'max' => 45],
+            [['access_token'], 'string',  'max' => 120],
         ];
     }
 
@@ -111,6 +132,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'tariff_id' => 'Tariff ID',
             'custom_logo' => 'Custom Logo',
             'hide_site_logo' => 'Hide Site Logo',
+            'access_token' => 'Access token',
         ];
     }
 

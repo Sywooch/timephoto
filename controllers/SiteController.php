@@ -3,13 +3,18 @@ namespace app\controllers;
 
 use app\models\ContactForm;
 use app\models\LoginForm;
+use app\models\PasswordResetRequestForm;
+use app\models\ResetPasswordForm;
 use app\models\SignupForm;
 use app\models\User;
 use app\models\Page;
 use app\components\Controller as BaseContoller;
 use Yii;
+use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
+
 //use yii\web\Controller;
 
 /**
@@ -163,7 +168,7 @@ class SiteController extends BaseContoller
         ]);
     }
 
-    /*public function actionRequestPasswordReset()
+    public function actionRequestPassword()
     {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -176,12 +181,12 @@ class SiteController extends BaseContoller
             }
         }
 
-        return $this->render('requestPasswordResetToken', [
+        return $this->render('requestPassword', [
             'model' => $model,
         ]);
-    }*/
+    }
 
-    /*public function actionResetPassword($token)
+    public function actionResetPassword($token)
     {
         try {
             $model = new ResetPasswordForm($token);
@@ -198,6 +203,6 @@ class SiteController extends BaseContoller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
-    }*/
+    }
 
 }
