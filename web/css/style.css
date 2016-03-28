@@ -621,3 +621,10 @@ body #page-container .content.gmap-content.gmap-content .gmap {
 #cameras-buttons button i{float: none;}
 
 #sidebar .nav-header > .fa {margin-right: 5px; margin-top: 3px;}
+
+.checkboxes-public label{cursor: pointer;}
+.checkboxes-public label + label {margin-left: 25px;}
+.checkboxes-public input[type=checkbox], input[type=radio] {margin: 0;}
+
+.public-link-wrap {display: none; }
+.public-link-wrap.show {display: block; }

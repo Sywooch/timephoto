@@ -180,6 +180,23 @@ $i = 1;
                             'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Используйте для распознания формата наименовая файлов']); ?>
                     </div>
                 </div>
+                <div class="form-group checkboxes-public">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-lg-offset-3">
+                        <?php echo $form->field($camera, 'public')->radioList(\app\models\Camera::getPublicListLabels()); ?>
+                    </div>
+                </div>
+                <div class="form-group public-link-wrap <?=$camera->public ? "show" : "" ?>">
+                    <div class="col-sm-3">
+                        Публичная ссылка
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="">
+                            <pre>http://cam.loc/cabinet/camera/edit/9</pre>
+                        </div>
+                    </div>
+                </div>
+
+
             <?php else: ?>
                 <div class="form-group">
                     <div class="col-sm-3">
@@ -215,6 +232,14 @@ $i = 1;
             }
         });
         App.init();
+
+        $('[name="Camera[public]"]').on('change', function(){
+            if($('[name="Camera[public]"][value="1"]').prop("checked")){
+                $('.public-link-wrap').addClass('show');
+            }else{
+                $('.public-link-wrap').removeClass('show');
+            }
+        });
     });
 
     $(document).on('click', '#trigger-file', function (e) {
@@ -255,6 +280,8 @@ $i = 1;
 
             }
         });
+
+
     });
 
     function readURL(input) {

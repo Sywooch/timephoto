@@ -86,7 +86,7 @@ class Camera extends \yii\db\ActiveRecord
     {
         return [
             [['comment', 'icon_name'], 'string'],
-            [['enabled', 'deleted', 'user_id', 'location_id', 'camera_category_id', 'delete', 'internal_id', 'registrator_id', 'camera_registrator_id'], 'integer'],
+            [['enabled', 'public', 'deleted', 'user_id', 'location_id', 'camera_category_id', 'delete', 'internal_id', 'registrator_id', 'camera_registrator_id'], 'integer'],
             [['memory_limit'], 'number'],
             [['user_id'], 'required'],
             [['name', 'created', 'ftp_login', 'ftp_password', 'access', 'storage_time'], 'string', 'max' => 45],
@@ -125,6 +125,7 @@ class Camera extends \yii\db\ActiveRecord
             'registrator_id' => 'Registrator ID',
             'camera_registrator_id' => 'Camera Registrator ID',
             'format' => 'Формат файлов',
+            'public' => 'Свободный доступ',
         ];
     }
 
@@ -373,6 +374,13 @@ class Camera extends \yii\db\ActiveRecord
         }
 
         return [$cameraMenu, $camerasArray];
+    }
+
+    public static function getPublicListLabels(){
+        return [
+            0 => "Доступ по паролю",
+            1 => "Свободный доступ",
+        ];
     }
 
 }
