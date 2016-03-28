@@ -15,6 +15,7 @@ use app\models\Image;
 use app\models\Location;
 use app\models\Tariff;
 use Yii;
+use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 
@@ -44,6 +45,17 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
         return true;
     }
 
+    /**
+     * @param null $id
+     * @param string $view
+     * @param null $imageId
+     * @param string $type
+     * @param null $date
+     * @param null $currentPage
+     * @param int $limit
+     * @return string
+     * @throws ForbiddenHttpException
+     */
     public function actionIndex($id = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
     {
 
@@ -73,12 +85,55 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
         }
     }
 
-    /*public function actionInfo()
+    /**
+     * Example: http://timephoto.loc:8082/cabinet/public?token=33c6ffb2843fdd44cf099fe5ca0323a8&view=one
+     * @param null $token
+     * @param string $view
+     * @param null $imageId
+     * @param string $type
+     * @param null $date
+     * @param null $currentPage
+     * @param int $limit
+     * @return string
+     * @throws ForbiddenHttpException
+     */
+    public function actionPublic($token = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
     {
-        phpinfo();
-        die();
-    }*/
 
+        $id = Camera::find()->select('id')->where(new Expression('MD5(CONCAT(id, created)) = :token'), [':token' => $token])->scalar();
+
+        if (!Yii::$app->user->identity->checkPermission('access_view', $id)) {
+            throw new ForbiddenHttpException('Доступ запрещен');
+        }
+
+        if (isset($_COOKIE['GalleryOneColumn']) && isset($_COOKIE['GalleryOneHeight']) && isset($_COOKIE['GalleryColumn']) && isset($_COOKIE['GalleryHeight'])) {
+            if ($view == 'one') {
+                $limit = $_COOKIE['GalleryOneColumn'] * $_COOKIE['GalleryOneHeight'];
+            } else {
+                $limit = $_COOKIE['GalleryColumn'] * $_COOKIE['GalleryHeight'];
+            }
+        } else {
+            $limit = !empty($limit) ? $limit : 16;
+        }
+
+
+        if ($id === null) {
+            return $this->render('index', ['cameras' => 1]);
+        } else {
+            return $this->actionPhotos($id, $view, $imageId, $type, $date, $currentPage, $limit);
+        }
+    }
+
+    /**
+     * @param $id
+     * @param string $view
+     * @param null $imageId
+     * @param string $type
+     * @param null $date
+     * @param null $currentPage
+     * @param int $limit
+     * @return string
+     */
     public function actionPhotos($id, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
     {
 
@@ -211,12 +266,12 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
 
             if ($view == 'one') {
                 $this->footer = $this->renderPartial('footers/one', compact('type', 'date', 'id', 'imageId', 'filterTypes'), true);
-
-                return $this->render('one', compact('images', 'camera', 'view', 'imageId', 'isLast', 'currentImage', 'previous', 'next', 'type', 'date', 'json', 'pagesCount', 'currentPage', 'limit', 'id'));
+                return $this->render('one', compact('images', 'camera', 'view', 'imageId', 'isLast',
+                    'currentImage', 'previous', 'next', 'type', 'date', 'json', 'pagesCount', 'currentPage', 'limit', 'id'));
             } elseif ($view == 'thumbs') {
                 $this->footer = $this->renderPartial('footers/thumbs', compact('type', 'date', 'id', 'imageId', 'filterTypes'), true);
-
-                return $this->render('thumbs', compact('images', 'camera', 'view', 'imageId', 'isLast', 'currentImage', 'previous', 'next', 'type', 'date', 'json', 'pagesCount', 'currentPage', 'limit', 'id'));
+                return $this->render('thumbs', compact('images', 'camera', 'view', 'imageId', 'isLast', 'currentImage',
+                    'previous', 'next', 'type', 'date', 'json', 'pagesCount', 'currentPage', 'limit', 'id'));
             } elseif ($view == 'full') {
                 return $this->render('full', compact('images', 'camera', 'view'));
             }

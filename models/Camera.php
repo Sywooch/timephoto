@@ -331,12 +331,22 @@ class Camera extends \yii\db\ActiveRecord
         return $filterTypes;
     }
 
-    public static function getCameras()
+    public static function getCameras($id = false)
     {
-        $cameras = Camera::find()->where([
-            'user_id' => Yii::$app->user->identity->userId,
-            'deleted' => 0
-        ])->orderBy(['location_id' => SORT_DESC, 'id' => SORT_DESC])->all();
+        $cameras = [];
+
+        if($id){
+
+            $cameras[] = Camera::findOne(['id' => $id]);
+
+        } else {
+
+            $cameras = Camera::find()->where([
+                'user_id' => Yii::$app->user->identity->userId,
+                'deleted' => 0
+            ])->orderBy(['location_id' => SORT_DESC, 'id' => SORT_DESC])->all();
+
+        }
 
         $cameraMenu = [];
         $camerasArray = [];

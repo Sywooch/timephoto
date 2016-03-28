@@ -10,8 +10,8 @@ namespace app\modules\cabinet\components;
 
 use app\components\Controller;
 use app\models\Camera;
-use app\models\Registrator;
 use Yii;
+use yii\db\Expression;
 
 /**
  * Site controller
@@ -23,10 +23,10 @@ class CabinetController extends Controller
     public $activeCamera = null;
     public $activeLocation = null;
     public $activeCategory = null;
-    public $cameras;
-    public $jsonCameras;
-    public $jsonRegistrators;
-    public $registrators;
+    public $cameras = [];
+    public $jsonCameras = '';
+    public $jsonRegistrators = '';
+    public $registrators = [];
 
     public function init()
     {
@@ -37,13 +37,24 @@ class CabinetController extends Controller
         }
 
         if (!Yii::$app->user->isGuest) {
-            list($cameras, $camerasArray) = Camera::getCameras();
-            $this->cameras = $cameras;
-            $this->jsonCameras = json_encode($camerasArray);
+            if (Yii::$app->request->get('token')) {
 
-            list($registrators, $registratorArray) = Registrator::getRegistrators();
-            $this->registrators = $registrators;
-            $this->jsonRegistrators = json_encode($registratorArray);
+                $id = Camera::find()->select('id')->where(new Expression('MD5(CONCAT(id, created)) = :token'), [':token' => Yii::$app->request->get('token')])->scalar();
+                list($cameras, $camerasArray) = Camera::getCameras($id);
+                $this->cameras = $cameras;
+                $this->jsonCameras = json_encode($camerasArray);
+
+            } else {
+
+                list($cameras, $camerasArray) = Camera::getCameras();
+                $this->cameras = $cameras;
+                $this->jsonCameras = json_encode($camerasArray);
+
+                //list($registrators, $registratorArray) = Registrator::getRegistrators();
+                //$this->registrators = $registrators;
+                //$this->jsonRegistrators = json_encode($registratorArray);
+
+            }
         }
 
     }
@@ -56,9 +67,15 @@ class CabinetController extends Controller
 
         if (!Yii::$app->user->isGuest) {
             if (Yii::$app->user->identity->role == 'USER') {
+
+                Yii::$app->view->blocks['menu_bar'] = $this->renderPartial('/layouts/menu');
+
                 return true;
             }
-            if (Yii::$app->user->identity->role == 'ADDITIONAL_USER') {
+            elseif (Yii::$app->user->identity->role == 'ADDITIONAL_USER') {
+
+                Yii::$app->view->blocks['menu_bar'] = $this->renderPartial('/layouts/menu');
+
                 return true;
             }
         }
