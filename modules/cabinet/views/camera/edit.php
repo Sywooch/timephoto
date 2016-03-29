@@ -191,7 +191,7 @@ $i = 1;
                     </div>
                     <div class="col-sm-9">
                         <div class="">
-                            <pre>http://cam.loc/cabinet/camera/edit/9</pre>
+                            <textarea rows="10" cols="50"><?= $camera->getPublicCode()?></textarea>
                         </div>
                     </div>
                 </div>

@@ -47,9 +47,13 @@ $config = [
                 //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 //'<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
+                // Автоматическое создание превью, для публичных камер
+                'camera/<id>/image/<preset:[a-z0-z_-]+>' => 'imageapi/image/get',
+
                 'cabinet/camera/edit/<id>' => 'cabinet/camera/edit',
                 'cabinet/object' => 'cabinet/object/index',
                 'cabinet/camera' => 'cabinet/camera/index',
+                'cabinet/public' => 'cabinet/camera/public',
                 'cabinet/user/account' => 'cabinet/user/index',
                 'login' => 'site/login',
                 'logout' => 'site/logout',
@@ -86,7 +90,9 @@ $config = [
         'cart' => [
             'class' => 'yz\shoppingcart\ShoppingCart',
             'cartId' => 'my_application_cart',
-        ]
+        ],
+        // Генерация картинок для превьюшек или заданного по пресету размеру
+        'image' => require(__DIR__ . '/image_cache.php'),
     ],
     'modules' => [
         'cabinet' => [
@@ -94,6 +100,9 @@ $config = [
         ],
         'admin' => [
             'class' => 'app\modules\admin\Module',
+        ],
+        'imageapi' => [
+            'class' => 'app\modules\imageapi\Module',
         ],
     ],
     'params' => $params,

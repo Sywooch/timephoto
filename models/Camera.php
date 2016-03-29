@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\Helper;
 use Yii;
@@ -94,7 +95,8 @@ class Camera extends \yii\db\ActiveRecord
             [['ftp_login'], 'unique'],
             [['ftp_home_dir'], 'unique'],
             [['format'], 'string', 'max' => 50],
-            [['created'], 'safe']
+            [['created'], 'safe'],
+            [['public'], 'integer'],
         ];
     }
 
@@ -381,6 +383,21 @@ class Camera extends \yii\db\ActiveRecord
             0 => "Доступ по паролю",
             1 => "Свободный доступ",
         ];
+    }
+
+    /**
+     * Example: http://timephoto.loc:8082/cabinet/public?token=33c6ffb2843fdd44cf099fe5ca0323a8&view=one
+     * @param string $preset
+     * @return string
+     */
+    public function getPublicCode($preset = 'standart'){
+
+        $imageCode = Html::img(Url::to(['camera/'.$this->id.'/image/' . $preset], true));
+
+        $imageUri = Url::to(['/cabinet/public'], true) . '?token=' . md5($this->id . $this->created);
+
+        return Html::a($imageCode, $imageUri);
+
     }
 
 }

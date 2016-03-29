@@ -168,6 +168,15 @@ $i = 1;
                     <?php echo $form->field($newCamera, 'ftp_password')->textInput(['class' => 'form-control col-md-10', "data-toggle" => "tooltip", "data-placement" => "bottom", "title" => "Используйте для соединения камеры с FTP сервером"]); ?>
                 </div>
             </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <?php echo Html::label($newCamera->attributeLabels()['format'], ['class' => 'control-label pull-left']) ?>
+                    </div>
+                    <div class="col-sm-9">
+                        <?php echo $form->field($newCamera, 'format')->textInput(['class' => 'form-control col-md-10',
+                            'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Используйте для распознания формата наименовая файлов']); ?>
+                    </div>
+                </div>
         </div>
     </div>
     <div class="col-md-12 ">
