@@ -73,6 +73,21 @@ class Device extends \yii\db\ActiveRecord implements CartPositionInterface
         ];
     }
 
+    public function getFormattedPrice(){
+        $return = preg_replace(
+            '~' .
+            '(\d' . // число
+            '(?=' . // после есть (логическое есть)
+            '(?:\d{3})+' . // число
+            '(?!\d)' . // после нет числа (логическое отрицание)
+            ')' .
+            ')' .
+            '~s', "\\1 ", $this->price);
+        //    '~s', "\\1 </span><span class=f_price2>", $this->price);
+        //$return = '<span class="f_price">' . $return . '</span>';
+        return $return;
+    }
+
     /**
      * @inheritdoc
      */

@@ -3,7 +3,7 @@
 return [
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'admin@example.com',
-    'host' => 'timephoto.ru',
+    'host' => 'cam.loc',
     'cameraDir' => '/home/users',
-    'imageDir' => 'camfiles',
+    'imageDir' => 'public',
 ];

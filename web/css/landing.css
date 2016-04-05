@@ -382,3 +382,5 @@ body .container .pros-2 {
   padding: 25px 15px;
   vertical-align: middle;
 }
+
+.header a:hover{color: #fff; text-decoration: none;}

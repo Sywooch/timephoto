@@ -5,6 +5,8 @@
 
 use yii\helpers\Url;
 
+$activeCategory = '';
+
 $i = 1;
 ?>
 <!DOCTYPE html>
@@ -32,7 +34,7 @@ $i = 1;
     </div>
     <div class="row">
         <div class="col-md-12 devices">
-            <div class="col-md-6 product-wrap">
+            <div class="col-md-8 product-wrap">
                 <div class="col-md-5">
                     <div class="col-md-12 images">
                         <div class="row text-center">
@@ -48,7 +50,10 @@ $i = 1;
                                      src="<?= Yii::$app->homeUrl . 'uploads/device_photos/' . $device->devicePhotos[0]->file_name ?>">
                             </a>
                         </div>
-                        <a href="<?=Url::to(['/catalog/add-to-cart', 'id'=>$device->id])?>" class="btn btn-cart">Купить</a>
+                        <div class="product-footer">
+                            <span class="price"><?=$device['FormattedPrice']?> руб</span>
+                            <a href="<?=Url::to(['/catalog/add-to-cart', 'id'=>$device->id])?>" class="btn btn-cart">Купить</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-7 product-description">
@@ -67,14 +72,8 @@ $i = 1;
                     <p><?= $device->description ?></p>
                 </div>
             </div>
-            <div class="col-md-6 cart">
-                <?php
-                foreach (Yii::$app->cart->getPositions() as $pos) {
-                    echo 'id: ' . $pos->name . ', cost: ' . $pos->getCost().', qqq: ' . $pos->getQuantity();
-                }
-                //echo $itemsCount = Yii::$app->cart->getCount();
-                //echo $total = Yii::$app->cart->getCost();
-                ?>
+            <div class="col-md-4 cart">
+                <?=$this->render('elements/cart');?>
             </div>
         </div>
     </div>

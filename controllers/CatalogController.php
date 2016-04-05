@@ -13,6 +13,7 @@ use app\components\Controller;
 use app\models\Device;
 use app\models\DeviceCategory;
 use app\components\Controller as BaseContoller;
+use yii\helpers\Json;
 use yz\shoppingcart\ShoppingCart;
 use yii\web\NotFoundHttpException;
 use Yii;
@@ -50,6 +51,15 @@ class CatalogController extends BaseContoller
 
     }
 
+
+    public function actionCart(){
+        $categories = DeviceCategory::find()->asArray()->all();
+
+        return $this->renderPartial('cart', compact('devices', 'categories', 'activeCategory'));
+    }
+
+
+
     public function actionAddToCart($id)
     {
         $cart = Yii::$app->cart;
@@ -62,5 +72,15 @@ class CatalogController extends BaseContoller
         throw new NotFoundHttpException();
     }
 
+    public function actionRemoveFromCart($id)
+    {
+        if(!Yii::$app->request->isAjax){
+            throw new NotFoundHttpException();
+        }
+        $cart = Yii::$app->cart;
+        $cart->removeById($id);
+        return Json::encode(['success'=> true]);
+
+    }
 
 }
