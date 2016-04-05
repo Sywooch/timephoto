@@ -127,7 +127,7 @@ class Camera extends \yii\db\ActiveRecord
             'registrator_id' => 'Registrator ID',
             'camera_registrator_id' => 'Camera Registrator ID',
             'format' => 'Формат файлов',
-            'public' => 'Свободный доступ',
+            'public' => 'Разрешить публичный доступ',
         ];
     }
 
@@ -380,8 +380,8 @@ class Camera extends \yii\db\ActiveRecord
 
     public static function getPublicListLabels(){
         return [
-            0 => "Доступ по паролю",
-            1 => "Свободный доступ",
+            0 => "Запретить публичный доступ",
+            1 => "Разрешить публичный доступ",
         ];
     }
 
@@ -390,13 +390,11 @@ class Camera extends \yii\db\ActiveRecord
      * @param string $preset
      * @return string
      */
-    public function getPublicCode($preset = 'standart'){
+    public function getPublicCode(){
 
-        $imageCode = Html::img(Url::to(['camera/'.$this->id.'/image/' . $preset], true));
+        $src = Url::to(['camera', 'id' => $this->id], true);
 
-        $imageUri = Url::to(['/cabinet/public'], true) . '?token=' . md5($this->id . $this->created);
-
-        return Html::a($imageCode, $imageUri);
+        return "<script src='{$src}' id='timephoto-camera-{$this->id}'></script>";
 
     }
 

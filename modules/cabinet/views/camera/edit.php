@@ -182,7 +182,7 @@ $i = 1;
                 </div>
                 <div class="form-group checkboxes-public">
                     <div class="col-lg-9 col-md-12 col-sm-12 col-lg-offset-3">
-                        <?php echo $form->field($camera, 'public')->radioList(\app\models\Camera::getPublicListLabels()); ?>
+                        <?php echo $form->field($camera, 'public')->checkbox(); ?>
                     </div>
                 </div>
                 <div class="form-group public-link-wrap <?=$camera->public ? "show" : "" ?>">
