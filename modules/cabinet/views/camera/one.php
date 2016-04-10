@@ -168,8 +168,8 @@ switch ($_COOKIE['GalleryOneHeight']) {
                                     <li>
                                         <div class="row view-menu">
 
-                                                <a href="#" class="js-sort <?=($_COOKIE['GalleryOneSort'] == 'desc') ? '' : 'hidden'?>" data-sort="desc">Обратная сортировка </a>
-                                                <a href="#" class="js-sort <?=($_COOKIE['GalleryOneSort'] == 'asc') ? '' : 'hidden'?>" data-sort="asc">Прямая сортировка </a>
+                                            <a href="#" class="js-sort <?=($_COOKIE['GalleryOneSort'] != 'desc') ? '' : 'hidden'?>" data-sort="desc">Обратная сортировка</a>
+                                            <a href="#" class="js-sort <?=($_COOKIE['GalleryOneSort'] != 'asc') ? '' : 'hidden'?>" data-sort="asc">Прямая сортировка</a>
                                             <button class="btn btn-inverse btn-sm size-change <?= $column2 ?>"
                                                     data-size="6" data-column="2">2
                                             </button>
@@ -355,7 +355,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
     var pagesCount = <?=$pagesCount?>;
     var currentPage = <?=$currentPage?>;
     var limit = $.cookie('GalleryOneHeight') * $.cookie('GalleryOneColumn');
-    var sort = $.cookie('GalleryOneSort');
+    var sort = "<?=$_COOKIE['GalleryOneSort']?>";
     var magnifierEnabled = false;
     var currentScale = 1;
     var previousScale = 1;
@@ -510,10 +510,11 @@ switch ($_COOKIE['GalleryOneHeight']) {
         $('.js-sort').removeClass('hidden');
         $(this).addClass('hidden');
         sort = self.data('sort');
+        console.log(sort);
         if (sort == 'asc') {
-            $.cookie('GalleryOneSort', 'desc');
-        } else {
             $.cookie('GalleryOneSort', 'asc');
+        } else {
+            $.cookie('GalleryOneSort', 'desc');
         }
         moveToPage(1);
     });

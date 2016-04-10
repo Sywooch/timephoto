@@ -258,11 +258,10 @@ switch ($_COOKIE['GalleryHeight']) {
                     <ul class="dropdown-menu" aria-labelledby="change-view">
                         <li>
                             <div class="row view-menu">
-                                <?php if($_COOKIE['GallerySort'] == 'desc'): ?>
-                                    <a href="#" class="js-sort" data-sort="desc">Обратная сортировка </a>
-                                <?php else: ?>
-                                    <a href="#" class="js-sort" data-sort="asc">Прямая сортировка </a>
-                                <?php endif;?>
+
+                                <a href="#" class="js-sort <?=($_COOKIE['GallerySort'] != 'desc') ? '' : 'hidden'?>" data-sort="desc">Обратная сортировка</a>
+                                <a href="#" class="js-sort <?=($_COOKIE['GallerySort'] != 'asc') ? '' : 'hidden'?>" data-sort="asc">Прямая сортировка</a>
+
                                 <button class="btn btn-inverse btn-sm <?= $column2 ?> size-change" data-size="6"
                                         data-column="2">2
                                 </button>
@@ -332,7 +331,7 @@ switch ($_COOKIE['GalleryHeight']) {
     var pagesCount = <?=$pagesCount?>;
     var currentPage = <?=$currentPage?>;
     var limit = $.cookie('GalleryColumn') * $.cookie('GalleryHeight');
-    var sort = $.cookie('GallerySort');
+    var sort = "<?=$_COOKIE['GallerySort']?>";
     var cameraId = <?=$id?>;
     var magnifierEnabled = false;
     var currentScale = 1;
@@ -408,17 +407,16 @@ switch ($_COOKIE['GalleryHeight']) {
     //Изменение размеров превью
     $(document).on('click', '.js-sort', function () {
         var self = $(this);
+        $('.js-sort').removeClass('hidden');
+        $(this).addClass('hidden');
         sort = self.data('sort');
-        moveToPage(1);
+        console.log(sort);
         if (sort == 'asc') {
-            self.data('sort', 'desc');
-            $.cookie('GallerySort', 'desc');
-            self.html('Обратная сортировка');
-        } else {
-            self.data('sort', 'asc');
             $.cookie('GallerySort', 'asc');
-            self.html('Прямая сортировка');
+        } else {
+            $.cookie('GallerySort', 'desc');
         }
+        moveToPage(1);
     });
 
     $(document).on('click', '.size-change', function () {

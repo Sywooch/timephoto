@@ -102,11 +102,9 @@ $cameras = array_values($cameras)
                     <td class=" text-middle">
                         <select class="form-control count js-change-btn-type">
                             <option value="1">Удалить все</option>
-                            <?php if (Yii::$app->user->identity->getTariffId() !== 1): ?>
                                 <?php for ($i = 2; $i <= min(10, $camera->countImages()); $i++): ?>
                                     <option value="<?= $i ?>">Оставить каждую <?= $i ?>-ю</option>
                                 <?php endfor; ?>
-                            <?php endif; ?>
                         </select>
                     </td>
                     <td class="text-center text-middle">
