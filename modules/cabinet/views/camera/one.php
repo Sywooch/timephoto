@@ -30,10 +30,10 @@ $this->registerJsFile(Yii::$app->homeUrl . "js/slashman-glass.js", ['position' =
 
 $i = 1;
 
-$boot_class = 'col-md-6';
-if (!empty($_COOKIE['GalleryOneColumn'])) {
-    $boot_class = 'col-md-' . 12 / $_COOKIE['GalleryOneColumn'];
-}
+$_COOKIE['GalleryOneColumn'] = isset($_COOKIE['GalleryOneColumn']) ? $_COOKIE['GalleryOneColumn'] : 3;
+$_COOKIE['GalleryOneHeight'] = isset($_COOKIE['GalleryOneHeight']) ? $_COOKIE['GalleryOneHeight'] : 8;
+$_COOKIE['GalleryOneSort'] = isset($_COOKIE['GalleryOneSort']) ? $_COOKIE['GalleryOneSort'] : 'desc';
+$boot_class = 'col-md-' . 12 / $_COOKIE['GalleryOneColumn'];
 
 $column2 = $column3 = '';
 switch ($_COOKIE['GalleryOneColumn']) {
@@ -167,8 +167,9 @@ switch ($_COOKIE['GalleryOneHeight']) {
                                 <ul class="dropdown-menu" aria-labelledby="change-view">
                                     <li>
                                         <div class="row view-menu">
-                                            <a href="#" class="js-sort" data-sort="asc">Прямая сортировка </a>
 
+                                                <a href="#" class="js-sort <?=($_COOKIE['GalleryOneSort'] == 'desc') ? '' : 'hidden'?>" data-sort="desc">Обратная сортировка </a>
+                                                <a href="#" class="js-sort <?=($_COOKIE['GalleryOneSort'] == 'asc') ? '' : 'hidden'?>" data-sort="asc">Прямая сортировка </a>
                                             <button class="btn btn-inverse btn-sm size-change <?= $column2 ?>"
                                                     data-size="6" data-column="2">2
                                             </button>
@@ -354,7 +355,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
     var pagesCount = <?=$pagesCount?>;
     var currentPage = <?=$currentPage?>;
     var limit = $.cookie('GalleryOneHeight') * $.cookie('GalleryOneColumn');
-    var sort = 'desc';
+    var sort = $.cookie('GalleryOneSort');
     var magnifierEnabled = false;
     var currentScale = 1;
     var previousScale = 1;
@@ -373,7 +374,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
                     page: page,
                     limit: limit,
                     date: date,
-                    sort: sort
+                    sort: $.cookie('GalleryOneSort')
                 },
                 '&', 'get'),
             success: function (images) {
@@ -506,15 +507,15 @@ switch ($_COOKIE['GalleryOneHeight']) {
     //AJAX
     $(document).on('click', '.js-sort', function () {
         var self = $(this);
+        $('.js-sort').removeClass('hidden');
+        $(this).addClass('hidden');
         sort = self.data('sort');
-        moveToPage(1);
         if (sort == 'asc') {
-            self.data('sort', 'desc');
-            self.html('Обратная сортировка');
+            $.cookie('GalleryOneSort', 'desc');
         } else {
-            self.data('sort', 'asc');
-            self.html('Прямая сортировка');
+            $.cookie('GalleryOneSort', 'asc');
         }
+        moveToPage(1);
     });
 
     $(document).on('click', '.nextImage', function () {

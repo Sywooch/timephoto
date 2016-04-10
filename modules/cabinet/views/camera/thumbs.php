@@ -26,6 +26,10 @@ $this->registerJsFile(Yii::$app->homeUrl . "js/slashman-glass.js", ['position' =
 
 $i = 1;
 
+$_COOKIE['GalleryColumn'] = isset($_COOKIE['GalleryColumn']) ? $_COOKIE['GalleryColumn'] : 4;
+$_COOKIE['GalleryHeight'] = isset($_COOKIE['GalleryHeight']) ? $_COOKIE['GalleryHeight'] : 4;
+$_COOKIE['GallerySort'] = isset($_COOKIE['GallerySort']) ? $_COOKIE['GallerySort'] : 'desc';
+
 $boot_class = 'col-md-3';
 if (!empty($_COOKIE['GalleryColumn'])) {
     $boot_class = 'col-md-' . 12 / $_COOKIE['GalleryColumn'];
@@ -254,7 +258,11 @@ switch ($_COOKIE['GalleryHeight']) {
                     <ul class="dropdown-menu" aria-labelledby="change-view">
                         <li>
                             <div class="row view-menu">
-                                <a href="#" class="js-sort" data-sort="asc">Прямая сортировка </a>
+                                <?php if($_COOKIE['GallerySort'] == 'desc'): ?>
+                                    <a href="#" class="js-sort" data-sort="desc">Обратная сортировка </a>
+                                <?php else: ?>
+                                    <a href="#" class="js-sort" data-sort="asc">Прямая сортировка </a>
+                                <?php endif;?>
                                 <button class="btn btn-inverse btn-sm <?= $column2 ?> size-change" data-size="6"
                                         data-column="2">2
                                 </button>
@@ -324,7 +332,7 @@ switch ($_COOKIE['GalleryHeight']) {
     var pagesCount = <?=$pagesCount?>;
     var currentPage = <?=$currentPage?>;
     var limit = $.cookie('GalleryColumn') * $.cookie('GalleryHeight');
-    var sort = 'desc';
+    var sort = $.cookie('GallerySort');
     var cameraId = <?=$id?>;
     var magnifierEnabled = false;
     var currentScale = 1;
@@ -404,9 +412,11 @@ switch ($_COOKIE['GalleryHeight']) {
         moveToPage(1);
         if (sort == 'asc') {
             self.data('sort', 'desc');
+            $.cookie('GallerySort', 'desc');
             self.html('Обратная сортировка');
         } else {
             self.data('sort', 'asc');
+            $.cookie('GallerySort', 'asc');
             self.html('Прямая сортировка');
         }
     });

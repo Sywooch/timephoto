@@ -42,6 +42,13 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
             setcookie("GalleryHeight", 4);
         }
 
+        if (!isset($_COOKIE['GallerySort'])) {
+            setcookie("GallerySort", 'asc');
+        }
+        if (!isset($_COOKIE['GalleryOneSort'])) {
+            setcookie("GalleryOneSort", 'asc');
+        }
+
         return true;
     }
 
@@ -206,8 +213,18 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
 
             //$imagesCriteria->offset = $offset;
 
+            if (isset($_COOKIE['GallerySort']) && isset($_COOKIE['GalleryOneSort'])) {
+                if ($view == 'one') {
+                    $sort = ($_COOKIE['GalleryOneSort'] == 'desc') ? SORT_DESC : SORT_ASC;
+                } else {
+                    $sort = ($_COOKIE['GallerySort'] == 'desc') ? SORT_DESC : SORT_ASC;
+                }
+            } else {
+                $sort = SORT_DESC;
+            }
+
             //Find corresponding Images
-            $images = Image::find()->where($imagesCriteria)->orderBy(['created' => SORT_DESC])->limit($limit)->all();
+            $images = Image::find()->where($imagesCriteria)->orderBy(['created' => $sort])->limit($limit)->all();
 
             $previous = null;
             $next = null;
