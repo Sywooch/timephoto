@@ -8,10 +8,10 @@ var fs = require('fs-extra');
  *
  */
 function guessCorum(fileName) {
-    if (fileName.indexOf('m') > 0) {
+    if (fileName.substr(-1) == 'm') {
         return 'MOVE';
     }
-    if (fileName.indexOf('i') > 0) {
+    if (fileName.substr(-1) == 'i') {
         return 'ALERT';
     }
 
@@ -33,10 +33,17 @@ function guessHicVision(fileName) {
 }
 
 /**
- *
+ * Пример: ---------yyyymmdd-hhiiss
  */
 function extractDate(file, mask) {
-    var formatData = {'y': '-', 'm': '-', 'd': ' ', 'h': ':', 'i': ':', 's': ''};
+    var formatData = {
+        'y': '-', 
+        'm': '-', 
+        'd': ' ', 
+        'h': ':', 
+        'i': ':', 
+        's': ''
+    };
     var data = '';
     for (var index in formatData) {
         var p = stripos(mask, index);
@@ -89,11 +96,13 @@ function guessImageType(fileName) {
     var guessHicVisionResult = guessHicVision(fileName);
     var guessCorumResult = guessCorum(fileName);
 
-    if (guessHicVisionResult)
+    if (guessHicVisionResult){
         return guessHicVisionResult;
+    }    
 
-    if (guessCorumResult)
+    if (guessCorumResult){
         return guessCorumResult;
+    }    
 
     return 'SCHEDULE';
 }

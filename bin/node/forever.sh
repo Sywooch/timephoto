@@ -3,11 +3,28 @@
 export PATH=$PATH:/usr/bin
 export NODE_PATH=$NODE_PATH:/usr/lib/node_modules
 APPLICATION_PATH="$(dirname `readlink -f $0 || realpath $0`)"
+NODE="$(which nodejs)"
 FOREVER="$(which forever)"
+CONVERTER="$(which convert)"
 MIN_UPTIME=5000
 SPIN_SLEEP_TIM=2000
 USER="www-data"
 GROUP="www-data"
+
+if [ -z "$NODE" ]; then
+    echo "Please run: apt-get install nodejs npm && ln -s \"$(which nodejs)\" /usr/bin/node"
+    exit 0
+fi
+
+if [ -z "$FOREVER" ]; then
+    echo "Please run: npm -g install forever forever-monitor"
+    exit 0
+fi
+
+if [ -z "$CONVERTER" ]; then
+    echo "Please run: apt-get install imagemagick"
+    exit 0
+fi
 
 APPLICATIONS=(
   "photos.js"

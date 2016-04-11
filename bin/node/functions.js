@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 
 function processArray(items, process) {
     var todo = items.concat();
@@ -45,7 +46,7 @@ function str_replace(search, replace, subject) {
     return subject.split(search).join(replace);
 }
 
-function directoryWalk(dir, done, rootDir) {
+function directoryWalk(dir, allowExt, done, rootDir) {
     var results = [];
     if (typeof rootDir === 'undefined')
         rootDir = dir;
@@ -61,11 +62,13 @@ function directoryWalk(dir, done, rootDir) {
 
         fs.stat(dir + '/' + file, function (err, stat) {
 
-            if (file.indexOf('.ftpquota') < 0 && file.indexOf('.thumbs') < 0) {
+            var ext = path.extname(file);
+
+            if (file.indexOf('.ftpquota') < 0 && file.indexOf('.thumbs') < 0 && allowExt.indexOf(ext) > -1) {
 
                 if (stat && stat.isDirectory()) {
 
-                    directoryWalk(file, function (err, res) {
+                    directoryWalk(file, allowExt, function (err, res) {
 
                         results = results.concat(res);
                         next();

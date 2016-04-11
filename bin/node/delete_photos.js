@@ -70,9 +70,12 @@ DeletePhotos.prototype.run = function () {
 
     Camera.findAll().then(function (cameras) {
         Functions.processArray(cameras, function (camera) {
+
             var storageTime = camera.dataValues['storage_time'];
 
-            if (!storageTime) storageTime = 1;
+            if (!storageTime){
+                return;
+            }
 
             camera.getImages({
                 where: Sequelize.and({

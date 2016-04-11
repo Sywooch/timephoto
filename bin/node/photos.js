@@ -6,7 +6,7 @@ var colors = require('colors');
 var mkdirp = require('mkdirp').sync;
 var chownr = require('chownr').sync;
 var mime = require('mime');
-var exif = require('exiv2');
+//var exif = require('exiv2');
 //var gm = require('gm');
 var _0775 = parseInt('0775', 8);
 var _0664 = parseInt('0664', 8);
@@ -25,6 +25,7 @@ process.umask(0);
 var sequelize = new Sequelize(Settings.mysql.db_name, Settings.mysql.db_login, Settings.mysql.db_password, {
     'host': 'localhost',
     'logging': false,
+    'timezone': '+03:00' // Выставляем Москву + 3 часа
 });
 
 var Tariff = sequelize.define('Tariff', {
@@ -102,7 +103,7 @@ PhotoScan.prototype.run = function () {
                     chownr(camera_dir, user, group);
                 }
 
-                Functions.directoryWalk(ftp_homedir, function (walkError, files) {
+                Functions.directoryWalk(ftp_homedir, ['.jpeg', '.jpg'], function (walkError, files) {
 
                     if (files.length > 0) {
 
