@@ -626,5 +626,8 @@ body #page-container .content.gmap-content.gmap-content .gmap {
 .checkboxes-public label + label {margin-left: 25px;}
 .checkboxes-public input[type=checkbox], input[type=radio] {margin: 0;}
 
+.field-camera-public{margin-top: 30px!important;}
 .public-link-wrap {display: none; }
+.public-link-wrap textarea{max-height: 80px; }
 .public-link-wrap.show {display: block; }
+.alert-name-file{background:rgba(199, 225, 222, 0.78); font-size:0.9em; padding: 10px; margin-top: 5px; border-radius: 7px;}

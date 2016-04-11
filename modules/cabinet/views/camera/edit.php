@@ -115,6 +115,21 @@ $i = 1;
                     <img src="<?= Yii::$app->homeUrl . 'uploads/camera_icons/' . $camera->icon_name ?>"/>
                 </div>
             <?php endif; ?>
+                <div class="form-group checkboxes-public">
+                    <div class="col-lg-9 col-md-12 col-sm-12 ">
+                        <?php echo $form->field($camera, 'public')->checkbox(); ?>
+                    </div>
+                </div>
+                <div class="form-group public-link-wrap <?=$camera->public ? "show" : "" ?>">
+                    <div class="col-sm-3">
+                        Публичная ссылка
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="">
+                            <textarea rows="10" cols="50"><?= $camera->getPublicCode()?></textarea>
+                        </div>
+                    </div>
+                </div>
         </div>
         <div class="col-md-6 col-md-offset-1">
             <div class="form-group">
@@ -176,25 +191,25 @@ $i = 1;
                         <?php echo Html::label($camera->attributeLabels()['format'], ['class' => 'control-label pull-left']) ?>
                     </div>
                     <div class="col-sm-9">
-                        <?php echo $form->field($camera, 'format')->textInput(['class' => 'form-control col-md-10',
-                            'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Используйте для распознания формата наименовая файлов']); ?>
+                        <?php echo $form->field($camera, 'format')->textInput(['class' => 'form-control col-md-10', 'data-toggle' => "tooltip", ]); ?>
+
+                    </div>
+                    <div class="col-sm-12 alert-name-file">
+                        <h5>Используйте маску для распознания имени файлов </h5>
+
+                        "<strong>-" </strong>- пропустить (необрабатывать) символ в имени файла <br>
+                        "<strong>yyyy</strong>" - указывает год в имени файла, например "2016"<br>
+                        "<strong>yy</strong>" - указывает год в имени файла, например "16"<br>
+                        "<strong>mm</strong>" - указывает месяц в имени файла, например "04"<br>
+                        "<strong>dd</strong>" - указывает день в имени файла, например "01"<br>
+                        "<strong>hh</strong>" - указывает часы в имени файла, например "23"<br>
+                        "<strong>ii</strong>" - указывает минуты в имени файла, например "15"<br>
+                        "<strong>ss</strong>" - указывает секунды в имени файла, например "15"<br>
+                        маска "<strong>---------------yyyymmddhhiiss</strong>" преобразует имя файла "<strong>MyNewHomeCamera20160401231515</strong>", получив время и дату <strong>01/04/16 23:15:15</strong>"
+
                     </div>
                 </div>
-                <div class="form-group checkboxes-public">
-                    <div class="col-lg-9 col-md-12 col-sm-12 col-lg-offset-3">
-                        <?php echo $form->field($camera, 'public')->checkbox(); ?>
-                    </div>
-                </div>
-                <div class="form-group public-link-wrap <?=$camera->public ? "show" : "" ?>">
-                    <div class="col-sm-3">
-                        Публичная ссылка
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="">
-                            <textarea rows="10" cols="50"><?= $camera->getPublicCode()?></textarea>
-                        </div>
-                    </div>
-                </div>
+
 
 
             <?php else: ?>
