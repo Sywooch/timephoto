@@ -26,13 +26,19 @@ class RemoveController extends \app\modules\cabinet\components\CabinetController
             ])->all();
 
             foreach ($images as $image) {
+
+                if(file_exists($image->absoluteFileName)){
+                    unlink($image->absoluteFileName);
+                }
+
+                if(file_exists($image->absoluteThubnailFileName)){
+                    unlink($image->absoluteThubnailFileName);
+                }
+
                 $img = Image::findOne($image['id']);
                 $img->deleted = '1';
                 $img->save(0);
 
-                unlink($image->absoluteFileName);
-
-                unlink($image->absoluteThubnailFileName);
             }
         }
     }

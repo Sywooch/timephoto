@@ -213,7 +213,7 @@ class Camera extends \yii\db\ActiveRecord
     {
 
         if (!file_exists($this->ftp_home_dir)) {
-            mkdir($this->ftp_home_dir, 0775, true);
+            mkdir($this->ftp_home_dir);
             chmod($this->ftp_home_dir, 0775);
         }
 

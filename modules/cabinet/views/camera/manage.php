@@ -101,17 +101,19 @@ $cameras = array_values($cameras)
                     </td>
                     <td class=" text-middle">
                         <select class="form-control count js-change-btn-type">
-                            <option value="1">Удалить все</option>
+                            <option value="1">Все</option>
+                            <?php if (Yii::$app->user->identity->getTariffId() !== 1): ?>
                                 <?php for ($i = 2; $i <= min(10, $camera->countImages()); $i++): ?>
                                     <option value="<?= $i ?>">Оставить каждую <?= $i ?>-ю</option>
                                 <?php endfor; ?>
+                            <?php endif; ?>
                         </select>
                     </td>
                     <td class="text-center text-middle">
                         <a href="#" class="btn btn-danger delete-images"
                            data-toggle="tooltip" data-placement="bottom"
                            title="Удаление каждой N-й фотографии за выбранную дату. Будьте внимательны, после удаления, востановить невозможно"
-                        >Удалить все</a>
+                        >Удалить за период</a>
                     </td>
                     <?php if (Yii::$app->user->identity->canCopy()): ?>
                         <td class="text-center text-middle">
@@ -163,9 +165,11 @@ $cameras = array_values($cameras)
                 to: $(tr).find('.to-time:first').val(),
                 count: $(tr).find('.count option:selected').val()
             }).done(function (response) {
-                if (response !== '0')
-                    swal("Удалено!", "Вы удалили " + response + " фото", "success"); else
+                if (response !== '0') {
+                    swal("Удаление", "Запрос на удаление фото отправлен", "success");
+                } else {
                     sweetAlert("Не найдено", "Фотографий за указанный период не найдено", "error");
+                }
             });
         });
     });
@@ -179,7 +183,7 @@ $cameras = array_values($cameras)
         var tr = $(this).closest('tr');
         var val = $(this).val();
         if (val == 1) {
-            tr.find('.delete-images').removeClass('btn-warning').addClass('btn-danger').html('Удалить все');
+            tr.find('.delete-images').removeClass('btn-warning').addClass('btn-danger').html('Удалить в дианазоне');
         } else {
             tr.find('.delete-images').removeClass('btn-danger').addClass('btn-warning').html('Прореживать');
         }

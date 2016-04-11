@@ -46,7 +46,11 @@ class AjaxController extends \app\modules\cabinet\components\CabinetController
                 $count = intval($_POST['count']);
                 if ($count <= 10 && $count >= 1) {
                     $imagesToDelete = [];
-                    $images = Image::find()->where('camera_id = :camera AND created > :from AND created < :to', [':camera' => $_POST['id'], ':from' => $_POST['from'], ':to' => $_POST['to']])->all();
+                    $images = Image::find()->where('camera_id = :camera AND created > :from AND created < :to', [
+                        ':camera' => $_POST['id'], 
+                        ':from' => $_POST['from'], 
+                        ':to' => $_POST['to']
+                    ])->all();
                     for ($i = 0; $i < count($images); $i++) {
                         if (($i + 1) % $count !== 0) {
                             $imagesToDelete[] = $images[$i]->id;

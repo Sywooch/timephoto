@@ -81,7 +81,7 @@
                     </td>
                     <td class=" text-middle">
                         <select class="form-control count">
-                            <option value="1">Удалить все</option>
+                            <option value="1">Удалить в дианазоне</option>
                             <?php if (Yii::$app->user->identity->getTariffId() !== 1): ?>
                                 <?php for ($i = 2; $i <= min(10, $camera->countImages()); $i++): ?>
                                     <option value="<?= $i ?>">Оставить каждую <?= $i ?>-ю</option>
@@ -134,10 +134,11 @@
                         count: $(tr).find('.count option:selected').val()
                     }
                 ).done(function (response) {
-                    if (response !== '0')
-                        swal("Удалено!", "Вы удалили " + response + " фото", "success");
-                    else
+                    if (response !== '0') {
+                        swal("Удаление", "Запрос на удаление фото отправлен", "success");
+                    } else {
                         sweetAlert("Не найдено", "Фотографий за указанный период не найдено", "error");
+                    }    
                 });
             });
     });
