@@ -392,7 +392,7 @@ class Camera extends \yii\db\ActiveRecord
      */
     public function getPublicCode(){
 
-        $src = Url::to(['camera', 'id' => $this->id], true);
+        $src = Url::to(['/camera', 'id' => $this->id], true);
 
         return "<script src='{$src}' id='timephoto-camera-{$this->id}'></script>";
 
