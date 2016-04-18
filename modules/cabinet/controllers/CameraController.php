@@ -43,10 +43,10 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
         }
 
         if (!isset($_COOKIE['GallerySort'])) {
-            setcookie("GallerySort", 'asc');
+            setcookie("GallerySort", 'desc');
         }
         if (!isset($_COOKIE['GalleryOneSort'])) {
-            setcookie("GalleryOneSort", 'asc');
+            setcookie("GalleryOneSort", 'desc');
         }
 
         return true;
