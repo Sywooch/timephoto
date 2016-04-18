@@ -60,18 +60,18 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
                     <td id="client-account"></td>
                     <td id="client-created"></td>
                     <td>Активен: <a href="#" id="client-active" data-type="select" data-pk=""
-                                    data-url="<?= $this->context->createUrl('/admin/client/editField') ?>"
+                                    data-url="<?= $this->context->createUrl('/admin/client/edit-field') ?>"
                                     data-name="active"></a></td>
                     <td>Тариф: <a href="#" id="client-tariff" data-type="select" data-pk=""
-                                  data-url="<?= $this->context->createUrl('/admin/client/editField') ?>"
+                                  data-url="<?= $this->context->createUrl('/admin/client/edit-field') ?>"
                                   data-name="tariff_id"></a></td>
                 </tr>
                 <tr>
                     <td><a href="#" id="client-login" data-type="text" data-pk=""
-                           data-url="<?= $this->context->createUrl('/admin/client/editField') ?>" data-name="login"></a>
+                           data-url="<?= $this->context->createUrl('/admin/client/edit-field') ?>" data-name="login"></a>
                     </td>
                     <td><a href="#" id="client-password" data-type="text" data-pk=""
-                           data-url="<?= $this->context->createUrl('/admin/client/editField') ?>"
+                           data-url="<?= $this->context->createUrl('/admin/client/edit-field') ?>"
                            data-name="password"></a></td>
                     <td id="client-balance"></td>
                     <td id="client-tariff-expires"></td>
@@ -154,9 +154,9 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
     <tr class="users-row">
         <td>{{id}}</td>
         <td><a href="#" data-type="text" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/user/editField') ?>" data-name="login">{{login}}</a></td>
+               data-url="<?= $this->context->createUrl('/admin/user/edit-field') ?>" data-name="login">{{login}}</a></td>
         <td><a href="#" data-type="text" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/user/editField') ?>"
+               data-url="<?= $this->context->createUrl('/admin/user/edit-field') ?>"
                data-name="password">{{password}}</a></td>
     </tr>
     {{/each}}
@@ -180,13 +180,13 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
     <tr class="camera-row">
         <td>{{id}}</td>
         <td><a href="#" data-type="text" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/camera/editField') ?>" data-name="name">{{name}}</a></td>
+               data-url="<?= $this->context->createUrl('/admin/camera/edit-field') ?>" data-name="name">{{name}}</a></td>
         <td><a href="#" data-type="text" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/camera/editField') ?>" data-name="ftp_password">{{ftp_password}}</a>
+               data-url="<?= $this->context->createUrl('/admin/camera/edit-field') ?>" data-name="ftp_password">{{ftp_password}}</a>
         </td>
         <td>{{totalSize}} Gb. <strong>{{occupiedPercent}}%</strong></td>
         <td><a href="#" data-type="select" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/camera/editField') ?>" data-name="enabled"
+               data-url="<?= $this->context->createUrl('/admin/camera/edit-field') ?>" data-name="enabled"
                data-value="{{enabled}}"></a></td>
     </tr>
     {{/each}}

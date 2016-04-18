@@ -52,7 +52,7 @@ $this->registerCssFile(Yii::$app->homeUrl . "template/plugins/DataTables-1.10.2/
                                     <?php endif; ?>
                                    data-name="<?= $tariffAttribute['name'] ?>"
                                    data-pk="<?= $tariffValue['id'] ?>"
-                                   data-url="<?= $this->context->createUrl('/admin/tariff/editField') ?>"
+                                   data-url="<?= $this->context->createUrl('/admin/tariff/edit-field') ?>"
                                     <?php if (in_array($tariffAttribute['name'], Tariff::getUnlimitedAttributes())): ?>
                                         data-title="-1 - Без ограничений"
                                     <?php endif; ?>
@@ -96,7 +96,7 @@ $this->registerCssFile(Yii::$app->homeUrl . "template/plugins/DataTables-1.10.2/
                                    data-type="text"
                                    data-name="price"
                                    data-pk="<?= $durationPrice['id'] ?>"
-                                   data-url="<?= $this->context->createUrl('/admin/tariff/editPrice') ?>"
+                                   data-url="<?= $this->context->createUrl('/admin/tariff/edit-price') ?>"
                                 >
                                     <?= $durationPrice['price'] ?>
                                 </a>

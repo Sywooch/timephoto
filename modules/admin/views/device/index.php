@@ -39,14 +39,14 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
                                         <td>
                                             <a href="#" data-type="text" data-name="name"
                                                data-pk="<?= $deviceCategory->id ?>"
-                                               data-url="<?= $this->context->createUrl('/admin/device/editCategory') ?>">
+                                               data-url="<?= $this->context->createUrl('/admin/device/edit-category') ?>">
                                                 <?= $deviceCategory->name ?>
                                             </a>
                                         </td>
                                         <td>
                                             <a href="#" data-type="select" data-name="active"
                                                data-pk="<?= $deviceCategory->id ?>"
-                                               data-url="<?= $this->context->createUrl('/admin/device/editCategory') ?>"
+                                               data-url="<?= $this->context->createUrl('/admin/device/edit-category') ?>"
                                                data-value="<?= $deviceCategory->active ?>"></a>
                                         </td>
                                         <td><i class="fa fa-close trigger text-danger delete-device-category"
@@ -97,26 +97,26 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
                                     <tr class="device-row" device-id="<?= $device->id ?>">
                                         <td>
                                             <a href="#" data-type="text" data-name="name" data-pk="<?= $device->id ?>"
-                                               data-url="<?= $this->context->createUrl('/admin/device/editDevice') ?>">
+                                               data-url="<?= $this->context->createUrl('/admin/device/edit-device') ?>">
                                                 <?= $device->name ?>
                                             </a>
                                         </td>
                                         <td>
                                             <a href="#" data-type="text" data-name="price" data-pk="<?= $device->id ?>"
-                                               data-url="<?= $this->context->createUrl('/admin/device/editDevice') ?>">
+                                               data-url="<?= $this->context->createUrl('/admin/device/edit-device') ?>">
                                                 <?= $device->price ?>
                                             </a>
                                         </td>
                                         <td>
                                             <a href="#" data-type="select" data-name="main_page"
                                                data-pk="<?= $device->id ?>"
-                                               data-url="<?= $this->context->createUrl('/admin/device/editDevice') ?>"
+                                               data-url="<?= $this->context->createUrl('/admin/device/edit-device') ?>"
                                                data-value="<?= $device->main_page ?>"></a>
                                         </td>
                                         <td>
                                             <a href="#" data-type="select" data-name="active"
                                                data-pk="<?= $device->id ?>"
-                                               data-url="<?= $this->context->createUrl('/admin/device/editDevice') ?>"
+                                               data-url="<?= $this->context->createUrl('/admin/device/edit-device') ?>"
                                                data-value="<?= $device->active ?>"></a>
                                         </td>
                                         <td><i class="fa fa-close trigger text-danger delete-device"
@@ -166,13 +166,13 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
                                 <tr class="feature-row" feature-id="<?= $feature->id ?>">
                                     <td>
                                         <a href="#" data-type="text" data-name="name" data-pk="<?= $feature->id ?>"
-                                           data-url="<?= $this->context->createUrl('/admin/device/editFeature') ?>">
+                                           data-url="<?= $this->context->createUrl('/admin/device/edit-feature') ?>">
                                             <?= $feature->name ?>
                                         </a>
                                     </td>
                                     <td>
                                         <a href="#" data-type="text" data-name="icon" data-pk="<?= $feature->id ?>"
-                                           data-url="<?= $this->context->createUrl('/admin/device/editFeature') ?>">
+                                           data-url="<?= $this->context->createUrl('/admin/device/edit-feature') ?>">
                                             <?= $feature->icon ?>
                                         </a>
                                     </td>
@@ -322,24 +322,24 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
     <tr class="device-row" device-id="{{id}}">
         <td>
             <a href="#" data-type="text" data-name="name" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/device/editDevice') ?>">
+               data-url="<?= $this->context->createUrl('/admin/device/edit-device') ?>">
                 {{name}}
             </a>
         </td>
         <td>
             <a href="#" data-type="text" data-name="price" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/device/editDevice') ?>">
+               data-url="<?= $this->context->createUrl('/admin/device/edit-device') ?>">
                 {{price}}
             </a>
         </td>
         <td>
             <a href="#" data-type="select" data-name="main_page" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/device/editDevice') ?>" data-value="{{main_page}}">
+               data-url="<?= $this->context->createUrl('/admin/device/edit-device') ?>" data-value="{{main_page}}">
             </a>
         </td>
         <td>
             <a href="#" data-type="select" data-name="active" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/device/editDevice') ?>" data-value="{{active}}">
+               data-url="<?= $this->context->createUrl('/admin/device/edit-device') ?>" data-value="{{active}}">
             </a>
         </td>
         <td><i class="fa fa-close trigger text-danger delete-device" device-id="{{id}}"></i></td>
@@ -351,13 +351,13 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
     <tr class="device-category-row" device-category-id="{{id}}">
         <td>
             <a href="#" data-type="text" data-name="name" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/device/editCategory') ?>">
+               data-url="<?= $this->context->createUrl('/admin/device/edit-category') ?>">
                 {{name}}
             </a>
         </td>
         <td>
             <a href="#" data-type="select" data-name="active" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/device/editCategory') ?>" data-value="{{active}}"></a>
+               data-url="<?= $this->context->createUrl('/admin/device/edit-category') ?>" data-value="{{active}}"></a>
         </td>
         <td><i class="fa fa-close trigger text-danger delete-device-category" device-category-id="{{id}}"></i></td>
     </tr>
@@ -368,13 +368,13 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/handlebars.js", ['position' => yi
     <tr class="feature-row" feature-id="{{id}}">
         <td>
             <a href="#" data-type="text" data-name="name" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/device/editFeature') ?>">
+               data-url="<?= $this->context->createUrl('/admin/device/edit-feature') ?>">
                 {{name}}
             </a>
         </td>
         <td>
             <a href="#" data-type="text" data-name="icon" data-pk="{{id}}"
-               data-url="<?= $this->context->createUrl('/admin/device/editFeature') ?>">
+               data-url="<?= $this->context->createUrl('/admin/device/edit-feature') ?>">
                 {{icon}}
             </a>
         </td>
