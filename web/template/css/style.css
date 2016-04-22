@@ -803,7 +803,9 @@ label {
 
 
 /* 2.5 Content & content elements */
-
+.public-cabinet .content {
+    margin: 0px 0px 0px 0px;
+.}
 .content {
     margin: 0px 0px 0px 220px;
     padding: 20px 25px;

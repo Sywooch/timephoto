@@ -52,8 +52,10 @@ $config = [
 
                 'cabinet/camera/edit/<id>' => 'cabinet/camera/edit',
                 'cabinet/object' => 'cabinet/object/index',
-                'cabinet/camera' => 'cabinet/camera/index',
-                'cabinet/public' => 'cabinet/camera/public',
+                'public_cabinet/camera' => 'public/camera/index',
+                'public_cabinet/public' => 'public/camera/public',
+                'public_cabinet/camera' => 'public_cabinet/camera/index',
+                'public_cabinet/public' => 'public_cabinet/camera/public',
                 'cabinet/user/account' => 'cabinet/user/index',
                 'login' => 'site/login',
                 'logout' => 'site/logout',
@@ -97,6 +99,9 @@ $config = [
     'modules' => [
         'cabinet' => [
             'class' => 'app\modules\cabinet\Module',
+        ],
+        'public_cabinet' => [
+            'class' => 'app\modules\public_cabinet\Module',
         ],
         'admin' => [
             'class' => 'app\modules\admin\Module',
