@@ -147,17 +147,15 @@ $i = 1;
                     ]); ?>
                 </div>
             </div>
-            <?php /*
-      <div class="form-group">
-        <div class="col-sm-3">
-          <?php echo Html::label($camera->attributeLabels()['location_id'], ['class' => 'control-label pull-left']) ?>
-        </div>
-        <div class="col-sm-9">
-          <?php echo $form->field($camera, 'location_id')->dropDownList($locations, ['class' => 'form-control col-md-10',
-            'data-toggle' =>"tooltip", 'data-placement'=> "bottom", 'title'=> 'Вы можете добавить объект, в котором расположена камера, по ссылке "Объекты"']); ?>
-        </div>
-      </div>
-      */ ?>
+              <div class="form-group">
+                <div class="col-sm-3">
+                  <?php echo Html::label($camera->attributeLabels()['location_id'], ['class' => 'control-label pull-left']) ?>
+                </div>
+                <div class="col-sm-9">
+                  <?php echo $form->field($camera, 'location_id')->dropDownList($locations, ['class' => 'form-control col-md-10',
+                    'data-toggle' =>"tooltip", 'data-placement'=> "bottom", 'title'=> 'Вы можете добавить объект, в котором расположена камера, по ссылке "Объекты"']); ?>
+                </div>
+              </div>
             <div class="form-group">
                 <div class="col-sm-3">
                     <?php echo Html::label($camera->attributeLabels()['camera_category_id'], ['class' => 'control-label pull-left']) ?>
