@@ -387,16 +387,16 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
                             $camera->icon_name = $camera->ftp_login . '.' . $camera->icon_file->extension;
                             $hasIcon = true;
 
-                            $node = new NodeCameraAPI($camera);
-                            $node->updateWaterMark();
+                            //$node = new NodeCameraAPI($camera);
+                            //$node->updateWaterMark();
                         }
                     }
 
                     if (!$hasIcon && $camera->icon_name) {
                         unlink(realpath('uploads/camera_icons/' . $camera->icon_name));
                         $camera->icon_name = null;
-                        $node = new NodeCameraAPI($camera);
-                        $node->removeWatermark();
+                        //$node = new NodeCameraAPI($camera);
+                        //$node->removeWatermark();
                     }
 
                     if ($camera->save()) {
