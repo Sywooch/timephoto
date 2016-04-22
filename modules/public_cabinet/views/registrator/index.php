@@ -131,35 +131,6 @@ $i = 1;
                                                             <a href="<?= $this->context->createUrl('/public_cabinet/camera/manage') ?>"><i
                                                                     class="fa fa-refresh"></i> Работа с архивом</a></li>
                                                     <?php endif; ?>
-                                                    <?php if (Yii::$app->user->identity->role == 'USER'): ?>
-                                                        <li>
-                                                            <a href="<?= $this->context->createUrl(['/public_cabinet/camera/edit', 'id' => $camera->id]) ?>">
-                                                                <i class="fa fa-cog"></i> Настройки камеры
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#"
-                                                               class="toggle-camera <?= $camera->enabled ? 'active' : '' ?>"
-                                                               camera-id="<?= $camera->id ?>">
-                                                        <span
-                                                            class="<?= $camera->enabled ? 'text-success' : 'text-danger' ?>">
-                                                            <i class="fa fa-share-alt"></i> <span
-                                                                class="text"><?= $camera->enabled ? 'Выключить публичный доступ' : 'Включить публичный доступ' ?></span>
-                                                        </span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#"
-                                                               class="toggle-camera <?= $camera->enabled ? 'active' : '' ?>"
-                                                               camera-id="<?= $camera->id ?>">
-                                                        <span
-                                                            class="<?= $camera->enabled ? 'text-success' : 'text-danger' ?>">
-                                                            <i class="fa fa-power-off"></i> <span
-                                                                class="text"><?= $camera->enabled ? 'Выключить камеру' : 'Включить камеру' ?></span>
-                                                        </span>
-                                                            </a>
-                                                        </li>
-                                                    <?php endif; ?>
                                                 </ul>
                                             </div>
                                         </div>

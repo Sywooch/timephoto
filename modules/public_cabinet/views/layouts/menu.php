@@ -21,27 +21,8 @@ $countCameras = count(\Yii::$app->controller->cameras);
                 </a>
             </li>
 
-            <?php if (Yii::$app->user->identity->role == 'USER'): ?>
-                <li>
-                    <?php if (!Yii::$app->user->identity->canAddCamera()): ?>
-                        <a onclick="noMoreCameras()"><i class="fa fa-plus-circle"></i> <span>Добавить камеру</span></a>
-                    <?php elseif (!Yii::$app->user->identity->active): ?>
-                        <a onclick="youAreBlocked()"><i class="fa fa-plus-circle"></i> <span>Добавить камеру</span></a>
-                    <?php else: ?>
-                        <a href="<?= $this->context->createUrl(['/public_cabinet/camera/add']); ?>"><i
-                                class="fa fa-plus-circle"></i> <span>Добавить камеру</span></a>
-                    <?php endif; ?>
-                </li>
-            <?php endif; ?>
 
             <?php if ($countCameras): ?>
-                <?php if (Yii::$app->user->identity->role == 'USER'): ?>
-                    <li>
-                        <a href="<?php echo URL::to(['/public_cabinet/camera/edit', 'id' => 0]) ?>">
-                            <i class="fa fa-cog"></i> Настройки камер
-                        </a>
-                    </li>
-                <?php endif; ?>
             <?php endif; ?>
 
             <?php if (Yii::$app->user->identity->canEdit()): ?>

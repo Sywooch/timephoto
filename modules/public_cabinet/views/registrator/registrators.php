@@ -131,36 +131,6 @@ $i = 1;
                                                             <a href="<?= $this->context->createUrl('/public_cabinet/registrator/manage') ?>"><i
                                                                     class="fa fa-refresh"></i> Работа с архивом</a></li>
                                                     <?php endif; ?>
-                                                    <?php if (Yii::$app->user->identity->role == 'USER'): ?>
-                                                        <li>
-                                                            <a href="<?= $this->context->createUrl(['/public_cabinet/registrator/edit', 'id' => $registrator->id]) ?>">
-                                                                <i class="fa fa-cog"></i> Настройки регистратора
-                                                            </a>
-                                                        </li>
-                                                        <?php /*?>
-                                                        <li>
-                                                          <a href="#" class="toggle-camera <?= $registrator->enabled ? 'active' : '' ?>"
-                                                             camera-id="<?= $registrator->id ?>">
-                                                                                    <span
-                                                                                        class="<?= $registrator->enabled ? 'text-success' : 'text-danger' ?>">
-                                                                                        <i class="fa fa-share-alt"></i> <span
-                                                                                          class="text"><?= $registrator->enabled ? 'Выключить публичный доступ' : 'Включить публичный доступ' ?></span>
-                                                                                    </span>
-                                                          </a>
-                                                        </li>
-                                                        */ ?>
-                                                        <li>
-                                                            <a href="#"
-                                                               class="toggle-camera <?= $registrator->enabled ? 'active' : '' ?>"
-                                                               camera-id="<?= $registrator->id ?>">
-                                                        <span
-                                                            class="<?= $registrator->enabled ? 'text-success' : 'text-danger' ?>">
-                                                            <i class="fa fa-power-off"></i> <span
-                                                                class="text"><?= $registrator->enabled ? 'Выключить регистратор' : 'Включить регистратор' ?></span>
-                                                        </span>
-                                                            </a>
-                                                        </li>
-                                                    <?php endif; ?>
                                                 </ul>
                                             </div>
                                         </div>

@@ -66,10 +66,6 @@ class CameraController extends \app\modules\public_cabinet\components\CabinetCon
     public function actionIndex($id = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
     {
 
-        if (!Yii::$app->user->identity->checkPermission('access_view', $id)) {
-            throw new ForbiddenHttpException('Доступ запрещен');
-        }
-
         if (isset($_COOKIE['GalleryOneColumn']) && isset($_COOKIE['GalleryOneHeight']) && isset($_COOKIE['GalleryColumn']) && isset($_COOKIE['GalleryHeight'])) {
             if ($view == 'one') {
                 $limit = $_COOKIE['GalleryOneColumn'] * $_COOKIE['GalleryOneHeight'];
@@ -109,9 +105,6 @@ class CameraController extends \app\modules\public_cabinet\components\CabinetCon
 
         $id = Camera::find()->select('id')->where(new Expression('MD5(CONCAT(id, created)) = :token'), [':token' => $token])->scalar();
 
-        if (!Yii::$app->user->identity->checkPermission('access_view', $id)) {
-            throw new ForbiddenHttpException('Доступ запрещен');
-        }
 
         if (isset($_COOKIE['GalleryOneColumn']) && isset($_COOKIE['GalleryOneHeight']) && isset($_COOKIE['GalleryColumn']) && isset($_COOKIE['GalleryHeight'])) {
             if ($view == 'one') {
@@ -417,12 +410,9 @@ class CameraController extends \app\modules\public_cabinet\components\CabinetCon
 
     public function actionManage($category = null, $location = null)
     {
-        if (Yii::$app->user->identity->role == 'ADDITIONAL_USER') {
-            throw new ForbiddenHttpException('Доступ запрещен');
-        }
+
 
         $camerasAttributes = [
-            'user_id' => Yii::$app->user->identity->userId,
             'deleted' => 0
         ];
 

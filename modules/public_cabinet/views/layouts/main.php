@@ -9,7 +9,7 @@
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">
-                        <?php if (!Yii::$app->user->identity->siteLogoHidden()): ?>
+                        <?php /*if (!Yii::$app->user->identity->siteLogoHidden()): ?>
                             <div class="site-logo"></div>
 
                         <?php endif; ?>
@@ -18,7 +18,8 @@
                                 <img
                                     src="<?= Yii::$app->homeUrl ?>uploads/custom_logos/<?= Yii::$app->user->identity->custom_logo ?>">
                             </div>
-                        <?php endif; ?>
+                        <?php endif; */?>
+                        <div class="site-logo"></div>
                     </a>
 
                 </div>

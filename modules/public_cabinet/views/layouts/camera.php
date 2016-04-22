@@ -52,40 +52,6 @@ $i = 1;
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <?php if (Yii::$app->user->identity->role == 'USER'): ?>
-                                    <div class="row text-right camera-actions">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle"
-                                                    data-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa fa-align-justify"></i>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                <li>
-                                                    <a href="{{href}}">
-                                                        <i class="fa fa-folder-open"></i> Просмотреть архив
-                                                    </a>
-                                                </li>
-                                                {{#if canEdit}}
-                                                <li><a href="{{manage_href}}"><i class="fa fa-refresh"></i> Работа с
-                                                        архивом</a></li>
-                                                {{/if}}
-                                                <li>
-                                                    <a href="{{edit_href}}">
-                                                        <i class="fa fa-cog"></i> Настройки камеры
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="toggle-camera {{#if enabled}}active{{/if}}"
-                                                       camera-id="{{id}}">
-                                                    <span class="{{#if enabled}}text-success{{else}}text-danger{{/if}}">
-                                                        <i class="fa fa-power-off"></i> <span class="text">{{#if enabled}}Выключить камеру{{else}}Включить камеру{{/if}}</span>
-                                                    </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

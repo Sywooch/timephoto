@@ -70,13 +70,11 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/bootstrap-multiselect/js/bootstra
                         </div>
                     </li>
                     <li class="divider-vertical"></li>
-                    <?php if (Yii::$app->user->identity->checkPermission('access_copy', $id)): ?>
                         <li class="p-l-5 p-r-5 p-t-1">
                             <button href="#" id="download-selected" class="btn btn-default"><i
                                     class="fa fa-download"></i> Скачать выделенное
                             </button>
                         </li>
-                    <?php endif; ?>
                     <li class="divider-vertical"></li>
 
                 </ul>
