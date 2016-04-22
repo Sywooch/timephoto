@@ -79,7 +79,7 @@ $i = 1;
                     </div>
                     <div class="col-sm-4">
                         <?php echo $form->field($newCamera, 'delete')->dropDownList([
-                            1 => 'Удалить в дианазоне',
+                            1 => 'Удалить в диапозоне',
                             2 => 'Оставить каждую 2-ю',
                             3 => 'Оставить каждую 3-ю',
                             4 => 'Оставить каждую 4-ю',
@@ -117,6 +117,19 @@ $i = 1;
                     <img src=""/>
                 </div>
             <?php endif; ?>
+
+            <div class="form-group checkboxes-public">
+                <div class="col-lg-9 col-md-12 col-sm-12 ">
+                    <?php echo $form->field($newCamera, 'public')->checkbox(); ?>
+                </div>
+            </div>
+            <div class="form-group public-link-wrap <?=$newCamera->public ? "show" : "" ?>">
+                <div class="alert alert-success">
+                        Ссылка будет доступна после добавления камеры
+                </div>
+
+            </div>
+
         </div>
         <div class="col-md-6 col-md-offset-1">
             <div class="form-group">
@@ -168,15 +181,29 @@ $i = 1;
                     <?php echo $form->field($newCamera, 'ftp_password')->textInput(['class' => 'form-control col-md-10', "data-toggle" => "tooltip", "data-placement" => "bottom", "title" => "Используйте для соединения камеры с FTP сервером"]); ?>
                 </div>
             </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <?php echo Html::label($newCamera->attributeLabels()['format'], ['class' => 'control-label pull-left']) ?>
-                    </div>
-                    <div class="col-sm-9">
-                        <?php echo $form->field($newCamera, 'format')->textInput(['class' => 'form-control col-md-10',
-                            'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Используйте для распознания формата наименовая файлов']); ?>
-                    </div>
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <?php echo Html::label($newCamera->attributeLabels()['format'], ['class' => 'control-label pull-left']) ?>
                 </div>
+                <div class="col-sm-9">
+                    <?php echo $form->field($newCamera, 'format')->textInput(['class' => 'form-control col-md-10', 'data-toggle' => "tooltip", ]); ?>
+
+                </div>
+                <div class="col-sm-12 alert-name-file">
+                    <h5>Используйте маску для распознания имени файлов </h5>
+
+                    "<strong>-" </strong>- пропустить (необрабатывать) символ в имени файла <br>
+                    "<strong>yyyy</strong>" - указывает год в имени файла, например "2016"<br>
+                    "<strong>yy</strong>" - указывает год в имени файла, например "16"<br>
+                    "<strong>mm</strong>" - указывает месяц в имени файла, например "04"<br>
+                    "<strong>dd</strong>" - указывает день в имени файла, например "01"<br>
+                    "<strong>hh</strong>" - указывает часы в имени файла, например "23"<br>
+                    "<strong>ii</strong>" - указывает минуты в имени файла, например "15"<br>
+                    "<strong>ss</strong>" - указывает секунды в имени файла, например "15"<br>
+                    маска "<strong>---------------yyyymmddhhiiss</strong>" преобразует имя файла "<strong>MyNewHomeCamera20160401231515</strong>", получив время и дату <strong>01/04/16 23:15:15</strong>"
+
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-12 ">
@@ -203,6 +230,15 @@ $i = 1;
             }
         });
         App.init();
+
+        $('[name="Camera[public]"]').on('change', function(){
+            if($('[name="Camera[public]"][value="1"]').prop("checked")){
+                $('.public-link-wrap').addClass('show');
+            }else{
+                $('.public-link-wrap').removeClass('show');
+            }
+        });
+
     });
 
     $(document).on('click', '#trigger-file', function (e) {

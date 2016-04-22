@@ -89,7 +89,7 @@ class Camera extends \yii\db\ActiveRecord
             [['comment', 'icon_name'], 'string'],
             [['enabled', 'public', 'deleted', 'user_id', 'location_id', 'camera_category_id', 'delete', 'internal_id', 'registrator_id', 'camera_registrator_id'], 'integer'],
             [['memory_limit'], 'number'],
-            [['user_id'], 'required'],
+            [['name', 'user_id'], 'required'],
             [['name', 'created', 'ftp_login', 'ftp_password', 'access', 'storage_time'], 'string', 'max' => 45],
             [['ftp_home_dir'], 'string', 'max' => 255],
             [['ftp_login'], 'unique'],
