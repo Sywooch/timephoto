@@ -20,9 +20,9 @@ exports.fs = {
     user: 501,
     group: 20,
     rootDir: '/usr/local/var/www/timephoto.loc/yii2/web/public/',
-
+    watermarkPath: '/usr/local/var/www/timephoto.loc/yii2/web/uploads/camera_icons/'    
 };
 
 exports.site = {
-    logo: '/usr/local/var/www/timephoto.loc/yii2/bin/node/logo.png',
+    logo: '/usr/local/var/www/timephoto.loc/yii2/bin/node/logo.png'
 };

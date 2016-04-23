@@ -51,7 +51,8 @@ var Camera = sequelize.define('Camera', {
     format: Sequelize.STRING(50),
     deleted: Sequelize.INTEGER,
     enabled: Sequelize.INTEGER,
-    user_id: {type: Sequelize.INTEGER, references: User, referencesKey: "id"}
+    user_id: {type: Sequelize.INTEGER, references: User, referencesKey: "id"},
+    icon_name: Sequelize.STRING(50),
 }, {
     timestamps: false, tableName: 'camera'
 });
@@ -95,6 +96,7 @@ PhotoScan.prototype.run = function () {
             var ftp_homedir = currentCamera.dataValues['ftp_home_dir'];
             var format = currentCamera.dataValues['format'];
             var cameraId = currentCamera.dataValues['id'];
+            var watermarkPath = Settings.fs.watermarkPath + currentCamera.dataValues['icon_name'];            
 
             if (fs.existsSync(ftp_homedir)) {
 
@@ -171,7 +173,7 @@ PhotoScan.prototype.run = function () {
 
                                                 Thubnails.startWorkflow({
                                                     imagePath: camera_dir + "/" + fileName,
-                                                    watermarkPath: '.watermark',
+                                                    watermarkPath: watermarkPath,
                                                     userInfo: userInfo,
                                                     thumbPath: fileThumb
                                                 }, function () {
