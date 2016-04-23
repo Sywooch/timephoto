@@ -66,13 +66,14 @@ $i = 1;
                             </ul>
                         </div>
                     </li>
+                    <?php /*
                     <li class="divider-vertical"></li>
                         <li class="p-l-5 p-r-5 p-t-1">
                             <button href="" id="download-selected" class="btn btn-default"><i
                                     class="fa fa-download"></i> Скачать выделенное
                             </button>
                         </li>
-                    <li class="divider-vertical"></li>
+                    <li class="divider-vertical"></li>*/?>
 
                 </ul>
             </div>
@@ -215,12 +216,6 @@ $i = 1;
         var link = 'http://' + window.location.host + $(this).attr('href');
         window.open(link, '_blank');
     });
-    function removeSelectedThumbnails() {
-        $('.thumb-check:checked').each(function (index, checkbox) {
-            $(checkbox).parents('.thumbnail-container').remove();
-        });
-    }
-
 
     //AJAX HANDLING
 

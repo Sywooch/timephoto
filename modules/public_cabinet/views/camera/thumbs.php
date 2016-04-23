@@ -169,7 +169,7 @@ switch ($_COOKIE['GalleryHeight']) {
                                                 <i class="fa fa-expand"></i>
                                             </button>
                                             <?php if ($view !== 'thumbs'): ?>
-                                                <a href="<?= $this->context->createUrl(['/public_cabinet/camera', 'id' => $camera->id, 'view' => 'thumbs']) ?>"
+                                                <a href="<?= $this->context->createUrl(['/public_cabinet/camera', 'token' => $camera->token, 'view' => 'thumbs']) ?>"
                                                    class="btn btn-default" title="Предпросмотр изображений">
                                                     <i class="fa fa-th"></i>
                                                 </a>
@@ -286,7 +286,7 @@ switch ($_COOKIE['GalleryHeight']) {
                             </div>
                         </li>
                     </ul>
-                    <a href="<?= $this->context->createUrl(['/public_cabinet/camera', 'id' => $camera->id, 'view' => 'one']) ?>"
+                    <a href="<?= $this->context->createUrl(['/public_cabinet/camera', 'token' => $camera->token, 'view' => 'one']) ?>"
                        class="btn btn-sm btn-inverse m-r-10 pull-right">Режим галереи</a>
                 </div>
             </div>

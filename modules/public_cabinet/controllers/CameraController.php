@@ -18,6 +18,7 @@ use Yii;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 class CameraController extends \app\modules\public_cabinet\components\CabinetController
 {
@@ -53,7 +54,7 @@ class CameraController extends \app\modules\public_cabinet\components\CabinetCon
     }
 
     /**
-     * @param null $id
+     * @param string $token
      * @param string $view
      * @param null $imageId
      * @param string $type
@@ -63,8 +64,14 @@ class CameraController extends \app\modules\public_cabinet\components\CabinetCon
      * @return string
      * @throws ForbiddenHttpException
      */
-    public function actionIndex($id = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
+    public function actionIndex($token = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
     {
+
+        $id = Camera::find()->select('id')->where(new Expression('MD5(CONCAT(id, created)) = :token'), [':token' => $token])->scalar();
+
+        if(!$id){
+            throw new NotFoundHttpException();
+        }
 
         if (isset($_COOKIE['GalleryOneColumn']) && isset($_COOKIE['GalleryOneHeight']) && isset($_COOKIE['GalleryColumn']) && isset($_COOKIE['GalleryHeight'])) {
             if ($view == 'one') {
@@ -76,16 +83,7 @@ class CameraController extends \app\modules\public_cabinet\components\CabinetCon
             $limit = !empty($limit) ? $limit : 16;
         }
 
-
-        if ($id === null) {
-
-            /*$cameras = Camera::find()->where(['user_id' => Yii::$app->user->identity->userId, 'deleted' => 0])
-                ->orderBy(['location_id' => SORT_DESC, 'id' => SORT_DESC])->all();*/
-
-            return $this->render('index', ['cameras' => $this->cameras]);
-        } else {
-            return $this->actionPhotos($id, $view, $imageId, $type, $date, $currentPage, $limit);
-        }
+        return $this->actionPhotos($id, $view, $imageId, $type, $date, $currentPage, $limit);
     }
 
     /**
@@ -100,7 +98,7 @@ class CameraController extends \app\modules\public_cabinet\components\CabinetCon
      * @return string
      * @throws ForbiddenHttpException
      */
-    public function actionPublic($token = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
+    /*public function actionPublic($token = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
     {
 
         $id = Camera::find()->select('id')->where(new Expression('MD5(CONCAT(id, created)) = :token'), [':token' => $token])->scalar();
@@ -122,7 +120,7 @@ class CameraController extends \app\modules\public_cabinet\components\CabinetCon
         } else {
             return $this->actionPhotos($id, $view, $imageId, $type, $date, $currentPage, $limit);
         }
-    }
+    }*/
 
     /**
      * @param $id

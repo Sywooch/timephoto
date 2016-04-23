@@ -31,6 +31,7 @@ use Yii;
  * @property integer $registrator_id
  * @property integer $camera_registrator_id
  * @property string $format
+ * @property integer $public
  *
  * @property CameraCategory $cameraCategory
  * @property Location $location
@@ -192,13 +193,24 @@ class Camera extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    /*
     public function afterSave($insert, $changedAttributes) {
 
-        return afterSave($insert, $changedAttributes);
+
+        if($this->public){
+
+            // Создаем дополнительного пользователя
+            
+            $user = new AdditionalUser;
+            
+        } else {
+            
+            AdditionalUser::find()->where([])->one()->delete();
+            
+        }
+
+        return parent::afterSave($insert, $changedAttributes);
 
     }
-    */
 
     /**
      *
@@ -383,6 +395,11 @@ class Camera extends \yii\db\ActiveRecord
             0 => "Запретить публичный доступ",
             1 => "Разрешить публичный доступ",
         ];
+    }
+
+    public function getToken()
+    {
+        return md5($this->id . $this->created);
     }
 
     /**

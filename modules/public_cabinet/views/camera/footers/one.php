@@ -69,13 +69,14 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/bootstrap-multiselect/js/bootstra
                             </ul>
                         </div>
                     </li>
+                    <?php /*
                     <li class="divider-vertical"></li>
                         <li class="p-l-5 p-r-5 p-t-1">
                             <button href="#" id="download-selected" class="btn btn-default"><i
                                     class="fa fa-download"></i> Скачать выделенное
                             </button>
                         </li>
-                    <li class="divider-vertical"></li>
+                    <li class="divider-vertical"></li>*/?>
 
                 </ul>
             </div>

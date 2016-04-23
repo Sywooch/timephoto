@@ -104,7 +104,7 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
      * @return string
      * @throws ForbiddenHttpException
      */
-    public function actionPublic($token = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
+    /*public function actionPublic($token = null, $view = 'thumbs', $imageId = null, $type = 'all', $date = null, $currentPage = null, $limit = 16)
     {
 
         $id = Camera::find()->select('id')->where(new Expression('MD5(CONCAT(id, created)) = :token'), [':token' => $token])->scalar();
@@ -129,7 +129,7 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
         } else {
             return $this->actionPhotos($id, $view, $imageId, $type, $date, $currentPage, $limit);
         }
-    }
+    }*/
 
     /**
      * @param $id
@@ -386,7 +386,6 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
                             $camera->icon_file->saveAs('uploads/camera_icons/' . $camera->ftp_login . '.' . $camera->icon_file->extension);
                             $camera->icon_name = $camera->ftp_login . '.' . $camera->icon_file->extension;
                             $hasIcon = true;
-
                             //$node = new NodeCameraAPI($camera);
                             //$node->updateWaterMark();
                         }

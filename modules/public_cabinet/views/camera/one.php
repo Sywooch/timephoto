@@ -230,7 +230,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
                                     <i class="fa fa-expand"></i>
                                 </button>
                                 <?php if ($view !== 'thumbs'): ?>
-                                    <a href="<?= $this->context->createUrl(['/public_cabinet/camera', 'id' => $camera->id, 'view' => 'thumbs']) ?>"
+                                    <a href="<?= $this->context->createUrl(['/public_cabinet/camera', 'token' => $camera->token, 'view' => 'thumbs']) ?>"
                                        class="btn btn-default" title="Предпросмотр изображений">
                                         <i class="fa fa-th"></i>
                                     </a>
