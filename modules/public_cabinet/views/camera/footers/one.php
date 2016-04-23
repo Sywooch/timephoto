@@ -69,14 +69,13 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/bootstrap-multiselect/js/bootstra
                             </ul>
                         </div>
                     </li>
-                    <?php /*
                     <li class="divider-vertical"></li>
                         <li class="p-l-5 p-r-5 p-t-1">
                             <button href="#" id="download-selected" class="btn btn-default"><i
                                     class="fa fa-download"></i> Скачать выделенное
                             </button>
                         </li>
-                    <li class="divider-vertical"></li>*/?>
+                    <li class="divider-vertical"></li>
 
                 </ul>
             </div>
@@ -126,7 +125,8 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/bootstrap-multiselect/js/bootstra
         window.location.replace(yii.app.createUrl('public_cabinet/camera', {
             id: cameraId,
             view: 'one',
-            type: type
+            type: type,
+            token:token
         }, '&', 'get'));
     });
     $(document).on('click', '#dateDoFilter', function (e) {
@@ -135,7 +135,8 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/bootstrap-multiselect/js/bootstra
             id: cameraId,
             view: 'one',
             type: type,
-            date: calendarDates
+            date: calendarDates,
+            token:token
         }, '&', 'get'));
     });
 
@@ -143,17 +144,6 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/bootstrap-multiselect/js/bootstra
         updateDownloadLink();
     });
 
-    $(document).on('click', '#delete-selected', function (e) {
-        e.preventDefault();
-
-
-        $.post(yii.app.createUrl('public_cabinet/remove/batch-remove'), {
-            Images: getSelectedThumbnailsString()
-        }).done(function (response) {
-            removeSelectedThumbnails();
-        });
-
-    });
 
     $(document).on('click', '#type-filter', function () {
         var type = '';
@@ -166,10 +156,11 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/bootstrap-multiselect/js/bootstra
             window.location.replace(yii.app.createUrl('public_cabinet/camera', {
                 id: cameraId,
                 view: 'one',
-                type: type
+                type: type, token:token
+
             }, '&', 'get'));
         } else
-            window.location.replace(yii.app.createUrl('public_cabinet/camera', {id: cameraId, view: 'one'}, '&', 'get'));
+            window.location.replace(yii.app.createUrl('public_cabinet/camera', {id: cameraId, view: 'one', token:token}, '&', 'get'));
     });
 
     $(document).on('change', '.type-filter-dropup input[type=checkbox]', function () {
@@ -202,7 +193,7 @@ $this->registerJsFile(Yii::$app->homeUrl . "fw/bootstrap-multiselect/js/bootstra
         return images;
     }
     function updateDownloadLink() {
-        var downloadBaseUrl = yii.app.createUrl('public_cabinet/download/download-zip', {images: images}, '&', 'get');
+        var downloadBaseUrl = yii.app.createUrl('public_cabinet/download/download-zip', {images: images, token:token}, '&', 'get');
         $('#download-selected').attr('href', downloadBaseUrl + getSelectedThumbnailsString());
     }
     $('#download-selected').on('click', function () {

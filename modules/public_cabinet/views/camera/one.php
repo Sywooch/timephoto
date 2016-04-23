@@ -362,6 +362,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
     var slideshowTimerId = null;
     var slideshowInterval = 1;
     var boot_class = '<?=$boot_class?>';
+    var token = '<?=Yii::$app->request->get('token')?>';
 
     $('.limit-change[data-size="' + limit / 2 + '"]').addClass('active');
 

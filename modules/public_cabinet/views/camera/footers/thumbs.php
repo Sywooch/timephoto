@@ -66,14 +66,13 @@ $i = 1;
                             </ul>
                         </div>
                     </li>
-                    <?php /*
                     <li class="divider-vertical"></li>
                         <li class="p-l-5 p-r-5 p-t-1">
                             <button href="" id="download-selected" class="btn btn-default"><i
                                     class="fa fa-download"></i> Скачать выделенное
                             </button>
                         </li>
-                    <li class="divider-vertical"></li>*/?>
+                    <li class="divider-vertical"></li>
 
                 </ul>
             </div>
@@ -130,7 +129,8 @@ $i = 1;
         window.location.replace(yii.app.createUrl('public_cabinet/camera', {
             id: cameraId,
             view: 'thumbs',
-            type: type
+            type: type,
+            token:token
         }, '&', 'get'));
     });
     $(document).on('click', '#dateDoFilter', function (e) {
@@ -139,7 +139,8 @@ $i = 1;
             id: cameraId,
             view: 'thumbs',
             type: type,
-            date: calendarDates
+            date: calendarDates,
+            token:token
         }, '&', 'get'));
     });
 
@@ -147,17 +148,7 @@ $i = 1;
         updateDownloadLink();
     });
 
-    $(document).on('click', '#delete-selected', function (e) {
-        e.preventDefault();
 
-
-        $.post(yii.app.createUrl('public_cabinet/remove/batch-remove'), {
-            Images: getSelectedThumbnailsString()
-        }).done(function (response) {
-            removeSelectedThumbnails();
-        });
-
-    });
 
     $(document).on('click', '#type-filter', function () {
         var type = '';
@@ -170,10 +161,11 @@ $i = 1;
             window.location.replace(yii.app.createUrl('public_cabinet/camera', {
                 id: cameraId,
                 view: 'thumbs',
-                type: type
+                type: type,
+                token:token
             }, '&', 'get'));
         } else
-            window.location.replace(yii.app.createUrl('public_cabinet/camera', {id: cameraId, view: 'thumbs'}, '&', 'get'));
+            window.location.replace(yii.app.createUrl('public_cabinet/camera', {id: cameraId, view: 'thumbs', token:token}, '&', 'get'));
     });
 
 
@@ -208,7 +200,7 @@ $i = 1;
         return 'images=' + images;
     }
     function updateDownloadLink() {
-        var downloadBaseUrl = yii.app.createUrl('public_cabinet/download/download-zip', {images: []});
+        var downloadBaseUrl = yii.app.createUrl('public_cabinet/download/download-zip', {images: [], token:token});
 
         $('#download-selected').attr('href', downloadBaseUrl + getSelectedThumbnailsString());
     }

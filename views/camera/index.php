@@ -8,7 +8,7 @@ $camera = Camera::find()->where(['id' =>$get['id']])->one();
 if(!$camera->public){
     return false;
 }
-$link_url = Url::to(['/cabinet/public'], true) . '?token=' . md5($camera->id . $camera->created).'&view=one';
+$link_url = Url::to(['/public_cabinet/camera/index'], true) . '?token=' .$camera->getToken().'&view=one';
 
 $image = $camera->getLastImage();
 $image_date = date("d.m.Y H:i:s", strtotime($image->created));
