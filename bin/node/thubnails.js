@@ -16,11 +16,11 @@ function startWorkflow(options, callback) {
     var thumbSize = {width: 383, height: 207};
 
     bigImage
-        //.resize(383)
+        .resize(thumbSize.width)
         //.resize(thumbSize.width*2, thumbSize.height*2 + ">")
-        //.gravity('Center')
+        .gravity('Center')
         .crop(thumbSize.width, thumbSize.height, 0, 0)
-        //.quality(60)
+        .quality(60)
         .write(options.thumbPath, function (error, stdout, stderr, command) {
 
             if (error) console.log('Error - ', error);
