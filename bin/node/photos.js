@@ -7,7 +7,7 @@ var mkdirp = require('mkdirp').sync;
 var chownr = require('chownr').sync;
 var mime = require('mime');
 //var exif = require('exiv2');
-//var gm = require('gm');
+var gm = require('gm').subClass({imageMagick: true});
 var _0775 = parseInt('0775', 8);
 var _0664 = parseInt('0664', 8);
 
@@ -96,7 +96,7 @@ PhotoScan.prototype.run = function () {
             var ftp_homedir = currentCamera.dataValues['ftp_home_dir'];
             var format = currentCamera.dataValues['format'];
             var cameraId = currentCamera.dataValues['id'];
-            var watermarkPath = Settings.fs.watermarkPath + currentCamera.dataValues['icon_name'];            
+            var watermarkPath = Settings.fs.watermarkPath + currentCamera.dataValues['icon_name'];
 
             if (fs.existsSync(ftp_homedir)) {
 
@@ -141,48 +141,63 @@ PhotoScan.prototype.run = function () {
 
                                         if (!fs.existsSync(camera_dir + "/" + fileName)) {
 
-                                            fs.copy(ftp_homedir + "/" + currentFile, camera_dir + "/" + fileName, function (err) {
+                                            var bigImage = gm(ftp_homedir + "/" + currentFile);
 
-                                                if (!fs.existsSync(ftp_homedir + "/" + currentFile)) {
-                                                    return;
+                                            if (userInfo['Tariff']['watermark'] == 1) {
+
+                                                //WaterMark
+                                                if (fs.existsSync(watermarkPath)) {
+                                                    bigImage
+                                                        .gravity('SouthEast x: 5, y: 5')
+                                                        //.operator('Opacity', 'Assign', '50%')
+                                                        .draw(['image over 10,10 0,0 "' + watermarkPath + '"']);
                                                 }
 
-                                                fs.unlinkSync(ftp_homedir + "/" + currentFile);
+                                            }
 
-                                                console.log('Copying... ' + camera_dir + "/" + fileName);
+                                            //SaveChanges
+                                            bigImage.write(camera_dir + "/" + fileName, function (e) {
+                                                if (e) {
+                                                    console.log(e);
+                                                } else {
 
-                                                if (!fs.existsSync(camera_dir + '/.thumbs')) {
-                                                    mkdirp(camera_dir + '/.thumbs', _0775);
-                                                    chownr(camera_dir + '/.thumbs', user, group);
+                                                    fs.unlinkSync(ftp_homedir + "/" + currentFile);
+
+                                                    console.log('Copying... ' + camera_dir + "/" + fileName);
+
+                                                    if (!fs.existsSync(camera_dir + '/.thumbs')) {
+                                                        mkdirp(camera_dir + '/.thumbs', _0775);
+                                                        chownr(camera_dir + '/.thumbs', user, group);
+                                                    }
+
+                                                    var fileThumb = camera_dir + '/.thumbs/' + fileName;
+
+                                                    if (fs.existsSync(fileThumb)) {
+                                                        fs.unlinkSync(fileThumb);
+                                                    }
+
+                                                    Image.create({
+                                                        file_name: fileName,
+                                                        created: Guess.extractDate(fileName, format),
+                                                        file_size: Guess.getSize(camera_dir + '/' + fileName),
+                                                        camera_id: cameraId,
+                                                        type: Guess.guessImageType(camera_dir + "/" + fileName),
+                                                        //exif: JSON.stringify(tags),
+                                                    });
+
+                                                    Thubnails.startWorkflow({
+                                                        imagePath: camera_dir + "/" + fileName,
+                                                        thumbPath: fileThumb,
+                                                        width: 383,
+                                                        height: 207
+                                                    }, function () {
+
+                                                        console.log('Thubnails image create ' + fileThumb);
+
+                                                    });
+
                                                 }
-
-                                                var fileThumb = camera_dir + '/.thumbs/' + fileName;
-
-                                                if (fs.existsSync(fileThumb)) {
-                                                    fs.unlinkSync(fileThumb);
-                                                }
-
-                                                Image.create({
-                                                    file_name: fileName,
-                                                    created: Guess.extractDate(fileName, format),
-                                                    file_size: Guess.getSize(camera_dir + '/' + fileName),
-                                                    camera_id: cameraId,
-                                                    type: Guess.guessImageType(camera_dir + "/" + fileName),
-                                                    //exif: JSON.stringify(tags),
-                                                });
-
-                                                Thubnails.startWorkflow({
-                                                    imagePath: camera_dir + "/" + fileName,
-                                                    watermarkPath: watermarkPath,
-                                                    userInfo: userInfo,
-                                                    thumbPath: fileThumb
-                                                }, function () {
-
-                                                    console.log('Thubnails image create ' + fileThumb);
-
-                                                });
-
-                                            });
+                                            })
 
                                         } else {
 
