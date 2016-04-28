@@ -28,7 +28,8 @@ class Settings extends \yii\db\ActiveRecord
     {
         return [
             [['setting', 'value'], 'required'],
-            [['setting', 'value'], 'string', 'max' => 45]
+            [['setting'], 'string', 'max' => 45],
+            [['value'], 'string', 'max' => 255],
         ];
     }
 

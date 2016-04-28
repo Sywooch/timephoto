@@ -71,6 +71,11 @@ $this->registerCssFile(Yii::$app->homeUrl . "css/admin.css");
                                 'label' => 'Контент',
                                 'url' => ['/admin/page/index']
                             ],
+                            [
+                                'label' => 'Настройки',
+                                'url' => ['/admin/settings/index']
+                            ],
+
 
                         ],
                         'options' => ['class' => 'nav navbar-nav'],
