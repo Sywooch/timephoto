@@ -19,7 +19,7 @@ class SettingsController extends AdminController
         file_put_contents(Yii::getAlias('@app').'/web/images/watermark-logo.png',base64_decode($logo));
         if(file_exists(Yii::getAlias('@app').'/web/images/watermark-logo.png')){
             $setting = Settings::findOne(['setting'=> 'site_logo']);
-            $setting->value = 1;
+            $setting->value = '/web/images/watermark-logo.png';
             $setting->save();
             return Json::encode(['success' => true]);
         }
