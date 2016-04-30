@@ -6,26 +6,35 @@ var colors = require('colors');
 var mkdirp = require('mkdirp').sync;
 var chownr = require('chownr').sync;
 var mime = require('mime');
+var sizeOf = require('image-size');
 //var exif = require('exiv2');
 var gm = require('gm').subClass({imageMagick: true});
 var _0775 = parseInt('0775', 8);
 var _0664 = parseInt('0664', 8);
 
-var Settings = require('./settings.js');
+var App = require('./settings.js');
 var Functions = require('./functions.js');
 var Guess = require('./image_properties.js');
 var Thubnails = require('./thubnails.js');
-var rootDir = Settings.fs.rootDir;
-var user = Settings.fs.user;
-var group = Settings.fs.group;
+var rootDir = App.fs.rootDir;
+var user = App.fs.user;
+var group = App.fs.group;
 
 //var allowedImageTypes = ['PNG', 'JPEG']; //@todo
 process.umask(0);
 
-var sequelize = new Sequelize(Settings.mysql.db_name, Settings.mysql.db_login, Settings.mysql.db_password, {
+var sequelize = new Sequelize(App.mysql.db_name, App.mysql.db_login, App.mysql.db_password, {
     'host': 'localhost',
     'logging': false,
     'timezone': '+03:00' // Выставляем Москву + 3 часа
+});
+
+var Settings = sequelize.define('Settings', {
+    id: {type: Sequelize.INTEGER, primaryKey: true},
+    setting: Sequelize.STRING(45),
+    value: Sequelize.STRING(45)
+}, {
+    timestamps: false, tableName: 'settings'
 });
 
 var Tariff = sequelize.define('Tariff', {
@@ -38,7 +47,8 @@ var Tariff = sequelize.define('Tariff', {
 var User = sequelize.define('User', {
     id: {type: Sequelize.INTEGER, primaryKey: true},
     hide_site_logo: Sequelize.INTEGER,
-    tariff_id: {type: Sequelize.INTEGER, references: Tariff, referencesKey: "id"}
+    tariff_id: {type: Sequelize.INTEGER, references: Tariff, referencesKey: "id"},
+    custom_logo: Sequelize.STRING(45)
 }, {
     timestamps: false, tableName: 'user'
 });
@@ -96,7 +106,8 @@ PhotoScan.prototype.run = function () {
             var ftp_homedir = currentCamera.dataValues['ftp_home_dir'];
             var format = currentCamera.dataValues['format'];
             var cameraId = currentCamera.dataValues['id'];
-            var watermarkPath = Settings.fs.watermarkPath + currentCamera.dataValues['icon_name'];
+            var watermarkPath = App.fs.watermarkPath + userInfo['custom_logo'];
+            var logoPath = App.fs.siteLogoPath;
 
             if (fs.existsSync(ftp_homedir)) {
 
@@ -143,9 +154,23 @@ PhotoScan.prototype.run = function () {
 
                                             var bigImage = gm(ftp_homedir + "/" + currentFile);
 
+                                            var originalSize = {};
+                                            originalSize = sizeOf(ftp_homedir + "/" + currentFile);
+
+                                            var logoSize = {};
+                                            logoSize = sizeOf(logoPath);
+
+                                            // Logo
+                                            if (fs.existsSync(logoPath)) {
+                                                bigImage
+                                                    .gravity('SouthEast x: 5, y: 5')
+                                                    //.operator('Opacity', 'Assign', '50%')
+                                                    .draw(['image over ' + (originalSize.width - logoSize.width - 10) + ',10 0,0 "' + logoPath + '"']);
+                                            }
+
+                                            // WaterMark
                                             if (userInfo['Tariff']['watermark'] == 1) {
 
-                                                //WaterMark
                                                 if (fs.existsSync(watermarkPath)) {
                                                     bigImage
                                                         .gravity('SouthEast x: 5, y: 5')
@@ -157,6 +182,7 @@ PhotoScan.prototype.run = function () {
 
                                             //SaveChanges
                                             bigImage.write(camera_dir + "/" + fileName, function (e) {
+
                                                 if (e) {
                                                     console.log(e);
                                                 } else {
@@ -197,7 +223,8 @@ PhotoScan.prototype.run = function () {
                                                     });
 
                                                 }
-                                            })
+
+                                            });
 
                                         } else {
 
@@ -215,14 +242,6 @@ PhotoScan.prototype.run = function () {
                             }
 
                         });
-
-                    } else {
-
-                        /*Image.destroy({
-                         where: {
-                         camera_id: cameraId
-                         }
-                         });*/
 
                     }
 

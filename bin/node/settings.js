@@ -19,8 +19,9 @@ exports.mysql = {
 exports.fs = {
     user: 501,
     group: 20,
+    siteLogoPath: '/usr/local/var/www/timephoto.loc/yii2/web/images/watermark-logo.png',
     rootDir: '/usr/local/var/www/timephoto.loc/yii2/web/public/',
-    watermarkPath: '/usr/local/var/www/timephoto.loc/yii2/web/uploads/camera_icons/'    
+    watermarkPath: '/usr/local/var/www/timephoto.loc/yii2/web/uploads/custom_logos/'
 };
 
 exports.site = {
