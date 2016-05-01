@@ -11,7 +11,8 @@ $this->registerJsFile(Yii::$app->homeUrl . "template/js/login-v2.demo.min.js", [
 ?>
 ?>
 <div class="login-cover">
-    <div class="login-cover-image"><img src="<?php echo Yii::$app->homeUrl; ?>images/cover.jpg" data-id="login-cover-image" alt=""/></div>
+    <div class="login-cover-image"><img src="<?php echo Yii::$app->homeUrl; ?>images/cover.jpg"
+                                        data-id="login-cover-image" alt=""/></div>
     <div class="login-cover-bg"></div>
 </div>
 <!-- begin login -->
@@ -28,14 +29,33 @@ $this->registerJsFile(Yii::$app->homeUrl . "template/js/login-v2.demo.min.js", [
     </div>
     <!-- end brand -->
     <div class="login-content">
-        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <?php $form = ActiveForm::begin([
+            'id' => 'login-form',
+            'enableClientValidation' => true, 'enableAjaxValidation' => true,
+            'action' => Url::to(['/site/registration']),
+            'method' => 'post',
+        ]); ?>
 
         <div class="form-group m-b-20">
-            <?= $form->field($model, 'login')->textInput(['class' => 'form-control input-lg', 'placeholder' => 'Email']) ?>
+            <?= $form->field($model, 'login')->textInput(['class' => 'form-control input-lg', 'placeholder' => 'Введите e-mail']) ?>
         </div>
 
         <div class="form-group m-b-20">
-            <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control input-lg', 'placeholder' => 'Password']) ?>
+            <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control input-lg', 'placeholder' => 'Введите пароль']) ?>
+        </div>
+
+        <div class="form-group m-b-20">
+            <?= $form->field($model, 'repassword')->passwordInput(['class' => 'form-control input-lg', 'placeholder' => 'Повторите пароль']) ?>
+        </div>
+
+        <div class="form-group m-b-20">
+            <?= $form->field($model, 'reCaptcha')->widget(
+                \himiklab\yii2\recaptcha\ReCaptcha::className(),
+                [
+                    'siteKey' => '6LdEux4TAAAAAMfYdn2Xu9RCnoFOqEtp1_UUtPYI',
+                    'widgetOptions' => ['data-theme' => 'dark']
+                ]
+            )->label(false) ?>
         </div>
 
         <div class="login-buttons">

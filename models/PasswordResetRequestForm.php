@@ -25,8 +25,17 @@ class PasswordResetRequestForm extends Model
                 'exist',
                 'targetClass' => '\app\models\User',
                 'filter' => ['active' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with such email.'
+                'message' => 'Пользователь с таким E-mail адресом не найден.'
             ],
+        ];
+    }
+
+
+    public function attributeLabels()
+    {
+        return [
+            'login' => 'E-mail',
+            'reCaptcha' => 'Я не робот',
         ];
     }
 

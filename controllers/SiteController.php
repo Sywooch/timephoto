@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\PasswordResetRequestForm;
+use app\models\RegisterForm;
 use app\models\ResetPasswordForm;
 use app\models\SignupForm;
 use app\models\User;
@@ -14,6 +15,7 @@ use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
+use yii\widgets\ActiveForm;
 
 //use yii\web\Controller;
 
@@ -82,20 +84,24 @@ class SiteController extends BaseContoller
 
     public function actionRegistration()
     {
-        $model = new User;
 
-        // collect user input data
+        $model = new RegisterForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-            if ($model->save()) {
-                Yii::$app->getSession()->setFlash('SUCCESS', 'Регистрация прошла успешно');
-                $this->redirect(['/site/login']);
+            $user = new User();
+            $user->login = $model->login;
+            $user->password = $model->password;
+            if($user->save()){
+                Yii::$app->user->login($user, 3600*24*30);
             }
 
+            return $this->redirect(['/cabinet']);
+        } else {
+            //неправильные данные
+            return $this->render('registration', [
+                'model' => $model,
+            ]);
         }
-
-        // display the login form
-        return $this->render('registration', ['model' => $model]);
     }
 
     public function actionLogin()
@@ -171,6 +177,7 @@ class SiteController extends BaseContoller
     public function actionRequestPassword()
     {
         $model = new PasswordResetRequestForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
                 Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');

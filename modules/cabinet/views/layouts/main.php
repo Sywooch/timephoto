@@ -16,16 +16,15 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
-                        <?php if (!Yii::$app->user->identity->siteLogoHidden()): ?>
+                        <?php /* if (!Yii::$app->user->identity->siteLogoHidden()): */?>
                             <div class="site-logo"></div>
-
-                        <?php endif; ?>
-                        <?php if (Yii::$app->user->identity->hasCustomLogo() && Yii::$app->user->identity->siteLogoHidden()): ?>
+                        <?php /* endif; */ ?>
+                        <?php /* if (Yii::$app->user->identity->hasCustomLogo() && Yii::$app->user->identity->siteLogoHidden()): ?>
                             <div class="custom-logo">
                                 <img
                                     src="<?= Yii::$app->homeUrl ?>uploads/custom_logos/<?= Yii::$app->user->identity->custom_logo ?>">
                             </div>
-                        <?php endif; ?>
+                        <?php endif; */?>
                     </a>
                     <a href="javascript:;" class="custom-sidebar-toggle" data-click="sidebar-minify">
                         <i class="fa fa-bars"></i>
@@ -65,7 +64,7 @@
                         </li>
                     </ul>
 
-                    <?php if (Yii::$app->user->identity->hasCustomLogo() && !Yii::$app->user->identity->siteLogoHidden()): ?>
+                    <?php  if (Yii::$app->user->identity->hasCustomLogo() /* &&  !Yii::$app->user->identity->siteLogoHidden() */ ): ?>
                         <div class="custom-logo pull-right m-r-30">
                             <img
                                 src="<?= Yii::$app->homeUrl ?>uploads/custom_logos/<?= Yii::$app->user->identity->custom_logo ?>">

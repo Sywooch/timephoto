@@ -542,46 +542,6 @@ class CameraController extends \app\modules\public_cabinet\components\CabinetCon
     }
 
 
-    public function actionDashboard()
-    {
-        $user_id = Yii::$app->user->identity->userId;
-
-        //Свободное/занятое место
-        $tariff_limit = Tariff::findOne(Yii::$app->user->identity->tariff_id)['memory_limit'] * 1024 * 1024;
-        $load_space = Yii::$app->db->createCommand(
-            "SELECT SUM(i.file_size)
-                    FROM image i
-                    JOIN camera c ON c.id=i.camera_id
-                    JOIN `user` u ON u.id=c.user_id
-                    WHERE u.id=:user_id ", [':user_id' => $user_id])->queryScalar();
-
-        $return['disk_space']['load'] = round($load_space / $tariff_limit * 100, 2);
-        $return['disk_space']['free'] = 100 - $return['disk_space']['load'];
-
-        //сводка типы фоток / количество за неделю
-        $return['image_per_week'] = ArrayHelper::map(Yii::$app->db->createCommand(
-            "SELECT i.`type`, COUNT(i.id) as ammount
-                FROM image i
-                JOIN camera c ON c.id=i.camera_id
-                JOIN `user` u ON u.id=c.user_id
-                WHERE u.id=:user_id AND TIMESTAMPDIFF(DAY, i.created, NOW() ) <= 7
-                GROUP BY `type`", [':user_id' => $user_id])->queryAll(), 'type', 'ammount');
-
-        // Трафик с камер
-        $periods = ['1' => 'day', '7' => 'week', '30' => 'month'];
-        foreach ($periods as $day => $type) {
-            $filesizes = Yii::$app->db->createCommand(
-                "SELECT SUM(i.file_size)
-                    FROM image i
-                    JOIN camera c ON c.id=i.camera_id
-                    JOIN `user` u ON u.id=c.user_id
-                    WHERE u.id=:user_id AND TIMESTAMPDIFF(DAY, i.created, NOW() ) <= :day", [':user_id' => $user_id, ':day' => $day])->queryScalar();
-
-            $return['traff_by_camera'][$type] = round($filesizes / 1024 / 1024, 2);
-        }
-
-        return $this->render('dashboard', ['stats' => $return]);
-    }
 
     public function actionFavorite()
     {

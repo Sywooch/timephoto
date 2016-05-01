@@ -32,8 +32,16 @@ $this->registerJsFile(Yii::$app->homeUrl . "template/js/login-v2.demo.min.js", [
 
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-        <div class="form-group m-b-20">
-            <?= $form->field($model, 'login') ?>
+        <div class="m-b-20">
+            <?= $form->field($model, 'login')->label('Введите Ваш E-mail') ?>
+        </div>
+
+        <div class="m-b-20">
+            <?= \himiklab\yii2\recaptcha\ReCaptcha::widget([
+                'name' => 'reCaptcha',
+                'siteKey' => '6LdEux4TAAAAAMfYdn2Xu9RCnoFOqEtp1_UUtPYI',
+                'widgetOptions' => ['data-theme' => 'dark']
+            ]) ?>
         </div>
 
         <div class="m-t-20">

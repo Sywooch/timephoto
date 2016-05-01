@@ -566,8 +566,10 @@ class CameraController extends \app\modules\cabinet\components\CabinetController
                     JOIN `user` u ON u.id=c.user_id
                     WHERE u.id=:user_id ", [':user_id' => $user_id])->queryScalar();
 
-        $return['disk_space']['load'] = round($load_space / $tariff_limit * 100, 2);
-        $return['disk_space']['free'] = 100 - $return['disk_space']['load'];
+        if($tariff_limit){
+            $return['disk_space']['load'] = round($load_space / $tariff_limit * 100, 2);
+            $return['disk_space']['free'] = 100 - $return['disk_space']['load'];
+        }
 
         //сводка типы фоток / количество за неделю
         $return['image_per_week'] = ArrayHelper::map(Yii::$app->db->createCommand(

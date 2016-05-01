@@ -149,7 +149,7 @@ $i = 1;
                             //'labelOptions' => ['class' => 'col-lg-2 control-label'],
                         ],
                     ]); ?>
-
+<?php /*
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="col-xs-8">
@@ -162,6 +162,7 @@ $i = 1;
                             </div>
                         </div>
                     </div>
+*/ ?>
                     <div class="row m-t-10 m-b-10">
                         <div class="col-xs-12 text-center">
                             Вывести Ваш логотип в шапке сайта

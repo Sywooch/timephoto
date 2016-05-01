@@ -153,7 +153,8 @@ $i = 1;
                 </div>
                 <div class="col-sm-9">
                   <?php echo $form->field($camera, 'location_id')->dropDownList($locations, ['class' => 'form-control col-md-10',
-                    'data-toggle' =>"tooltip", 'data-placement'=> "bottom", 'title'=> 'Вы можете добавить объект, в котором расположена камера, по ссылке "Объекты"']); ?>
+                    // 'data-toggle' =>"tooltip", 'data-placement'=> "bottom", 'title'=> 'Вы можете добавить объект, в котором расположена камера, по ссылке "Объекты"'
+                  ]);?>
                 </div>
               </div>
             <div class="form-group">
@@ -162,7 +163,8 @@ $i = 1;
                 </div>
                 <div class="col-sm-9">
                     <?php echo $form->field($camera, 'camera_category_id')->dropDownList($categories, ['class' => 'form-control col-md-10',
-                        'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Вы можете добавить тематику камеры по ссылке "Объекты"']); ?>
+                        //'data-toggle' => "tooltip", 'data-placement' => "bottom", 'title' => 'Вы можете добавить тематику камеры по ссылке "Объекты"'
+                    ]); ?>
                 </div>
             </div>
             <?php if (!$camera->camera_registrator_id): ?>

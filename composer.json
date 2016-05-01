@@ -18,10 +18,11 @@
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
+        "himiklab/yii2-recaptcha-widget" : "*",
+        "omnilight/yii2-shopping-cart": "*",
         "yii2mod/yii2-cart": "dev-master"
     },
     "require-dev": {
-        "omnilight/yii2-shopping-cart": "*",
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-gii": "*",
