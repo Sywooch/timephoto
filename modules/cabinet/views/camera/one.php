@@ -20,7 +20,7 @@
 /* @var $pagesCount Integer */
 /* @var $limit Integer Количество превьюшек на странице */
 
-$this->title = Yii::$app->name . ' - ' . $camera->name;
+$this->title = Yii::$app->name . ' - ' . $camera->getName();
 
 $this->registerCssFile(Yii::$app->homeUrl . "fw/datepicker/css/datepicker3.css");
 $this->registerJsFile(Yii::$app->homeUrl . "fw/fs.js", ['position' => yii\web\View::POS_HEAD]);
@@ -93,7 +93,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
                             100%
                         </div>
                         <div class="col-md-6 text-center">
-                            <?= $camera->name ?>
+                            <?= $camera->getName() ?>
                         </div>
                         <div class="col-md-5 text-center view-date">
                             <?php if ($isLast): ?>
@@ -135,7 +135,7 @@ switch ($_COOKIE['GalleryOneHeight']) {
                                 <img src="<?= Yii::$app->homeUrl ?>uploads/camera_icons/<?= $camera->icon_name ?>"
                                      class="header-camera-icon">
                             <?php endif; ?>
-                            <?= $camera->name; ?>
+                            <?= $camera->getName(); ?>
                         </div>
                         <div class="col-md-4 text-center">
                             <ul class="pagination pagination-sm m-t-5 m-b-0 ">

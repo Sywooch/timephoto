@@ -21,7 +21,7 @@
 /* @var $limit Integer Количество превьюшек на странице */
 
 
-$this->title = Yii::$app->name . ' - ' . $camera->name;
+$this->title = Yii::$app->name . ' - ' . $camera->getName();
 
 $this->registerCssFile(Yii::$app->homeUrl . "fw/datepicker/css/datepicker3.css");
 $this->registerJsFile(Yii::$app->homeUrl . "fw/fs.js");
@@ -54,7 +54,7 @@ $this->registerJsFile(Yii::$app->homeUrl . "js/slashman-glass.js");
                             100%
                         </div>
                         <div class="col-md-6 text-center">
-                            <?= $camera->name ?>
+                            <?= $camera->getName() ?>
                         </div>
                         <div class="col-md-5 text-center view-date">
                             <?php if ($isLast): ?>
@@ -90,7 +90,7 @@ $this->registerJsFile(Yii::$app->homeUrl . "js/slashman-glass.js");
             <img src="<?= Yii::$app->homeUrl ?>uploads/camera_icons/<?= $camera->icon_name ?>"
                  class="header-camera-icon">
         <?php endif; ?>
-        <?= $camera->name; ?>
+        <?= $camera->getName(); ?>
     </div>
     <?php if (isset($images[0])): ?>
         <div class="row text-center one-image">

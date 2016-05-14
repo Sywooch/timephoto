@@ -34,7 +34,7 @@ $i = 1;
 <div class="page-default-wrap camera-edit-wrap">
     <div class="col-md-12 divide-bottom">
         <h3 class="page-header">
-            Изменение камеры "<?= $camera->name ?>"
+            Изменение камеры "<?= $camera->getName() ?>"
         </h3>
 
         <?php $this->context->showMessages($camera); ?>

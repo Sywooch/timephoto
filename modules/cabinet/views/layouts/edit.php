@@ -34,7 +34,7 @@ $i = 1;
                         <?php endif; ?>
                         <li <?= $this->context->activeCamera == $camera->id ? 'class="active"' : '' ?>>
                             <a href="<?= $this->context->createUrl(['/cabinet/camera/edit/', 'id' => $camera->id]) ?>">
-                                <?= $camera->name ?>
+                                <?= $camera->getName(); ?>
                             </a>
                         </li>
                     <?php endforeach; ?>

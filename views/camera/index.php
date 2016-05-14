@@ -39,7 +39,7 @@ hint.innerHTML = "<?=$image_date?>";
 
 title = document.createElement("DIV");
 title.style.cssText = "width:<?=$width?>px; position:absolute; top:0; padding-bottom:3px; background:#<?=$border_color?>; text-align:center; font:<?=$text_size?>px/<?=$text_size?>px Sans-serif; color:#<?=$text_color?>;";
-title.innerHTML = "<?=$camera->name?>";
+title.innerHTML = "<?=$camera->getName()?>";
 
 a_wrapper.appendChild(title);
 a_wrapper.appendChild(img);

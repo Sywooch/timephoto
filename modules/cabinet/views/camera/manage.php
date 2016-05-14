@@ -70,7 +70,7 @@ $cameras = array_values($cameras)
                 <tbody>
                 <?php endif; ?>
                 <tr camera-id="<?= $camera->id; ?>">
-                    <td class="text-center text-middle name-column"><?= $camera->name ?></td>
+                    <td class="text-center text-middle name-column"><?= $camera->getName() ?></td>
                     <td class="text-center text-middle size-column">
                         <div class="progress progress-sm active">
                             <div

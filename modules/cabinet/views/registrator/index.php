@@ -64,7 +64,7 @@ $i = 1;
                         <div class="panel-heading">
                             <h4 class="panel-title text-center">
                                 <i
-                                    class="fa fa-camera pull-left p-t-3"></i> <?= $camera->name; ?><?= $camera->enabled ? '' : ' <span class="text-danger">[Камера отключена]</span>' ?>
+                                    class="fa fa-camera pull-left p-t-3"></i> <?= $camera->getName(); ?><?= $camera->enabled ? '' : ' <span class="text-danger">[Камера отключена]</span>' ?>
                             </h4>
                         </div>
                         <div class="panel-body">

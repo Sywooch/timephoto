@@ -245,7 +245,12 @@ class Camera extends \yii\db\ActiveRecord
 
     public function getName()
     {
-        return Helper::shortLine($this->name, 20);
+        if(!empty($this->name)){
+            return Helper::shortLine($this->name, 20);
+        }else{
+            return "без имени";
+        }
+
     }
 
     public function getLocationName()
@@ -298,8 +303,10 @@ class Camera extends \yii\db\ActiveRecord
 
     public function getCategoryAndLocation()
     {
-        if (isset($this->cameraCategory)) {
-            return Helper::shortLine($this->cameraCategory->name . ' [' . $this->location->name . ']', 21);
+        if ($this->cameraCategory->name) {
+            return Helper::shortLine($this->cameraCategory->getName() . ' [' . $this->location->getName() . ']', 21);
+        }else{
+            return "не указана";
         }
     }
 
@@ -373,6 +380,7 @@ class Camera extends \yii\db\ActiveRecord
             }
             $cameraElement = $camera->attributes;
             $cameraElement['thumb'] = $camera->getLastImage()->getThumbnailUrl();
+            $cameraElement['name'] = $camera->getName();
             $cameraElement['category_name'] = $camera->getCategoryName();
             $cameraElement['location_name'] = $camera->getLocationName();
             $cameraElement['last_image_date'] = date('d-m-y H:i', strtotime($camera->getLastImage()->created));

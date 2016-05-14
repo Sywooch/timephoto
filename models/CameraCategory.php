@@ -130,7 +130,11 @@ class CameraCategory extends \yii\db\ActiveRecord
 
     public function getName($chars = 12)
     {
-        return Helper::shortLine($this->name, $chars);
+        if($this->name){
+            return Helper::shortLine($this->name, $chars);
+        }else{
+            return "не указано";
+        }
     }
 
 }

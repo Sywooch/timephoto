@@ -32,12 +32,20 @@ class UserController extends \app\modules\cabinet\components\CabinetController
     {
         $tariffs = Tariff::find()->all();
         $user = Yii::$app->user->identity;
+        $post = Yii::$app->request->post();
 
-        if (isset($_POST['User'])) {
-            $user->load($_POST);
+        if (isset($post['User'])) {
+            foreach ($post['User'] as $k => $v) {
+                if(property_exists(User::className(), $k)){
+                    $user->$k = $v;
+                }
+            }
+
             if ($user->changePassword()) {
                 Yii::$app->session->setFlash('PASSWORD_OK', 'Пароль успешно изменен');
-
+                return $this->redirect(['/cabinet/user/index']);
+            }else{
+                Yii::$app->session->setFlash('PASSWORD_ERR', 'Пароли указаны не верно');
                 return $this->redirect(['/cabinet/user/index']);
             }
         }
@@ -86,14 +94,17 @@ class UserController extends \app\modules\cabinet\components\CabinetController
     public function actionAjaxToggleAllCameras()
     {
         if (!empty($_POST['action']) && !empty($_POST['password'])) {
-            $user = User::findOne(Yii::$app->user->identity->userId);
+            $user = User::findOne(Yii::$app->user->identity->getId());
             if ($_POST['password'] == $user->password) {
+
                 if ($_POST['action'] == 'disable') {
-                    Camera::updateAll(['enabled' => 0], 'user_id = :myId', [':myId' => Yii::$app->user->identity->userId]);
-                    User::updateAll(['id' => Yii::$app->user->identity->userId], ['cameras_enabled' => 1]);
+                    Camera::updateAll(['enabled' => 0], 'user_id = :myId', [':myId' => Yii::$app->user->identity->getId()]);
+                    $user->cameras_enabled = 0;
+                    $user->save();
                 } else {
-                    Camera::updateAll(['enabled' => 1], 'user_id = :myId', [':myId' => Yii::$app->user->identity->userId]);
-                    User::updateAll(['id' => Yii::$app->user->identity->userId], ['cameras_enabled' => 0]);
+                    Camera::updateAll(['enabled' => 1], 'user_id = :myId', [':myId' => Yii::$app->user->identity->getId()]);
+                    $user->cameras_enabled = 1;
+                    $user->save();
                 }
                 echo 'OK';
             } else {
@@ -151,14 +162,15 @@ class UserController extends \app\modules\cabinet\components\CabinetController
             //$transaction->created = new Expression('NOW()');
             $transaction->method = 'INVOICE';
             $transaction->type = 'IN';
-            $transaction->user_id = Yii::$app->user->identity->userId;
+            $transaction->user_id = Yii::$app->user->identity->getId();
             if ($transaction->save()) {
                 $invoice = new Invoice();
                 $invoice->amount = $_POST['amount'];
                 $invoice->save();
-
-                return $this->redirect(['/cabinet/user/printInvoice', 'id' => $invoice->getPrimaryKey()]);
+                return $this->redirect(['/cabinet/user/print-invoice', 'id' => $invoice->getPrimaryKey()]);
             }
+        }else{
+            $this->actionIndex();
         }
     }
 
@@ -291,6 +303,7 @@ class UserController extends \app\modules\cabinet\components\CabinetController
 
             foreach ($client->cameras as $camera) {
                 if (!$camera->deleted) {
+                    $camera->name = $camera->getName();
                     $element = $camera->attributes;
                     $permission = AdditionalUserPermission::find()
                         ->select(['permission_id', 'machine_name'])

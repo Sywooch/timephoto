@@ -60,9 +60,19 @@ $i = 1;
                         <span class="close" data-dismiss="alert">×</span>
                         <i class="fa fa-check fa-2x pull-left"></i>
 
-                        <p><?= Yii::$app->user->identity->getFlash('PASSWORD_OK') ?></p>
+                        <p><?= Yii::$app->session->getFlash('PASSWORD_OK') ?></p>
                     </div>
                 <?php endif; ?>
+
+                <?php if (Yii::$app->session->hasFlash('PASSWORD_ERR')): ?>
+                    <div class="alert alert-danger fade in">
+                        <span class="close" data-dismiss="alert">×</span>
+                        <i class="fa fa-times fa-2x pull-left"></i>
+
+                        <p><?= Yii::$app->session->getFlash('PASSWORD_ERR') ?></p>
+                    </div>
+                <?php endif; ?>
+
                 <div class="panel-body">
 
                     <?php $form = ActiveForm::begin([
@@ -253,7 +263,7 @@ $i = 1;
 
     <div id="disable-cameras-popover" style="display: none;">
         <div class="form-group">
-            <input type="text" class="form-control" id="disable-cameras-password" placeholder="Пароль">
+            <input type="text" class="form-control" id="disable-cameras-password" value="" placeholder="Пароль">
         </div>
         <div class="form-group text-center">
             <button type="button" class="btn btn-default btn-sm" id="do-disable-cameras">ОК</button>
@@ -261,7 +271,7 @@ $i = 1;
     </div>
     <div id="delete-all-popover" style="display: none;">
         <div class="form-group">
-            <input type="text" class="form-control" id="delete-all-password" placeholder="Пароль">
+            <input type="text" class="form-control" id="delete-all-password"  value="" placeholder="Пароль">
         </div>
         <div class="form-group text-center">
             <button type="button" class="btn btn-default btn-sm" id="do-delete-all">ОК</button>
